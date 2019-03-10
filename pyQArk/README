@@ -1,0 +1,14 @@
+pyQArk
+======
+
+pyQArk is a python/qt4 library that provides a set of classes to create GUI applications.
+Currently it supports :
+    - Multiple Document Area
+    - Exception/Warning/Message handling
+    - Basic MVC implementations
+    - Threaded calls to python functions
+    - Some graphics
+    - Specific input widgets
+    - Functors and auto-generated associated widgets
+    
+pyQArk comes under the very liberal 3-clause BSD license, see LICENSE for more details.

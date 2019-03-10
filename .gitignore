@@ -1,0 +1,20 @@
+syntax: glob
+*.orig
+*.rej
+*~
+*.err
+*.pyc
+*.hdr
+*.lum
+*.hdr
+*.tif
+*.pyx_dev
+*.c1
+*.c2
+*.hd
+*.jp2
+*.gz
+*.tar
+*.bz2
+*.b2
+*.f

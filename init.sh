@@ -1,0 +1,3 @@
+export PYQARK_PATH=`pwd`
+echo "Init PYQARK_PATH: "${PYQARK_PATH}
+export PYTHONPATH=${PYQARK_PATH}:${PYTHONPATH}

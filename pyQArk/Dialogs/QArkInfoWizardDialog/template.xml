@@ -1,0 +1,16 @@
+<InfoWizard>
+    <IntroPage>
+        <Title></Title>
+        <Subtitle></Subtitle>
+        <Image></Image>
+        <Text></Text>
+    </IntroPage>
+    <ListOfPages>
+        <Page>
+            <Title></Title>
+            <Subtitle></Subtitle>
+            <Image></Image>
+            <Text></Text>
+        </Page>
+    </ListOfPages>
+</InfoWizard>
