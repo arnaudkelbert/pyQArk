@@ -6,19 +6,74 @@
 #
 #
 # @author : Arnaud Kelbert
-# @date : 2017/09/26
-# @version : 0.1
-#-----------------------------------------------------------------------
+# @date : 2019/03/05
+# @version : 0.2
+#
+# Historic:
+# 0.2 : init version
+# -----------------------------------------------------------------------
+# {-- Python 2/3 compatibility ------------------------------------------
 from __future__ import (absolute_import, division, print_function, unicode_literals)
+import sys
+try:
+    from future import standard_library
+    standard_library.install_aliases()
 
+    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
+                          int, map, next, oct, open, pow, range, round,
+                          str, super, zip)
+except ImportError:
+    if sys.version_info.major == 2:
+        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
+try:
+    # Python 2 : basestring exists (for isinstance test)
+    basestring
+except:
+    # Python 3 : basestring does not exist
+    basestring = str
+# }-- Python 2/3 compatibility ------------------------------------------
 import inspect
 import os
-from PyQt4 import uic
+import datetime
+import importlib
+from .QArkUiCompiler import QArkUiCompiler
 
-def loadUiType(**kwargs):
+def loadUi(_s_uiFile, pkgname, **kwargs):
     """
-    Load Ui for calling module
-    Inspect the stack to retrieve the calling module and constructs its ui name by replacing .py with .ui
-    @see uic.loadUiType
+    Load a ui file. Tries to load corresponding compiled python file according
+    to pyQArk naming.
+    If python file does not exists then a compilation is performed using QArkUiCompiler
+    module.
+
+    Args:
+        _s_uiFile (str): ui file path
+
+    Returns:
+        The python class corresponding to the ui.
     """
-    return uic.loadUiType( os.path.abspath(inspect.stack()[1][1]).replace('.py','.ui'), **kwargs )
+    o_uimdate = datetime.datetime.fromtimestamp(os.path.getmtime(_s_uiFile))
+    b_compile = False
+    s_pyfile = QArkUiCompiler.autoname(_s_uiFile)
+    # Check if python file exists
+    if not os.path.exists( s_pyfile ):
+        b_compile = True
+    else:
+        # Check if ui file has been modified since last compilation
+        o_pymdate = datetime.datetime.fromtimestamp(os.path.getmtime(s_pyfile))
+        if o_uimdate > o_pymdate:
+            # Ui file has been modified -> recompile
+            print('Ui file date is newer than its compiled python file')
+            b_compile = True
+    if b_compile:
+        print('Compilation of ui file {}'.format(_s_uiFile))
+        QArkUiCompiler.compile(_s_uiFile, s_pyfile, **kwargs)
+
+    # Import the module
+    s_mod = os.path.basename(s_pyfile).split('.')[0]
+    o_mod = importlib.import_module(s_mod, pkgname)
+
+    # Find the class
+    t_members = inspect.getmembers(o_mod, inspect.isclass)
+    assert(len(t_members)==1)
+    return t_members[0][1]
+
