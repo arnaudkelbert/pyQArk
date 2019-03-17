@@ -13,7 +13,7 @@
 # 0.1 : init version
 # 0.2 : add python 2/3 compatibility
 #-----------------------------------------------------------------------
-#{-- Pyhton 2/3 compatibility ------------------------------------------
+# {-- Python 2/3 compatibility ------------------------------------------
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 import sys
 try:
@@ -32,7 +32,7 @@ try:
 except:
     # Python 3 : basestring does not exist
     basestring = str
-#}-- Pyhton 2/3 compatibility ------------------------------------------
+# }-- Python 2/3 compatibility ------------------------------------------
 import time
 
 class QArkException( Exception ):
