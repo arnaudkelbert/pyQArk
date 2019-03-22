@@ -61,6 +61,15 @@ class QArkInputWidget(QtWidgets.QWidget):
     def initConnection(self):
         pass
 
+    def internalLayout(self):
+        o_layout = QtWidgets.QHBoxLayout(self)
+        for i in range(self.__class__.U_COLSIZE):
+            o_layout.addWidget(self.getChildWidget(i))
+        return o_layout
+
+    def setInternalLayout(self):
+        self.setLayout(self.internalLayout())
+
     def getChildWidget(self, _u_index):
         raise NotImplemented
 

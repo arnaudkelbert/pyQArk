@@ -33,7 +33,6 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
-import unittest
 from PyQt4 import QtCore, QtGui
 
 from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat

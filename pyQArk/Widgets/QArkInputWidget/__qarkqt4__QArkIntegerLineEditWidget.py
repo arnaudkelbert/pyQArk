@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------
 # 
 #
-# Widgets.QArkInputWidget.QArkIntegerInputWidget
+# Widgets.QArkInputWidget.QArkIntegerLineEditWidget
 # 
 #
 # @author : Arnaud Kelbert
@@ -33,32 +33,23 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
-import unittest
 from PyQt4 import QtCore, QtGui
 
 from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 
-
 class QArkIntegerLineEditWidget( QArkInputWidget ):
-    
-    
+
     U_COLSIZE = 2
-    
-    
+
     def initUi(self,_s_label, _x_initValue):
         self.o_label = QtGui.QLabel( _s_label, self )
         self.o_label.setSizePolicy( QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred )
-        
         self.o_lineEdit = QtGui.QLineEdit( _s_label, self )
         self.o_lineEdit.setText( str(_x_initValue) )
         self.o_lineEdit.setSizePolicy( QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred )
-    
-    
-    
+
     def initConnection(self):
         pass
-    
-    
     
     def getChildWidget(self, _u_index=0):
         if _u_index == 0:
@@ -68,15 +59,11 @@ class QArkIntegerLineEditWidget( QArkInputWidget ):
         else:
             return QtCore.QVariant()
     
-    
-    
     def getValue(self):
         try:
             return int( self.o_lineEdit.text() )
         except Exception as e:
             raise QArkInputWidgetBadFormat( self.__class__, self.o_lineEdit.text(), str(e) )
-
-
 
     def setValue( self, *args, **kwargs ):
         """

@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------
 # 
 #
-# Widgets.QArkInputWidget.QArkIntegerSpinBoxWidget
+# Widgets.QArkInputWidget.QArkFloatSpinBoxWidget
 # 
 #
 # @author : Arnaud Kelbert
@@ -33,24 +33,25 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore, QtGui
+import unittest
+from PyQt5 import QtCore, QtWidgets
 
 from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 
-class QArkIntegerSpinBoxWidget( QArkInputWidget ):
+class QArkFloatSpinBoxWidget( QArkInputWidget ):
 
     U_COLSIZE = 2
 
     def initUi(self,_s_label, _x_initValue):
-        self.o_label = QtGui.QLabel( _s_label, self )
-        self.o_label.setSizePolicy( QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred )
-        self.o_spinbox = QtGui.QSpinBox( self )
-        self.o_spinbox.setValue( int(_x_initValue) )
-        self.o_spinbox.setSizePolicy( QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred )
-
+        self.o_label = QtWidgets.QLabel( _s_label, self )
+        self.o_label.setSizePolicy( QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred )
+        self.o_spinbox = QtWidgets.QDoubleSpinBox( self )
+        self.o_spinbox.setValue( float(_x_initValue) )
+        self.o_spinbox.setSizePolicy( QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred )
+    
     def initConnection(self):
         pass
-
+    
     def getChildWidget(self, _u_index=0):
         if _u_index == 0:
             return self.o_label
@@ -60,7 +61,7 @@ class QArkIntegerSpinBoxWidget( QArkInputWidget ):
             return QtCore.QVariant()
 
     def getValue(self):
-        return int( self.o_spinbox.value() )
+        return float( self.o_spinbox.value() )
 
     def setValue( self, *args, **kwargs ):
         """

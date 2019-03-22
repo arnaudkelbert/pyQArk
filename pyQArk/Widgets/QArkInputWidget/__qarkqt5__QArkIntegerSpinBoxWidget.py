@@ -33,7 +33,7 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 
@@ -42,11 +42,11 @@ class QArkIntegerSpinBoxWidget( QArkInputWidget ):
     U_COLSIZE = 2
 
     def initUi(self,_s_label, _x_initValue):
-        self.o_label = QtGui.QLabel( _s_label, self )
-        self.o_label.setSizePolicy( QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred )
-        self.o_spinbox = QtGui.QSpinBox( self )
+        self.o_label = QtWidgets.QLabel( _s_label, self )
+        self.o_label.setSizePolicy( QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred )
+        self.o_spinbox = QtWidgets.QSpinBox( self )
         self.o_spinbox.setValue( int(_x_initValue) )
-        self.o_spinbox.setSizePolicy( QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred )
+        self.o_spinbox.setSizePolicy( QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred )
 
     def initConnection(self):
         pass

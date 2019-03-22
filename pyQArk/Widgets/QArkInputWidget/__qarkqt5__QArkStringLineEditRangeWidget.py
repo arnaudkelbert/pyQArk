@@ -33,7 +33,7 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 from pyQArk.Core.QArkRange import QArkRange
@@ -43,20 +43,20 @@ class QArkStringLineEditRangeWidget( QArkInputWidget ):
     U_COLSIZE = 5
 
     def initUi(self,_s_label, _x_initValue):
-        self.o_label = QtGui.QLabel( _s_label, self )
-        self.o_label.setSizePolicy( QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred )
-        self.o_labelMin = QtGui.QLabel( 'Min : ', self )
-        self.o_labelMin.setSizePolicy( QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred )
-        self.o_labelMax = QtGui.QLabel( 'Max : ', self )
-        self.o_labelMax.setSizePolicy( QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred )
-        self.o_lineEditMin = QtGui.QLineEdit( '', self )
+        self.o_label = QtWidgets.QLabel( _s_label, self )
+        self.o_label.setSizePolicy( QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred )
+        self.o_labelMin = QtWidgets.QLabel( 'Min : ', self )
+        self.o_labelMin.setSizePolicy( QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred )
+        self.o_labelMax = QtWidgets.QLabel( 'Max : ', self )
+        self.o_labelMax.setSizePolicy( QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred )
+        self.o_lineEditMin = QtWidgets.QLineEdit( '', self )
         if not _x_initValue is None:
             self.o_lineEditMin.setText( str(_x_initValue[0]) )
-        self.o_lineEditMin.setSizePolicy( QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred )
-        self.o_lineEditMax = QtGui.QLineEdit( '', self )
+        self.o_lineEditMin.setSizePolicy( QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred )
+        self.o_lineEditMax = QtWidgets.QLineEdit( '', self )
         if not _x_initValue is None:
             self.o_lineEditMax.setText( str(_x_initValue[1]) )
-        self.o_lineEditMax.setSizePolicy( QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred )
+        self.o_lineEditMax.setSizePolicy( QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred )
 
     def initConnection(self):
         pass

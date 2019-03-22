@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------
 # 
 #
-# Widgets.QArkInputWidget.QArkIntegerSpinBoxWidget
+# Widgets.QArkInputWidget.QArkStringLineInputWidget
 # 
 #
 # @author : Arnaud Kelbert
@@ -33,20 +33,20 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 
-class QArkIntegerSpinBoxWidget( QArkInputWidget ):
+class QArkStringLineEditWidget( QArkInputWidget ):
 
     U_COLSIZE = 2
 
     def initUi(self,_s_label, _x_initValue):
-        self.o_label = QtGui.QLabel( _s_label, self )
-        self.o_label.setSizePolicy( QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred )
-        self.o_spinbox = QtGui.QSpinBox( self )
-        self.o_spinbox.setValue( int(_x_initValue) )
-        self.o_spinbox.setSizePolicy( QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred )
+        self.o_label = QtWidgets.QLabel( _s_label, self )
+        self.o_label.setSizePolicy( QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred )
+        self.o_lineEdit = QtWidgets.QLineEdit( _s_label, self )
+        self.o_lineEdit.setText( str(_x_initValue) )
+        self.o_lineEdit.setSizePolicy( QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred )
 
     def initConnection(self):
         pass
@@ -55,16 +55,19 @@ class QArkIntegerSpinBoxWidget( QArkInputWidget ):
         if _u_index == 0:
             return self.o_label
         elif _u_index == 1:
-            return self.o_spinbox
+            return self.o_lineEdit
         else:
             return QtCore.QVariant()
 
     def getValue(self):
-        return int( self.o_spinbox.value() )
+        try:
+            return str( self.o_lineEdit.text() )
+        except Exception as e:
+            raise QArkInputWidgetBadFormat( self.__class__, self.o_lineEdit.text(), str(e) )
 
     def setValue( self, *args, **kwargs ):
         """
         Sets the widget value from the value returned by getValue()
         args[0] contains the retur of getValue fonction
         """
-        self.o_spinbox.setValue( args[0] )
+        self.o_lineEdit.setText( str(args[0]) )
