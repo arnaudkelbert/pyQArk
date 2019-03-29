@@ -277,7 +277,7 @@ class QArkFunctor(object):
     def toString(self):
         t_args = [ '('
                   ,','.join( [ '{0}={1}'.format(k, v) 
-                              for k, v in self.t_functorArgs.iteritems()
+                              for k, v in self.t_functorArgs.items()
                               ]
                             )
                   ]
@@ -286,7 +286,7 @@ class QArkFunctor(object):
             t_args.append(',')
         
         t_args.extend( [','.join( [ '{0}={1}'.format(k, v) 
-                                    for k, v in self.t_cstArgs.iteritems()
+                                    for k, v in self.t_cstArgs.items()
                                     ]
                                   )
                         ,')']
@@ -297,7 +297,7 @@ class QArkFunctor(object):
     def toStringOnlyFuncArgs(self, _s_prefix=''):
         t_args = [ '('
                   ,','.join( [ '{0}={1}'.format(k, v) 
-                              for k, v in self.t_functorArgs.iteritems()
+                              for k, v in self.t_functorArgs.items()
                               ]
                             )
                   ,')'
@@ -307,11 +307,11 @@ class QArkFunctor(object):
 
     def toFancyString(self):
         t_args = [ '{0}={1}'.format(k, v) 
-                  for k, v in self.t_functorArgs.iteritems()
+                  for k, v in self.t_functorArgs.items()
                   ]
         t_args.extend(
                  [ '{0}={1}'.format(k, v) 
-                  for k, v in self.t_cstArgs.iteritems()
+                  for k, v in self.t_cstArgs.items()
                   ]     
                       )
         

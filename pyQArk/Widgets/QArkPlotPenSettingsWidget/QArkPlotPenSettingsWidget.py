@@ -120,7 +120,7 @@ class QArkPlotPenSettingsWidget( QtGui.QWidget, Ui_QArkPlotPenSettingsWidget ):
 
 
     def getLineStyle( self ):
-        for key, value in QArkPlotableObject.T_LIST_STYLES.iteritems():
+        for key, value in QArkPlotableObject.T_LIST_STYLES.items():
             if value == self.ui.styleComboBox.currentText():
                 return key
         return None
