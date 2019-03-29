@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'QArkListWidgetNavigationWidget.ui'
+# Form implementation generated from reading ui file 'D:\VMShare\MyProjects\pyQArk\pyQArk\Widgets\QArkListWidgetNavigationWidget\QArkListWidgetNavigationWidget.ui'
 #
-# Created: Sat Nov 22 13:25:22 2014
+# Created: Fri Mar 29 21:34:28 2019
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,16 +26,18 @@ except AttributeError:
 class Ui_QArkListWidgetNavigationWidget(object):
     def setupUi(self, QArkListWidgetNavigationWidget):
         QArkListWidgetNavigationWidget.setObjectName(_fromUtf8("QArkListWidgetNavigationWidget"))
-        QArkListWidgetNavigationWidget.resize(724, 461)
+        QArkListWidgetNavigationWidget.resize(703, 432)
         self.gridLayout = QtGui.QGridLayout(QArkListWidgetNavigationWidget)
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.listWidget = QtGui.QListWidget(QArkListWidgetNavigationWidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.listWidget.sizePolicy().hasHeightForWidth())
         self.listWidget.setSizePolicy(sizePolicy)
+        self.listWidget.setMinimumSize(QtCore.QSize(250, 0))
+        self.listWidget.setMaximumSize(QtCore.QSize(250, 16777215))
         self.listWidget.setObjectName(_fromUtf8("listWidget"))
         self.gridLayout.addWidget(self.listWidget, 0, 0, 4, 1)
         self.label = QtGui.QLabel(QArkListWidgetNavigationWidget)
@@ -59,7 +61,7 @@ class Ui_QArkListWidgetNavigationWidget(object):
         self.stackedWidget.setSizePolicy(sizePolicy)
         self.stackedWidget.setObjectName(_fromUtf8("stackedWidget"))
         self.gridLayout.addWidget(self.stackedWidget, 2, 1, 1, 2)
-        spacerItem = QtGui.QSpacerItem(20, 203, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem = QtGui.QSpacerItem(20, 189, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout.addItem(spacerItem, 3, 2, 1, 1)
 
         self.retranslateUi(QArkListWidgetNavigationWidget)
