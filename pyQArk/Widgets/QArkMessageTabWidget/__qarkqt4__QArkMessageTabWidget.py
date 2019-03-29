@@ -6,28 +6,46 @@
 #
 #
 # @author : Arnaud Kelbert
-# @date : 2014/07/26
-# @version : 0.1
-#-----------------------------------------------------------------------
-
+# @date : 2019/03/19
+# @version : 0.2
+#
+# Historic:
+# 0.1 : init version
+# 0.2 : add python 2/3 compatibility
+# -----------------------------------------------------------------------
+# {-- Pyhton 2/3 compatibility ------------------------------------------
+from __future__ import (absolute_import, division, print_function, unicode_literals)
 import sys
-import os
-import time
+try:
+    from future import standard_library
+    standard_library.install_aliases()
 
+    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
+                          int, map, next, oct, open, pow, range, round,
+                          str, super, zip)
+except ImportError:
+    if sys.version_info.major == 2:
+        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
+try:
+    # Python 2 : basestring exists (for isinstance test)
+    basestring
+except:
+    # Python 3 : basestring does not exist
+    basestring = str
+# }-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt4 import QtCore, QtGui
 
-from .Ui_QArkMessageTabWidget import Ui_QArkMessageTabWidget
+from pyQArk.Core.QArkUiLoader import loadUi
+Ui_QArkMessageTabWidget = loadUi('./QArkMessageTabWidget.ui', pkgname=__name__)
 
-from ...Models.QArkMessageItemModel import QArkMessageItemModel
-from ...Models.QArkWarningItemModel import QArkWarningItemModel
-from ...Models.QArkErrorItemModel import QArkErrorItemModel
-from ...Models.QArkSimpleItemListModel import QArkSimpleItemListModel
-
-from ...Core.QArkMessage import QArkMessage
-from ...Core.QArkMessageSender import QArkMessageSender
-from ...Core.QArkWarningSender import QArkWarningSender
-from ...Core.QArkExceptionHandler import QArkExceptionHandler
-
+from pyQArk.Models.QArkMessageItemModel import QArkMessageItemModel
+from pyQArk.Models.QArkWarningItemModel import QArkWarningItemModel
+from pyQArk.Models.QArkErrorItemModel import QArkErrorItemModel
+from pyQArk.Models.QArkSimpleItemListModel import QArkSimpleItemListModel
+from pyQArk.Core.QArkMessage import QArkMessage
+from pyQArk.Core.QArkMessageSender import QArkMessageSender
+from pyQArk.Core.QArkWarningSender import QArkWarningSender
+from pyQArk.Core.QArkExceptionHandler import QArkExceptionHandler
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -43,10 +61,6 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
-
-
-
 class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
     """
     Class to represents a tab widget with 3 tabs for messages, warnings
@@ -61,26 +75,18 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
     WARNING_TAB_INDEX = 1
     ERROR_TAB_INDEX = 2
 
-
     def __init__( self
                  , parent = None
                  ):
         super( QArkMessageTabWidget, self).__init__( parent = parent )
-
         # A python list to handle warnings
         self.t_warningList = []
-
         # A python list to handle exceptions
         self.t_errorList = []
-
         # A python list to handle messages
         self.t_messageList = []
-
-
         self.initUi()
         self.initConnection()
-
-
 
     def setMessageSender( self, _o_sender ):
         """
@@ -94,8 +100,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         self.o_messageSender = _o_sender
         self.o_messageSender.messageSentSignal.connect( self.handleMessageSentSlot )
 
-
-
     def setWarningSender( self, _o_sender ):
         """
         Set the warning sender member and set the connection with
@@ -105,8 +109,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         """
         self.o_warningSender = _o_sender
         self.o_warningSender.warningSentSignal.connect( self.handleWarningSentSlot )
-
-
 
     def setExceptionHandler( self, _o_handler ):
         """
@@ -119,9 +121,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         self.o_exceptionHandler.errorHandledSignal.connect( self.handleErrorHandledSlot )
         self.o_exceptionHandler.basicExceptionHandledSignal.connect( self.handleErrorHandledSlot )
 
-
-
-
     def write( self, _s_str ):
         """
         Define a write method so that an object can be considered as
@@ -131,8 +130,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         if len(_s_str.replace('\r','')) > 0 and _s_str != '\n':
             self.o_messageSender.send( QArkMessage( _s_str ) )
 
-
-
     def flush( self ):
         """
         Define a write method so that an object can be considered as
@@ -140,8 +137,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         """
         # Do nothing
         pass
-
-
 
     def setAsSystemOutput( self ):
         """
@@ -152,8 +147,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         sys.stdout = self
         sys.stderr = self
 
-
-
     def restoreDefaultSystemOutput( self ):
         """
         Restore the default system output
@@ -161,22 +154,16 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         sys.stdout = self.o_systemStdOut
         sys.stderr = self.o_systemStdErr
 
-
-
-
     def initUi( self ):
         """
         @brief init user interface
         """
         self.ui = Ui_QArkMessageTabWidget()
         self.ui.setupUi(self)
-
         self.setObjectName(_fromUtf8("qArkMessageTabWidget"))
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
-
         # Initialisation des modeles
-        #---------------------------------------------------------------
         self.o_warningListModel = QArkSimpleItemListModel( self, self.t_warningList )
         self.ui.warningListView.setModel( self.o_warningListModel )
 
@@ -187,16 +174,12 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         self.ui.messageListView.setModel( self.o_messageListModel )
 
         # Set icons
-        #---------------------------------------------------------------
         self.setTabIcon( self.__class__.MESSAGE_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-information") )
         self.setTabIcon( self.__class__.WARNING_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-warning") )
         self.setTabIcon( self.__class__.ERROR_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-error") )
 
         # Set current tab
         self.setCurrentIndex( self.__class__.MESSAGE_TAB_INDEX )
-
-
-
 
     def initConnection( self ):
         """
@@ -205,9 +188,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         self.o_warningListModel.rowsInserted.connect( self.ui.warningListView.scrollToBottom )
         self.o_messageListModel.rowsInserted.connect( self.ui.messageListView.scrollToBottom )
         self.o_errorListModel.rowsInserted.connect( self.ui.errorListView.scrollToBottom )
-
-
-
 
     def addWarning( self, _o_warning ):
         """
@@ -218,8 +198,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         self.o_warningListModel.addItem( QArkWarningItemModel(self,_o_warning) )
         self.setTabText( self.__class__.WARNING_TAB_INDEX, 'Warning ({})'.format(len(self.t_warningList)) )
 
-
-
     def addError( self, _o_error ):
         """
         Add an error item
@@ -229,8 +207,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         self.o_errorListModel.addItem( QArkErrorItemModel(self,_o_error) )
         self.setTabText( self.__class__.ERROR_TAB_INDEX, 'Erreur ({})'.format(len(self.t_errorList)) )
 
-
-
     def addMessage( self, _o_message ):
         """
         Add a message item
@@ -238,8 +214,6 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
         @type _o_message : L{QArkMessage}
         """
         self.o_messageListModel.addItem( QArkMessageItemModel(self,_o_message) )
-
-
 
 #---------------------------------------------------------------
 #
@@ -250,19 +224,10 @@ class QArkMessageTabWidget( QtGui.QTabWidget, Ui_QArkMessageTabWidget ):
     def handleWarningSentSlot( self, _o_warning ):
         self.addWarning( _o_warning )
 
-
     @QtCore.pyqtSlot( object )
     def handleErrorHandledSlot( self, _o_error ):
         self.addError( _o_error )
 
-
     @QtCore.pyqtSlot( object )
     def handleMessageSentSlot( self, _o_message ):
         self.addMessage( _o_message )
-
-
-
-
-
-
-

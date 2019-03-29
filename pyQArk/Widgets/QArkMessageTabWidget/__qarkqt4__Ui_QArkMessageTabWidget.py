@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'QArkMessageTabWidget.ui'
+# Form implementation generated from reading ui file 'D:\VMShare\MyProjects\pyQArk\pyQArk\Widgets\QArkMessageTabWidget\QArkMessageTabWidget.ui'
 #
-# Created: Sat Mar  7 20:32:39 2015
-#      by: PyQt4 UI code generator 4.11.2
+# Created: Fri Mar 29 21:58:52 2019
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
