@@ -38,15 +38,11 @@ from PyQt4 import QtCore
 
 
 from .QArkTreeItem import QArkTreeItem
-
-from ..Core.QArkMimeData import QArkMimeData
-
+from pyQArk.Core.QArkMimeData import QArkMimeData
 import copy
-
 
 class QArkTreeItemMimeData(QArkMimeData):
     MIME_TYPE = QtCore.QString('application/qarktreeitem-instance')
-
 
 class QArkTreeViewModel( QtCore.QAbstractItemModel ):
 

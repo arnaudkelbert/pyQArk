@@ -35,7 +35,7 @@ except:
 from PyQt4 import QtCore
 
 from .QArkItem import QArkItem
-from ..Core.QArkMimeData import QArkMimeData
+from pyQArk.Core.QArkMimeData import QArkMimeData
 
 import copy
 
