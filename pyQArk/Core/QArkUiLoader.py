@@ -36,6 +36,7 @@ import inspect
 import os
 import datetime
 import importlib
+from pyQArk.QArkConfig import QARK_QT_MODULE_PREFIX
 from .QArkUiCompiler import QArkUiCompiler
 
 def loadUi(_s_uiFile, pkgname, **kwargs):
@@ -47,6 +48,7 @@ def loadUi(_s_uiFile, pkgname, **kwargs):
 
     Args:
         _s_uiFile (str): ui file path
+        pkgname (str): parent package name (used for import)
 
     Returns:
         The python class corresponding to the ui.
@@ -70,6 +72,8 @@ def loadUi(_s_uiFile, pkgname, **kwargs):
 
     # Import the module
     s_mod = os.path.basename(s_pyfile).split('.')[0]
+    print('module:{}\npck : {}'.format(s_mod, pkgname))
+    #s_mod = s_mod.replace(QARK_QT_MODULE_PREFIX,'')
     o_mod = importlib.import_module(s_mod, pkgname)
 
     # Find the class

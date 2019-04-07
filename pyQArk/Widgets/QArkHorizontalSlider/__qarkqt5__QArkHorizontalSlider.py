@@ -39,7 +39,8 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
-Ui_QArkHorizontalSlider = loadUi('./QArkHorizontalSlider.ui', pkgname=__name__)
+from . import PKGPATH
+Ui_QArkHorizontalSlider = loadUi(PKGPATH('./QArkHorizontalSlider.ui'), pkgname=__package__)
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -53,7 +54,7 @@ try:
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+        return QtWidgets.QApplication.translate(context, text, disambig)
 
 class QArkHorizontalSlider( QtWidgets.QTabWidget, Ui_QArkHorizontalSlider ):
     """

@@ -35,7 +35,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 import unittest
 
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt
+from PyQt5 import QtCore, QtWidgets, QtWidgets, Qt
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -114,7 +114,7 @@ class QArkControlledStackedWidget( QtWidgets.QWidget ):
         #--------------------------------------------------------------------------------
         # Layout generale
         #--------------------------------------------------------------------------------        
-        #self.gridLayout = QtGui.QGridLayout(self)
+        #self.gridLayout = QtWidgets.QGridLayout(self)
         #self.gridLayout.setObjectName(_fromUtf8("gridLayout"))        
         #self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         #self.gridLayout.addWidget(self.stackedWidget, 1, 0, 1, 1)

@@ -36,7 +36,7 @@ except:
 import unittest
 
 from pyQArk import QArkConfig
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtWidgets
 
 from pyQArk.Widgets.QArkClickableLabel.QArkClickableLabel import QArkClickableLabel
 
@@ -62,8 +62,8 @@ class QArkClickableFilledRect( QArkClickableLabel ):
                  , parent=None
                  , size = QtCore.QSize(100,100)
                  , borderWidth = 0
-                 , fillColor = QtGui.QColor( 255, 255, 255 )
-                 , borderColor = QtGui.QColor( 0, 0, 0 )
+                 , fillColor = QtWidgets.QColor( 255, 255, 255 )
+                 , borderColor = QtWidgets.QColor( 0, 0, 0 )
                  ):
         super( QArkClickableFilledRect, self).__init__( parent )
         self.o_size = size
@@ -82,15 +82,15 @@ class QArkClickableFilledRect( QArkClickableLabel ):
         return self.o_fillColor
 
     def setFillColor( self, _o_color ):
-        o_pixmap = QtGui.QPixmap( self.o_size )
+        o_pixmap = QtWidgets.QPixmap( self.o_size )
         o_pixmap.fill( _o_color )
 
         if self.u_borderWidth > 0:
-            o_pen = QtGui.QPen(QtCore.Qt.SolidLine)
+            o_pen = QtWidgets.QPen(QtCore.Qt.SolidLine)
             o_pen.setWidth(self.u_borderWidth)
             o_pen.setColor(self.o_borderColor)
 
-            o_painter = QtGui.QPainter( o_pixmap )
+            o_painter = QtWidgets.QPainter( o_pixmap )
             o_painter.setPen(o_pen)
             o_painter.drawRect(0,0,self.o_size.width()-1,self.o_size.height()-1)
             o_painter.end()
@@ -113,7 +113,7 @@ class QArkClickableFilledRectTest( unittest.TestCase ):
     """
     def test_widget(self):
         o_app = QtWidgets.QApplication( sys.argv )
-        o_w = QArkClickableFilledRect( borderWidth=1, fillColor=QtGui.QColor(255,0,0) )
+        o_w = QArkClickableFilledRect( borderWidth=1, fillColor=QtWidgets.QColor(255,0,0) )
         #o_w.setText('click me!')
         o_w.show()
         o_app.exec_()

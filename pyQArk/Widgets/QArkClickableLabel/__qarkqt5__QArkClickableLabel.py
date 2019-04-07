@@ -37,7 +37,7 @@ import unittest
 
 from pyQArk import QArkConfig
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtWidgets
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

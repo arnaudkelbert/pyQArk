@@ -36,7 +36,15 @@ except:
 from PyQt5 import QtCore, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
-Ui_QArkMessageTabWidget = loadUi('./QArkMessageTabWidget.ui', pkgname=__name__)
+from . import PKGPATH
+print(PKGPATH('./QArkMessageTabWidget.ui'))
+for k in sys.modules:
+    if 'qark' in k.lower():
+        print(sys.modules[k])
+# TODO : le __init__ ne rajoute pas la reference locale
+# => obliger de chercher depuis la racine du projet
+from pyQArk.Widgets.QArkMessageTabWidget.Ui_QArkMessageTabWidget import Ui_QArkMessageTabWidget
+#Ui_QArkMessageTabWidget = loadUi(PKGPATH('./QArkMessageTabWidget.ui'), pkgname=__name__)
 
 from pyQArk.Models.QArkMessageItemModel import QArkMessageItemModel
 from pyQArk.Models.QArkWarningItemModel import QArkWarningItemModel

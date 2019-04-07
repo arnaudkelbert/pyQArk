@@ -25,7 +25,6 @@ from pyQArk.QArkConfig import QARK_QT_MODULE_PREFIX
 LOCAL_PATH = os.path.abspath(os.path.join( inspect.getfile(inspect.currentframe()), '..' ))
 
 for (_, name, _) in pkgutil.iter_modules([LOCAL_PATH]):
-    #print(name)
     if name.startswith(QARK_QT_MODULE_PREFIX):
         # import the module
         imported_module = importlib.import_module('.'+name, package=__name__)

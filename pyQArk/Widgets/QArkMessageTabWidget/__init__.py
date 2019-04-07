@@ -23,9 +23,17 @@ import pkgutil
 import importlib
 from pyQArk.QArkConfig import QARK_QT_MODULE_PREFIX
 LOCAL_PATH = os.path.abspath(os.path.join( inspect.getfile(inspect.currentframe()), '..' ))
+def PKGPATH(_s_file): return os.path.normpath(os.path.join(LOCAL_PATH, _s_file))
 
-for (_, name, _) in pkgutil.iter_modules([LOCAL_PATH]):
-    #print(name)
+# Local package specifics
+#=> must load QArkInputWidget first
+T_DO_FIRST = [
+    'Ui_QArkMessageTabWidget'
+]
+T_MODULE_NAMES_FIRST = [ '{}{}'.format(QARK_QT_MODULE_PREFIX,n) for n in T_DO_FIRST ]
+T_MODULE_NAMES = T_MODULE_NAMES_FIRST + [ n for (_,n,_) in pkgutil.iter_modules([LOCAL_PATH]) if not n in T_MODULE_NAMES_FIRST ]
+print('init__')
+for name in T_MODULE_NAMES:
     if name.startswith(QARK_QT_MODULE_PREFIX):
         # import the module
         imported_module = importlib.import_module('.'+name, package=__name__)
@@ -34,6 +42,8 @@ for (_, name, _) in pkgutil.iter_modules([LOCAL_PATH]):
         # find all references to the module with a prefixed name and replace them without prefix
         refs = [k for k in sys.modules.keys() if '{}.{}'.format(__name__,name) in k]
         for entry in refs:
+            print(entry, entry.replace('{}.{}'.format(__name__,QARK_QT_MODULE_PREFIX),'{}.'.format(__name__)))
             sys.modules[entry.replace('{}.{}'.format(__name__,QARK_QT_MODULE_PREFIX),'{}.'.format(__name__))] = sys.modules[entry]
             # erase reference with prefix
             del sys.modules[entry]
+        print('***')
