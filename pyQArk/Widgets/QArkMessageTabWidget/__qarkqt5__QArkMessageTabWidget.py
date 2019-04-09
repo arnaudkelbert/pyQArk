@@ -33,18 +33,11 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from . import PKGPATH
-print(PKGPATH('./QArkMessageTabWidget.ui'))
-for k in sys.modules:
-    if 'qark' in k.lower():
-        print(sys.modules[k])
-# TODO : le __init__ ne rajoute pas la reference locale
-# => obliger de chercher depuis la racine du projet
-from pyQArk.Widgets.QArkMessageTabWidget.Ui_QArkMessageTabWidget import Ui_QArkMessageTabWidget
-#Ui_QArkMessageTabWidget = loadUi(PKGPATH('./QArkMessageTabWidget.ui'), pkgname=__name__)
+Ui_QArkMessageTabWidget = loadUi(PKGPATH('./QArkMessageTabWidget.ui'), pkgname=__package__)
 
 from pyQArk.Models.QArkMessageItemModel import QArkMessageItemModel
 from pyQArk.Models.QArkWarningItemModel import QArkWarningItemModel
@@ -182,9 +175,9 @@ class QArkMessageTabWidget( QtWidgets.QTabWidget, Ui_QArkMessageTabWidget ):
         self.ui.messageListView.setModel( self.o_messageListModel )
 
         # Set icons
-        self.setTabIcon( self.__class__.MESSAGE_TAB_INDEX, QtWidgets.QIcon.fromTheme("dialog-information") )
-        self.setTabIcon( self.__class__.WARNING_TAB_INDEX, QtWidgets.QIcon.fromTheme("dialog-warning") )
-        self.setTabIcon( self.__class__.ERROR_TAB_INDEX, QtWidgets.QIcon.fromTheme("dialog-error") )
+        self.setTabIcon( self.__class__.MESSAGE_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-information") )
+        self.setTabIcon( self.__class__.WARNING_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-warning") )
+        self.setTabIcon( self.__class__.ERROR_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-error") )
 
         # Set current tab
         self.setCurrentIndex( self.__class__.MESSAGE_TAB_INDEX )

@@ -72,9 +72,9 @@ def loadUi(_s_uiFile, pkgname, **kwargs):
 
     # Import the module
     s_mod = os.path.basename(s_pyfile).split('.')[0]
-    print('module:{}\npck : {}'.format(s_mod, pkgname))
+    #print('module:{}\npck : {}'.format(s_mod, pkgname))
     #s_mod = s_mod.replace(QARK_QT_MODULE_PREFIX,'')
-    o_mod = importlib.import_module(s_mod, pkgname)
+    o_mod = importlib.import_module(pkgname+'.'+s_mod, pkgname)
 
     # Find the class
     t_members = inspect.getmembers(o_mod, inspect.isclass)

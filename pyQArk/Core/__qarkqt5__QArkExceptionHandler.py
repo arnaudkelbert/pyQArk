@@ -36,9 +36,14 @@ except:
 import os
 import traceback
 import time
-import cStringIO
+try:
+    # Python 2
+    from cStringIO import StringIO
+except:
+    # Python 3
+    from io import StringIO
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 from .QArkException import QArkException
 
@@ -185,7 +190,7 @@ class QArkExceptionHandler( QtCore.QObject ):
         s_logFile = os.path.join( self.s_logDir, "error.log" )
         s_timeString = time.strftime("%Y-%m-%d, %H:%M:%S")
         # init a buffer to write traceback
-        fp_tbinfofile = cStringIO.StringIO()
+        fp_tbinfofile = StringIO()
         # print traceback in buffer
         traceback.print_tb( tracebackobj, None, fp_tbinfofile )
         # read buffer
@@ -213,7 +218,7 @@ class QArkExceptionHandler( QtCore.QObject ):
         except IOError:
             pass
         try:
-            o_errorbox = QtGui.QMessageBox( parent = self.parent )
+            o_errorbox = QtWidgets.QMessageBox( parent = self.parent )
             o_errorbox.setText( s_msg )
             o_errorbox.exec_()
         except:

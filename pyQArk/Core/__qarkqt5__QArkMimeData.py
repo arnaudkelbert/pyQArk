@@ -33,10 +33,16 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore
+from PyQt5 import QtCore
 
-from cPickle import dumps, load, loads
-from cStringIO import StringIO
+try:
+    # Python 2
+    from cStringIO import StringIO
+    from cPickle import dumps, load, loads
+except ImportError:
+    # Python 3
+    from io import StringIO
+    from _pickle import dumps, load, loads
 
 class QArkMimeData(QtCore.QMimeData):
     """
@@ -44,7 +50,7 @@ class QArkMimeData(QtCore.QMimeData):
     This can be use to manage drag'n drop feature
     """
     # The MIME type for instances.
-    MIME_TYPE = QtCore.QString('application/qmimedata-instance')
+    MIME_TYPE = str('application/qmimedata-instance')
 
     def __init__(self, data=None):
         """

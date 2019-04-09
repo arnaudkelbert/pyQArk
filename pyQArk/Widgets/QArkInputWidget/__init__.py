@@ -43,4 +43,5 @@ for name in T_MODULE_NAMES:
         for entry in refs:
             sys.modules[entry.replace('{}.{}'.format(__name__,QARK_QT_MODULE_PREFIX),'{}.'.format(__name__))] = sys.modules[entry]
             # erase reference with prefix
+            #print('***',entry.replace('{}.{}'.format(__name__,QARK_QT_MODULE_PREFIX),'{}.'.format(__name__)), entry, sys.modules[entry])
             del sys.modules[entry]
