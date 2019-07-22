@@ -40,6 +40,12 @@ elif QARK_QT_GENERATION == 5:
     from PyQt5 import QtWidgets
 
 from pyQArk.Widgets.QArkMessageTabWidget.QArkMessageTabWidget import QArkMessageTabWidget
+from pyQArk.Core import QArkMessageSender
+from pyQArk.Core import QArkWarningSender
+from pyQArk.Core.QArkExceptionHandler import QArkExceptionHandler
+from pyQArk.Core.QArkWarning import QArkWarning
+#from pyQArk.Core.QArkExceptionHandableObject import QArkExceptionHandableObject
+
 
 TEST_CLASS = QArkMessageTabWidget
 class QArkInputWidgetGridTest(unittest.TestCase):
@@ -51,6 +57,19 @@ class QArkInputWidgetGridTest(unittest.TestCase):
             super(self.__class__, self).__init__(parent)
             self.initUi()
             self.initConnection()
+            self.initSpecifics()
+
+        def initSpecifics(self):
+            self.o_exceptionHandler = QArkExceptionHandler(self, '.')
+            self.o_exceptionHandler.setEnableExceptHook(True)
+
+            self.o_messageSender = QArkMessageSender.QARK_MESSAGE_SENDER
+            self.o_warningSender = QArkWarningSender.QARK_WARNING_SENDER
+
+            self.o_widget.setMessageSender(self.o_messageSender)
+            self.o_widget.setWarningSender(self.o_warningSender)
+            self.o_widget.setExceptionHandler(self.o_exceptionHandler)
+            self.o_widget.setAsSystemOutput()
 
         def initUi(self):
             self.o_layout = QtWidgets.QVBoxLayout(self)
@@ -64,7 +83,12 @@ class QArkInputWidgetGridTest(unittest.TestCase):
             self.o_button0.clicked.connect(self.handleButton0Clicked)
 
         def handleButton0Clicked(self):
-            pass
+            try:
+                print('test message')
+                self.o_warningSender.send(QArkWarning('test warning'))
+                raise Exception('test error')
+            except Exception as e:
+                self.o_exceptionHandler.handleException(e)
 
     def test_widget(self):
         print(TEST_CLASS)
