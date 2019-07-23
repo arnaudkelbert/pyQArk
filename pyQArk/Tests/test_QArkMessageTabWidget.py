@@ -48,7 +48,7 @@ from pyQArk.Core.QArkWarning import QArkWarning
 
 
 TEST_CLASS = QArkMessageTabWidget
-class QArkInputWidgetGridTest(unittest.TestCase):
+class QArkMessageTabWidget(unittest.TestCase):
     """
     Test
     """
