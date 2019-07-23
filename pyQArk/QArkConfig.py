@@ -64,7 +64,16 @@ if QARK_QT_GENERATION == 5:
     QARK_QT_MODULE_PREFIX = '__qarkqt5__'
 if QARK_QT_GENERATION == 4:
     QARK_QT_MODULE_PREFIX = '__qarkqt4__'
-    
+
+# Setting matplotlib backends
+import matplotlib
+if QARK_QT_GENERATION == 5:
+    matplotlib.use('QT5Agg')
+elif QARK_QT_GENERATION == 4:
+    matplotlib.use('QT4Agg')
+# Tell matplotlib to use PyQt (instead of PySide if installed)
+matplotlib.rcParams['backend.qt{}'.format(QARK_QT_GENERATION)] = 'PyQt{}'.format(QARK_QT_GENERATION)
+
 # Qt4/5 compatibility
 # List of widgets that have been moved from QtGui to QtWidgets
 #T_QARK_QTWIDGETS={}

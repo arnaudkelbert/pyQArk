@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------
 # @author : Arnaud Kelbert
-# @date : 2019/03/19
+# @date : 2019/07/23
 # @version : 0.2
 #
 # Historic:
@@ -34,21 +34,33 @@ import unittest
 from pyQArk.QArkConfig import QARK_QT_GENERATION
 
 if QARK_QT_GENERATION == 4:
-    from PyQt4 import QtGui
+    from PyQt4 import QtCore, QtGui
     QtWidgets=QtGui
 elif QARK_QT_GENERATION == 5:
-    from PyQt5 import QtWidgets
+    from PyQt5 import QtCore, QtWidgets
 
-from pyQArk.Widgets.QArkMessageTabWidget.QArkMessageTabWidget import QArkMessageTabWidget
-from pyQArk.Core import QArkMessageSender
-from pyQArk.Core import QArkWarningSender
-from pyQArk.Core.QArkExceptionHandler import QArkExceptionHandler
-from pyQArk.Core.QArkWarning import QArkWarning
-#from pyQArk.Core.QArkExceptionHandableObject import QArkExceptionHandableObject
+from pyQArk.Widgets.QArkMplPlotWidget.QArkMplPlotWidget import QArkMplPlotWidget
+from pyQArk.Widgets.QArkMplPlotWidget.QArkMplPlotter import QArkMplPlotter
 
+import matplotlib
+print(matplotlib.rcParams['backend.qt4'])
+import numpy as np
 
-TEST_CLASS = QArkMessageTabWidget
-class QArkMessageTabWidgetTest(unittest.TestCase):
+class MyPlotter(QArkMplPlotter):
+    dataChanged = QtCore.pyqtSignal()
+    def plot(self, **kwargs):
+        try:
+            self.o_axe.clear()
+        except AttributeError:
+            self.o_axe = self.initAxe(111, QArkMplPlotter.VIEW_MODE__PLOT)
+        self.o_plot = self.o_axe.plot(self.o_data[0], self.o_data[1])
+
+    def setData(self,x,y):
+        self.o_data=[x,y]
+        self.dataChanged.emit()
+
+TEST_CLASS = QArkMplPlotWidget
+class QArkMplPlotWidgetTest(unittest.TestCase):
     """
     Test
     """
@@ -60,16 +72,12 @@ class QArkMessageTabWidgetTest(unittest.TestCase):
             self.initSpecifics()
 
         def initSpecifics(self):
-            self.o_exceptionHandler = QArkExceptionHandler(self, '.')
-            self.o_exceptionHandler.setEnableExceptHook(True)
-
-            self.o_messageSender = QArkMessageSender.QARK_MESSAGE_SENDER
-            self.o_warningSender = QArkWarningSender.QARK_WARNING_SENDER
-
-            self.o_widget.setMessageSender(self.o_messageSender)
-            self.o_widget.setWarningSender(self.o_warningSender)
-            self.o_widget.setExceptionHandler(self.o_exceptionHandler)
-            self.o_widget.setAsSystemOutput()
+            x = np.arange(25)
+            y = np.sin(x)*np.cos(3*x)
+            o_data = [x,y]
+            self.o_plotter = MyPlotter(parent=self,_o_data=o_data)
+            self.o_widget.setPlotter(self.o_plotter)
+            self.o_plotter.dataChanged.connect( self.o_widget.updatePlot)
 
         def initUi(self):
             self.o_layout = QtWidgets.QVBoxLayout(self)
@@ -83,12 +91,10 @@ class QArkMessageTabWidgetTest(unittest.TestCase):
             self.o_button0.clicked.connect(self.handleButton0Clicked)
 
         def handleButton0Clicked(self):
-            try:
-                print('test message')
-                self.o_warningSender.send(QArkWarning('test warning'))
-                raise Exception('test error')
-            except Exception as e:
-                self.o_exceptionHandler.handleException(e)
+            x = np.random.randn(100)*np.pi
+            y = np.sin(x)*np.cos(x/3)
+            self.o_plotter.setData(x,y)
+            #self.o_widget.updatePlot()
 
     def test_widget(self):
         print(TEST_CLASS)
