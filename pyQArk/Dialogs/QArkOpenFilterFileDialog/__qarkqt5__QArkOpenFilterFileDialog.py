@@ -42,9 +42,11 @@ except:
 import sys
 import os
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-from .Ui_QArkOpenFilterFileDialog import Ui_QArkOpenFilterFileDialog
+from pyQArk.Core.QArkUiLoader import loadUi
+from . import PKGPATH
+Ui_QArkOpenFilterFileDialog = loadUi(PKGPATH('./QArkOpenFilterFileDialog.ui'), pkgname=__package__)
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -53,23 +55,23 @@ except AttributeError:
         return s
 
 try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
+    _encoding = QtWidgets.QApplication.UnicodeUTF8
     def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+        return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+        return QtWidgets.QApplication.translate(context, text, disambig)
 
-class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
+class QArkOpenFilterFileDialog( QtWidgets.QDialog, Ui_QArkOpenFilterFileDialog ):
 
-    directoryChangedSignal = QtCore.pyqtSignal( object )
-    acceptedSelectionSignal = QtCore.pyqtSignal( object )
+    directoryChangedSignal = QtCore.pyqtSignal(str)
+    acceptedSelectionSignal = QtCore.pyqtSignal(str)
 
     def __init__( self
                  , parent = None
                  , _s_directory = None
                  , _s_filter = None
-                 , _u_selectionMode = QtGui.QAbstractItemView.ExtendedSelection
+                 , _u_selectionMode = QtWidgets.QAbstractItemView.ExtendedSelection
                  ):
         super( QArkOpenFilterFileDialog, self ).__init__( parent = parent )
 
@@ -100,7 +102,7 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
         self.ui.urlLineEdit.setText( self.s_currentDirectory )
         self.ui.urlLineEdit.setReadOnly( True )
         self.ui.filterLineEdit.setText( self.s_currentFilter )
-        self.ui.buttonBox.button(QtGui.QDialogButtonBox.Open).setEnabled(False)
+        self.ui.buttonBox.button(QtWidgets.QDialogButtonBox.Open).setEnabled(False)
 
     def initConnection( self ):
         """
@@ -123,7 +125,7 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
             or evt.key() == QtCore.Qt.Key_Return :
             evt.ignore()
         else:
-            super( QtGui.QDialog, self ).keyPressEvent(evt)
+            super( QtWidgets.QDialog, self ).keyPressEvent(evt)
 
     def updateFileListWidget( self ):
         self.ui.fileListWidget.clear()
@@ -132,17 +134,15 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
 
         # On filtre avec exactMatch (la fonction filter de QStringList n'applique pas un exact match)
         #t_filteredFileList = self.t_allFilesInCurrentDirectory.filter( o_rx )
-        t_filteredFileList = QtCore.QStringList( [ f for f in self.t_allFilesInCurrentDirectory
-                                                     if o_rx.exactMatch(f)
-                                                  ]
-                                                )
+        t_filteredFileList = [ f for f in self.t_allFilesInCurrentDirectory
+                               if o_rx.exactMatch(f)
+                               ]
 
-        if not t_filteredFileList.isEmpty():
+        if len(t_filteredFileList) > 0:
             self.ui.fileListWidget.setEnabled(True)
             self.ui.fileListWidget.addItems( t_filteredFileList )
-
             o_qdir = QtCore.QDir( self.s_currentDirectory )
-            o_qFileIconProvider = QtGui.QFileIconProvider()
+            o_qFileIconProvider = QtWidgets.QFileIconProvider()
 
             for o_item in self.iterAllFiles():
                 o_item.setIcon( o_qFileIconProvider.icon( QtCore.QFileInfo(o_qdir, o_item.text()) ) )
@@ -181,7 +181,7 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
     def accept( self ):
         #self.setVisible(False)
         self.t_selectedFiles = self.getSelectedFileNameList()
-        QtGui.QDialog.accept( self )
+        QtWidgets.QDialog.accept( self )
         #print 'after accept'
         #self.acceptedSelectionSignal.emit( self.getSelectedFileNameList() )
         #print 'after emit'
@@ -193,7 +193,7 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
 #---------------------------------------------------------------
     @QtCore.pyqtSlot()
     def openDirectoryDialogSlot( self ):
-        s_directoryName = QtGui.QFileDialog.getExistingDirectory( self
+        s_directoryName = QtWidgets.QFileDialog.getExistingDirectory( self
                                                 , caption='Selection du repertoire'
                                                 , directory = self.s_currentDirectory
                                                 )
@@ -201,7 +201,7 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
         if len(s_directoryName) > 0 and s_directoryName != self.s_currentDirectory:
             self.directoryChangedSignal.emit( s_directoryName )
 
-    @QtCore.pyqtSlot( object )
+    @QtCore.pyqtSlot(str)
     def handleDirectoryChangedSlot( self, _s_directory ):
         self.ui.directoryListWidget.clear()
         self.s_currentDirectory = os.path.normpath( os.path.abspath( str(_s_directory) ) )
@@ -213,10 +213,10 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
         o_qdir.setFilter( QtCore.QDir.Dirs )
         t_dirList = o_qdir.entryList()
 
-        if not t_dirList.isEmpty():
+        if len(t_dirList) > 0:
             self.ui.directoryListWidget.setEnabled(True)
             self.ui.directoryListWidget.addItems( t_dirList )
-            o_qFileIconProvider = QtGui.QFileIconProvider()
+            o_qFileIconProvider = QtWidgets.QFileIconProvider()
 
             for o_item in self.iterAllDirectories():
                 o_item.setIcon( o_qFileIconProvider.icon( QtCore.QFileInfo(o_qdir, o_item.text()) ) )
@@ -239,9 +239,9 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
     @QtCore.pyqtSlot()
     def handleFileListWidgetSelectionChangedSlot( self ):
         if( len( self.getSelectedFileList() ) > 0 ):
-            self.ui.buttonBox.button(QtGui.QDialogButtonBox.Open).setEnabled(True)
+            self.ui.buttonBox.button(QtWidgets.QDialogButtonBox.Open).setEnabled(True)
         else:
-            self.ui.buttonBox.button(QtGui.QDialogButtonBox.Open).setEnabled(False)
+            self.ui.buttonBox.button(QtWidgets.QDialogButtonBox.Open).setEnabled(False)
 
     @QtCore.pyqtSlot()
     def handleFilterChangedSlot( self ):

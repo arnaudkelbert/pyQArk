@@ -31,6 +31,14 @@ except:
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
 import unittest
+sys._excepthook = sys.excepthook
+def exception_hook(exctype, value, traceback):
+    print(exctype, value, traceback)
+    sys._excepthook(exctype, value, traceback)
+    sys.exit(1)
+sys.excepthook = exception_hook
+
+from pyQArk import QArkConfig
 from pyQArk.QArkConfig import QARK_QT_GENERATION
 
 if QARK_QT_GENERATION == 4:
@@ -39,10 +47,10 @@ if QARK_QT_GENERATION == 4:
 elif QARK_QT_GENERATION == 5:
     from PyQt5 import QtWidgets, QtCore
 
-from pyQArk.Dialogs.QArkCriticalMessageBox.QArkCriticalMessageBox import QArkCriticalMessageBox
+from pyQArk.Dialogs.QArkOpenFilterFileDialog.QArkOpenFilterFileDialog import QArkOpenFilterFileDialog
 
-TEST_CLASS = QArkCriticalMessageBox
-class QArkCriticalMessageBoxTest(unittest.TestCase):
+TEST_CLASS = QArkOpenFilterFileDialog
+class QArkOpenFilterFileDialogTest(unittest.TestCase):
     """
     Test
     """
@@ -61,13 +69,18 @@ class QArkCriticalMessageBoxTest(unittest.TestCase):
             self.o_button0.clicked.connect(self.handleButton0Clicked)
 
         def handleButton0Clicked(self):
-            o_dialog = TEST_CLASS('message erreur', 'details', parent=self)
+            o_dialog = TEST_CLASS(parent=self)
+
             if QARK_QT_GENERATION == 5:
                 o_dialog.setModal(True)
                 o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
                 o_dialog.show()
+
             elif QARK_QT_GENERATION == 4:
-                o_dialog.exec_()
+                o_dialog.setModal(True)
+                o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+                o_dialog.show()
+                #o_dialog.exec_()
 
     def test_widget(self):
         print(TEST_CLASS)

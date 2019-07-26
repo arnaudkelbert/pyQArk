@@ -61,7 +61,7 @@ class MyPlotter(QArkMplPlotter):
         self.dataChanged.emit()
 
 TEST_CLASS = QArkMplPlotDialog
-class async (unittest.TestCase):
+class QArkMplPlotDialogTest(unittest.TestCase):
     """
     Test
     """
