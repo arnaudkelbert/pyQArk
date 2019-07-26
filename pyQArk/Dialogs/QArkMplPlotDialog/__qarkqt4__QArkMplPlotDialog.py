@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------
 #
 #
-# QArkCriticalMessageBox
+# QArkMplPlotDialog
 #
 #
 # @author : Arnaud Kelbert
@@ -33,26 +33,21 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
+from pyQArk.Widgets.QArkMplPlotWidget.QArkMplPlotWidget import QArkMplPlotWidget
 
-from ..QArkDialog import QArkDialog
-
-class QArkCriticalMessageBox(QtGui.QMessageBox):
-
-    def __init__(self, message, detailedMessage=None, *args, **kwargs):
-        QtGui.QMessageBox.__init__(self, *args, **kwargs)
-
-        self.setText( message )
-        self.setStandardButtons( QtGui.QMessageBox.Ok )
-        self.setIcon( QtGui.QMessageBox.Critical )
-
-        if not detailedMessage is None:
-            self.setDetailedText( detailedMessage )
-
-
-    def exec_(self, _b_centered=True, **kwargs):
-        # Reimplemented to get it centered
-        if _b_centered:
-            QArkDialog.centerDialog( self, **kwargs )
-
-        QtGui.QMessageBox.exec_(self, **kwargs)
+class QArkMplPlotDialog(QtGui.QDialog):
+    
+    def __init__(self, _s_id, *args, **kwargs):
+        QtGui.QDialog.__init__(self, *args, **kwargs)
+        self.s_id = _s_id
+        self.initUi()
+    
+    def initUi(self):    
+        o_layout = QtGui.QVBoxLayout(self)
+        self.o_plotWidget = QArkMplPlotWidget(self)
+        o_layout.addWidget(self.o_plotWidget)    
+        self.setLayout(o_layout)
+    
+    def getPlotWidget(self):
+        return self.o_plotWidget
