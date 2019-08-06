@@ -33,27 +33,22 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 
-from ..QArkDialog import QArkDialog
-
+from pyQArk.Dialogs.QArkDialog import QArkDialog
 
 class QArkWarningMessageBox(QtGui.QMessageBox):
 
     def __init__(self, message, detailedMessage=None, *args, **kwargs):
         QtGui.QMessageBox.__init__(self, *args, **kwargs)
-
         self.setText( message )
         self.setStandardButtons( QtGui.QMessageBox.Ok )
         self.setIcon( QtGui.QMessageBox.Warning )
-
         if not detailedMessage is None:
             self.setDetailedText( detailedMessage )
-
 
     def exec_(self, _b_centered=True, **kwargs):
         # Reimplemented to get it centered
         if _b_centered:
             QArkDialog.centerDialog( self, **kwargs )
-
         QtGui.QMessageBox.exec_(self, **kwargs)
