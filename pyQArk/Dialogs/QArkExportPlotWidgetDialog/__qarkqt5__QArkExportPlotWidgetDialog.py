@@ -35,10 +35,13 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 import os
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-from .Ui_QArkExportPlotWidgetDialog import Ui_QArkExportPlotWidgetDialog
-from ...Widgets.QArkPlotWidget.QArkPlotWidget import QArkPlotWidget
+from pyQArk.Core.QArkUiLoader import loadUi
+from . import PKGPATH
+Ui_QArkExportPlotWidgetDialog = loadUi(PKGPATH('./QArkExportPlotWidgetDialog.ui'), pkgname=__package__)
+
+from pyQArk.Widgets.QArkPlotWidget.QArkPlotWidget import QArkPlotWidget
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -47,14 +50,14 @@ except AttributeError:
         return s
 
 try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
+    _encoding = QtWidgets.QApplication.UnicodeUTF8
     def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+        return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+        return QtWidgets.QApplication.translate(context, text, disambig)
 
-class QArkExportPlotWidgetDialog( QtGui.QDialog, Ui_QArkExportPlotWidgetDialog ):
+class QArkExportPlotWidgetDialog( QtWidgets.QDialog, Ui_QArkExportPlotWidgetDialog ):
 
     def __init__( self
                  , parent = None
@@ -90,9 +93,9 @@ class QArkExportPlotWidgetDialog( QtGui.QDialog, Ui_QArkExportPlotWidgetDialog )
     def accept( self ):
         s_filename = QtCore.QFileInfo( self.ui.fileLineEdit.text() ).completeBaseName()
         if len(s_filename) == 0:
-            QtGui.QMessageBox.critical( self, ''
+            QtWidgets.QMessageBox.critical( self, ''
                                     , 'Fichier incorrect'
-                                    , QtGui.QMessageBox.Ok
+                                    , QtWidgets.QMessageBox.Ok
                                     )
         self.s_filename = '.'.join( [ os.path.join( str(self.ui.directoryLineEdit.text())
                                                    , str(s_filename)
@@ -102,7 +105,7 @@ class QArkExportPlotWidgetDialog( QtGui.QDialog, Ui_QArkExportPlotWidgetDialog )
                                     )
 
         self.u_width = self.ui.widthSpinBox.value()
-        QtGui.QDialog.accept( self )
+        QtWidgets.QDialog.accept( self )
 
 #---------------------------------------------------------------
 #
@@ -111,11 +114,9 @@ class QArkExportPlotWidgetDialog( QtGui.QDialog, Ui_QArkExportPlotWidgetDialog )
 #---------------------------------------------------------------
     @QtCore.pyqtSlot()
     def openDirectoryDialogSlot( self ):
-        s_dirname = QtGui.QFileDialog.getExistingDirectory(self
+        s_dirname = QtWidgets.QFileDialog.getExistingDirectory(self
                                                             , 'Repertoire de sortie'
                                                             , self.ui.directoryLineEdit.text()
                                                             )
         self.ui.directoryLineEdit.setText(s_dirname)
-        #s_filename = QtCore.QFileInfo( s_filename ).completeBaseName()\
-                   #+
-        #self.ui.fileLineEdit.setText(s_filename)
+
