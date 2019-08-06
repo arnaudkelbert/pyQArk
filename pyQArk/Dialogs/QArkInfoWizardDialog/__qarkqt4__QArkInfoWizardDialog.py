@@ -36,10 +36,10 @@ except:
 
 from PyQt4 import QtGui
 
-from ...Core import QArkDomXml
-from .QArkInfoWizardWelcomePage import QArkInfoWizardWelcomePage
-from .QArkInfoWizardPage import QArkInfoWizardPage
-from ..QArkDialog import QArkDialog
+from pyQArk.Core import QArkDomXml
+from pyQArk.Dialogs.QArkInfoWizardDialog.QArkInfoWizardWelcomePage import QArkInfoWizardWelcomePage
+from pyQArk.Dialogs.QArkInfoWizardDialog.QArkInfoWizardPage import QArkInfoWizardPage
+from pyQArk.QArkDialog import QArkDialog
 
 class QArkInfoWizardDialog( QtGui.QWizard ):
     """
@@ -75,5 +75,4 @@ class QArkInfoWizardDialog( QtGui.QWizard ):
         # Reimplemented to get it centered
         if _b_centered:
             QArkDialog.centerDialog( self, **kwargs )
-
         QtGui.QWizard.exec_(self)

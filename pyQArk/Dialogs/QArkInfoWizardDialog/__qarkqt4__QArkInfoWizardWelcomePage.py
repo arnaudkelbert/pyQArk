@@ -36,14 +36,12 @@ except:
 
 from PyQt4 import QtCore, QtGui
 
-from ...Core import QArkDomXml
-
+from pyQArk.Core import QArkDomXml
 
 class QArkInfoWizardWelcomePage( QtGui.QWizardPage ):
     """
     A wizard page to show a welcome message
     """
-
     def __init__( self
                  , parent = None
                  , _s_title = ''
@@ -51,23 +49,17 @@ class QArkInfoWizardWelcomePage( QtGui.QWizardPage ):
                  , _s_text = ''
                  , _s_image=None
                  ):
-
         """Constructor"""
         super( QArkInfoWizardWelcomePage, self ).__init__(parent)
-
         self.s_title = _s_title
         self.s_subtitle = _s_subtitle
         self.s_text = _s_text
         self.s_image = _s_image
-
         if self.s_title is None:
             self.s_title = ' '
-
         if self.s_subtitle is None:
             self.s_subtitle = ' '
-
         self.initUi()
-
 
     def initUi(self):
         self.setTitle( self.s_title )
@@ -86,7 +78,6 @@ class QArkInfoWizardWelcomePage( QtGui.QWizardPage ):
             o_textLabel.setAlignment( QtCore.Qt.AlignJustify )
             o_layout.addWidget( o_textLabel )
             self.setLayout(o_layout)
-
 
     @classmethod
     def createFromNode( cls, parent, _o_node ):

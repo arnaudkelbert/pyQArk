@@ -34,16 +34,14 @@ except:
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-from ...Core import QArkDomXml
+from pyQArk.Core import QArkDomXml
 
-
-class QArkInfoWizardPage( QtGui.QWizardPage ):
+class QArkInfoWizardPage( QtWidgets.QWizardPage ):
     """
     A wizard page to show an information message
     """
-
     def __init__( self
                  , parent = None
                  , _s_title = ''
@@ -51,35 +49,30 @@ class QArkInfoWizardPage( QtGui.QWizardPage ):
                  , _s_text = ''
                  , _s_image=None
                  ):
-
         """Constructor"""
         super( QArkInfoWizardPage, self ).__init__(parent)
-
         self.s_title = _s_title
         self.s_subtitle = _s_subtitle
         self.s_text = _s_text
         self.s_image = _s_image
-
         self.initUi()
-
 
     def initUi(self):
         self.setTitle( self.s_title )
-        self.setSubTitle( QtCore.QString.fromUtf8(self.s_subtitle) )
+        self.setSubTitle( self.s_subtitle )
 
         if not self.s_image is None:
             o_image = QtGui.QImage( str(self.s_image) )
             o_pixmap = QtGui.QPixmap.fromImage(o_image)
-            self.setPixmap( QtGui.QWizard.WatermarkPixmap, o_pixmap )
+            self.setPixmap( QtWidgets.QWizard.WatermarkPixmap, o_pixmap )
 
         if not self.s_text is None:
-            o_layout = QtGui.QVBoxLayout(self)
-            o_textLabel = QtGui.QLabel( self.s_text )
+            o_layout = QtWidgets.QVBoxLayout(self)
+            o_textLabel = QtWidgets.QLabel( self.s_text )
             o_textLabel.setWordWrap(True)
             o_textLabel.setAlignment( QtCore.Qt.AlignJustify )
             o_layout.addWidget( o_textLabel )
             self.setLayout(o_layout)
-
 
     @classmethod
     def createFromNode( cls, parent, _o_node ):
