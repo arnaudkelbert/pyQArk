@@ -42,8 +42,8 @@ elif QARK_QT_GENERATION == 5:
 from pyQArk.Widgets.QArkMplPlotWidget.QArkMplPlotWidget import QArkMplPlotWidget
 from pyQArk.Widgets.QArkMplPlotWidget.QArkMplPlotter import QArkMplPlotter
 
-import matplotlib
-print(matplotlib.rcParams['backend.qt4'])
+#import matplotlib
+#print(matplotlib.rcParams['backend.qt4'])
 import numpy as np
 
 class MyPlotter(QArkMplPlotter):
