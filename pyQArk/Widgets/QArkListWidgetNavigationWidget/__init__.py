@@ -23,7 +23,7 @@ import pkgutil
 import importlib
 from pyQArk.QArkConfig import QARK_QT_MODULE_PREFIX
 LOCAL_PATH = os.path.abspath(os.path.join( inspect.getfile(inspect.currentframe()), '..' ))
-def PKGPATH(_s_file): return os.path.normpath(os.path.join(LOCAL_PATH, _s_file)
+def PKGPATH(_s_file): return os.path.normpath(os.path.join(LOCAL_PATH, _s_file))
 
 # Local package specifics
 T_DO_FIRST = [
