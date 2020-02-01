@@ -78,7 +78,18 @@ elif QARK_QT_GENERATION == 4:
 # Tell matplotlib to use PyQt (instead of PySide if installed)
 # This line is deprecated :
 # => import Qt binding or set QT_API environment variable
-matplotlib.rcParams['backend.qt{}'.format(QARK_QT_GENERATION)] = 'PyQt{}'.format(QARK_QT_GENERATION)
+try:
+    QARK_QT_API = os.environ['QT_API']
+    b_qtApiSet = True
+except:
+    b_qtApiSet = False
+if not QARK_QT_API == 'PyQt{}'.format(QARK_QT_GENERATION):
+    try:
+        matplotlib.rcParams['backend.qt{}'.format(QARK_QT_GENERATION)] = 'PyQt{}'.format(QARK_QT_GENERATION)
+    except KeyError as e:
+        print('Cannot set matplotlib rcParams for key {}'.format('backend.qt{}'.format(QARK_QT_GENERATION)))
+    #raise
+    #print(matlotlib.rc)
 
 # Qt4/5 compatibility
 # List of widgets that have been moved from QtGui to QtWidgets
