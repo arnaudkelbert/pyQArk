@@ -82,6 +82,7 @@ try:
     QARK_QT_API = os.environ['QT_API']
     b_qtApiSet = True
 except:
+    QARK_QT_API = None
     b_qtApiSet = False
 if not QARK_QT_API == 'PyQt{}'.format(QARK_QT_GENERATION):
     try:
