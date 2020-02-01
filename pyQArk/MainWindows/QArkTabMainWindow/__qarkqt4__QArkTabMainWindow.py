@@ -36,13 +36,12 @@ except:
 
 from PyQt4 import QtCore, QtGui
 
-
-from ...Core import QArkMessageSender
-from ...Core import QArkWarningSender
-from ...Core.QArkExceptionHandler import QArkExceptionHandler
-from ...Core.QArkExceptionHandableObject import QArkExceptionHandableObject
-from ...Widgets.QArkMessageTabWidget.QArkMessageTabWidget import QArkMessageTabWidget
-from ...Widgets.QArkStatusWidget.QArkStatusWidget import QArkStatusWidget
+from pyQArk.Core import QArkMessageSender
+from pyQArk.Core import QArkWarningSender
+from pyQArk.Core.QArkExceptionHandler import QArkExceptionHandler
+from pyQArk.Core.QArkExceptionHandableObject import QArkExceptionHandableObject
+from pyQArk.Widgets.QArkMessageTabWidget.QArkMessageTabWidget import QArkMessageTabWidget
+from pyQArk.Widgets.QArkStatusWidget.QArkStatusWidget import QArkStatusWidget
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -60,7 +59,6 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
     def __init__( self
                  ,_s_logDir='.'
                  ):
-
         """Constructeur"""
         super( QArkTabMainWindow, self ).__init__()
         QArkExceptionHandableObject.__init__( self, QArkExceptionHandler( parent = self, _s_logDir = _s_logDir ) )
@@ -103,7 +101,6 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(1)
         self.ui_mainWidget.setSizePolicy( sizePolicy )
-
         self.ui_mainWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.ui_mainWidget.setAutoFillBackground(False)
         self.ui_mainWidget.setTabPosition(QtGui.QTabWidget.North)
@@ -114,11 +111,9 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
 
         # init the message tab widget
         self.ui_QArkMessageTabWidget = QArkMessageTabWidget( self )
-
         self.ui_QArkMessageTabWidget.setMessageSender( self.o_messageSender )
         self.ui_QArkMessageTabWidget.setWarningSender( self.o_warningSender )
         self.ui_QArkMessageTabWidget.setExceptionHandler( self.getExceptionHandler() )
-
         self.ui_QArkMessageTabWidget.setAsSystemOutput()
 
     def initUiSplitter( self ):
@@ -130,9 +125,7 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
         self.ui_qSplitter.setOrientation( QtCore.Qt.Vertical )
         self.ui_qSplitter.addWidget( self.ui_mainWidget )
         self.ui_qSplitter.addWidget( self.ui_QArkMessageTabWidget )
-
         self.setCentralWidget( self.ui_qSplitter )
-
         policy = self.ui_QArkMessageTabWidget.sizePolicy()
         policy.setVerticalStretch(0)
         policy.setHorizontalStretch(0)
@@ -150,14 +143,11 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
         """
         o_tabWidget = QtGui.QWidget()
         o_tabWidget.setObjectName(_fromUtf8("{}".format(_s_label.replace(' ','_'))) )
-
         o_vlayout = QtGui.QVBoxLayout(o_tabWidget)
         o_vlayout.setSpacing(0)
         o_vlayout.setMargin(0)
         o_vlayout.setObjectName(_fromUtf8("vlayout_{}".format(_s_label.replace(' ','_'))))
-
         o_vlayout.addWidget( _o_widget )
-
         self.ui_mainWidget.addTab(o_tabWidget, _fromUtf8(""))
         self.ui_mainWidget.setTabText( self.ui_mainWidget.indexOf(o_tabWidget), _s_label )
 
@@ -239,9 +229,9 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
         @param _s_id : id of the menu
         @type _s_id : C{str}
         """
-        if self.t_menus.has_key( _s_id ):
-            return self.t_menus[ _s_id ]
-        else:
+        try:
+            return self.t_menus[_s_id]
+        except KeyError:
             return None
 
     def getRegisteredAction( self, _s_id ):
@@ -250,9 +240,9 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
         @param _s_id : id of the action
         @type _s_id : C{str}
         """
-        if self.t_actions.has_key( _s_id ):
-            return self.t_actions[ _s_id ]
-        else:
+        try:
+            return self.t_actions[_s_id]
+        except KeyError:
             return None
 
     def initMenu( self ):
@@ -307,23 +297,19 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
             s_windowTitle = kwargs.pop('_s_windowTitle')
         except KeyError:
             s_windowTitle = QtCore.QString()
-
         try:
             b_showTitleButtons = kwargs.pop('_b_showTitleButtons')
         except KeyError:
             b_showTitleButtons = True
-
         try:
             b_onlyMinMaxButtons = kwargs.pop('_b_onlyMinMaxButtons')
         except KeyError:
             b_onlyMinMaxButtons = False
-
         # Force window to stay on top
         try:
             b_stayOnTop = kwargs.pop('_b_stayOnTop')
         except KeyError:
             b_stayOnTop = False
-
         if issubclass( _cls_dialogClass, QtGui.QDialog ):
             o_dialog = _cls_dialogClass( parent = self, **kwargs )
         else:
@@ -335,10 +321,8 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
             o_layout.setMargin(0)
             o_layout.addWidget( o_widget )
             o_dialog.setLayout( o_layout )
-
             if not o_size is None:
                 o_widget.resize(o_size)
-
         o_dialog.setWindowTitle( s_windowTitle )
 
         #o_window = QtGui.QMdiSubWindow( self.ui_mdiArea )
@@ -377,5 +361,4 @@ class QArkTabMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
                                                          #, self.ui_mdiArea.geometry()
                                                          #)
                               #)
-
         return o_dialog
