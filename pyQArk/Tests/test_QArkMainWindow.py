@@ -42,7 +42,6 @@ elif QARK_QT_GENERATION == 5:
 
 from pyQArk.MainWindows.QArkMainWindow.QArkMainWindow import QArkMainWindow
 
-
 class MainUI(QArkMainWindow):
 
     def __init__(self, _s_logDir):
