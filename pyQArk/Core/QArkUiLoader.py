@@ -53,6 +53,10 @@ def loadUi(_s_uiFile, pkgname, **kwargs):
     Returns:
         The python class corresponding to the ui.
     """
+    try:
+        s_kwClassname = kwargs.pop('classname')
+    except KeyError:
+        s_kwClassname = None
     o_uimdate = datetime.datetime.fromtimestamp(os.path.getmtime(_s_uiFile))
     b_compile = False
     s_pyfile = QArkUiCompiler.autoname(_s_uiFile)
@@ -82,10 +86,10 @@ def loadUi(_s_uiFile, pkgname, **kwargs):
     if len(t_members) == 1:
         return t_members[0][1]
     else:
+        if s_kwClassname is None:
+            raise Exception('You should give the name of the compiled class to the loadUi method (classname parameter)')
         try:
-            return [m[1] for m in t_members if m[0] == 'Ui_{}'.format(kwargs['classname'])][0]
-        except KeyError:
-            raise Exception('You should give the name of the compiled class to the loadUi method (through ')
+            return [m[1] for m in t_members if m[0] == 'Ui_{}'.format(s_kwClassname)][0]
         except Exception as e:
-            raise Exception('Cannot find class Ui_{} : \n{}'.format(kwargs['classname'], str(e)))
+            raise Exception('Cannot find class Ui_{} : \n{}'.format(s_kwClassname, str(e)))
 
