@@ -78,6 +78,14 @@ def loadUi(_s_uiFile, pkgname, **kwargs):
 
     # Find the class
     t_members = inspect.getmembers(o_mod, inspect.isclass)
-    assert(len(t_members)==1)
-    return t_members[0][1]
+    assert(len(t_members)>0)
+    if len(t_members) == 1:
+        return t_members[0][1]
+    else:
+        try:
+            return [m[1] for m in t_members if m[0] == 'Ui_{}'.format(kwargs['classname'])][0]
+        except KeyError:
+            raise Exception('You should give the name of the compiled class to the loadUi method (through ')
+        except Exception as e:
+            raise Exception('Cannot find class Ui_{} : \n{}'.format(kwargs['classname'], str(e)))
 
