@@ -84,7 +84,15 @@ class QArkCheckableComboBox(QtWidgets.QWidget):
     def initConnection(self):
         pass
 
+    def getSelection(self):
+        u_nrows = self.o_itemModel.rowCount()
+        if self.b_firstIsAll:
+            return [self.o_itemModel.item(i + 2).data().toString() for i in range(u_nrows - 2)]
+        else:
+            return [self.o_itemModel.item(i + 1).data().toString() for i in range(u_nrows - 1)]
+
     def insertCheckableItems(self, _s_title, _t_list, _b_fistItemIsAll=False):
+        self.b_firstIsAll = _b_fistItemIsAll
         self.o_itemModel = QtGui.QStandardItemModel(len(_t_list), 1)
         u_cIdx = 0
         # First item - title
