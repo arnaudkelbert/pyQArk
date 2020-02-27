@@ -87,9 +87,11 @@ class QArkCheckableComboBox(QtWidgets.QWidget):
     def getSelection(self):
         u_nrows = self.o_itemModel.rowCount()
         if self.b_firstIsAll:
-            return [self.o_itemModel.item(i + 2).data().toString() for i in range(u_nrows - 2)]
+            return [self.o_itemModel.item(i + 2).text() for i in range(u_nrows - 2)
+                    if self.o_itemModel.item(i + 2).checkState() == QtCore.Qt.Checked]
         else:
-            return [self.o_itemModel.item(i + 1).data().toString() for i in range(u_nrows - 1)]
+            return [self.o_itemModel.item(i + 1).text() for i in range(u_nrows - 1)
+                    if self.o_itemModel.item(i + 1).checkState() == QtCore.Qt.Checked]
 
     def insertCheckableItems(self, _s_title, _t_list, _b_fistItemIsAll=False):
         self.b_firstIsAll = _b_fistItemIsAll
