@@ -35,7 +35,6 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt4 import QtCore
 
-from .QArkWorker import QArkWorker
 from .QArkWorkerThread import QArkWorkerThread
 
 class QArkWorkerThreadController(QtCore.QObject):
@@ -50,6 +49,7 @@ class QArkWorkerThreadController(QtCore.QObject):
                  , _cls_worker
                  , _t_workerParameters
                  , _o_exceptionHandler
+                 , _b_selfIO = True
                  ):
         """
         """
@@ -58,6 +58,7 @@ class QArkWorkerThreadController(QtCore.QObject):
         self.cls_worker = _cls_worker
         self.t_workerParameters = _t_workerParameters
         self.o_exceptionHandler = _o_exceptionHandler
+        self.b_selfIO = _b_selfIO
         if self.o_exceptionHandler is None:
             print('Warning ! QArkWorkerThreadController:self.o_exceptionHandler not set - strange behaviour could occure')
 
@@ -76,6 +77,7 @@ class QArkWorkerThreadController(QtCore.QObject):
                                           , self.cls_worker
                                           , self.t_workerParameters
                                           , self.o_exceptionHandler
+                                          , _b_selfIO = self.b_selfIO
                                           )
         self.o_workerThread.finished.connect( self.handleWorkerThreadFinished )
         self.o_workerThread.terminated.connect( self.handleWorkerThreadTerminated )

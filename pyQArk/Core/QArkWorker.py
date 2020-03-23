@@ -39,12 +39,9 @@ class QArkWorker():
     @classmethod
     def run( cls, _t_param, _o_interruptor ):
         print('QArkWorker.run():start')
-
         # define here what to do
         print( _t_param )
-
         _o_interruptor.checkInterrupt()
-
         print( 'QArkWorker.run():end' )
 
 

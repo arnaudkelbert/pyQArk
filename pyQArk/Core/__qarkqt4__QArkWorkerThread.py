@@ -33,11 +33,14 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-import sys
+from pyQArk.QArkConfig import QARK_QT_GENERATION
 
-from PyQt4 import QtCore
+if QARK_QT_GENERATION == 4:
+    from PyQt4 import QtCore
+elif QARK_QT_GENERATION == 5:
+    from PyQt5 import QtCore
 
-from .QArkWorkerInterruptor import QArkWorkerInterruptor, QArkWorkerInterruptException
+from pyQArk.Core.QArkWorkerInterruptor import QArkWorkerInterruptor
 
 class QArkWorkerThread(QtCore.QThread):
     
@@ -50,6 +53,7 @@ class QArkWorkerThread(QtCore.QThread):
                  , _cls_worker
                  , _t_workerParam
                  , _o_exceptionHandler
+                 , _b_selfIO = True
                  ):
         QtCore.QThread.__init__(self, parent)
         self.t_workerParam = _t_workerParam
@@ -61,6 +65,7 @@ class QArkWorkerThread(QtCore.QThread):
         self.x_return = None
         self.b_interruptThread = False
         self.o_mutexInterruptThread = QtCore.QMutex()
+        self.b_selfIO = _b_selfIO
 
     def saveIO( self ):
         self.o_saveStdOut = sys.stdout
@@ -71,19 +76,30 @@ class QArkWorkerThread(QtCore.QThread):
         sys.stderr = self.o_saveStdErr
                 
     def write(self, _s_str):
-        self.stdoutWriteRequest.emit( _s_str )
+        if self.b_selfIO:
+            self.stdoutWriteRequest.emit( _s_str )
+        else:
+            QtCore.QThread.write(self, _s_str)
 
     def flush(self):
-        pass
+        if self.b_selfIO:
+            pass
+        else:
+            try:
+                QtCore.QThread.flush()
+            except:
+                pass
 
     def quit(self):
-        self.restoreIO()
+        if self.b_selfIO:
+            self.restoreIO()
         QtCore.QThread.quit(self)
 
     def start(self):
-        self.saveIO()
-        sys.stdout = self
-        sys.stderr = self    
+        if self.b_selfIO:
+            self.saveIO()
+            sys.stdout = self
+            sys.stderr = self
         QtCore.QThread.start(self)
         
     def run(self):

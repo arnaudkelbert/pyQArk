@@ -4,6 +4,7 @@
 #
 # QArkWorkerController
 #
+# => DEPREDICATED
 #
 # @author : Arnaud Kelbert
 # @date : 2019/03/05
@@ -35,8 +36,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 
 from PyQt4 import QtCore
-
-from .QArkWorker import QArkWorker
+#from pyQArk.Core.QArkWorker import QArkWorker
 
 class QArkThread(QtCore.QThread):
     def __init__(self, parent=None):
