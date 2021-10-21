@@ -64,6 +64,7 @@ class MyWorker(QArkWorker):
         print_lock('[Id {}] Waiting {} seconds'.format(_t_param['wid'], _t_param['wait']), _t_param['print_lock'])
         i = 0
         while i < _t_param['wait']:
+            #print_lock(_o_interruptor, _o_interruptor.checkInterrupt())
             _o_interruptor.checkInterrupt()
             time.sleep(0.5)
 
@@ -119,6 +120,7 @@ class MainProgram(QtCore.QObject, QArkExceptionHandableObject):
     def simuUserInterrupt(self):
         print_lock('send user interrupt to controller 2', self.o_printLock)
         self.t_controllers[2].interrupt()
+        print_lock('sent', self.o_printLock)
 
     @QtCore.pyqtSlot(object)
     def handleWarningSentSlot(self, _o_warning):

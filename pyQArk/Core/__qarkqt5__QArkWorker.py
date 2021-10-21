@@ -33,15 +33,13 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
+from pyQArk import QArkConfig
 
-class QArkWorker():
+if QArkConfig.QARK_QT_THREADING_MECHANISM == QArkConfig.QARK_QT_THREADING_QTHREAD_SUBCLASSING:
+    from pyQArk.Core.QArkWorker_QThreadSubclassing import QArkWorker_QThreadSubclassing
+    QArkWorker = QArkWorker_QThreadSubclassing
 
-    @classmethod
-    def run( cls, _t_param, _o_interruptor ):
-        print('QArkWorker.run():start')
-        # define here what to do
-        print( _t_param )
-        _o_interruptor.checkInterrupt()
-        print( 'QArkWorker.run():end' )
-
+elif QArkConfig.QARK_QT_THREADING_MECHANISM == QArkConfig.QARK_QT_THREADING_EVENT_DRIVEN:
+    from pyQArk.Core.QArkWorker_EventDriven import QArkWorker_EventDriven
+    QArkWorker = QArkWorker_EventDriven
 

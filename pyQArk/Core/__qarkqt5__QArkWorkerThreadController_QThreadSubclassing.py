@@ -5,7 +5,7 @@
 # QArkWorkerThreadController
 #
 # This implementation uses QThread subclassing.
-# => Should reimplement it to use an Event Driven mechanism
+# => Should reimplement it with so that the usage is transparent
 #
 # @author : Arnaud Kelbert
 # @date : 2019/03/05
@@ -35,16 +35,16 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore
+from PyQt5 import QtCore
 
 from pyQArk.Core.QArkWorkerThread import QArkWorkerThread
 
-class QArkWorkerThreadController(QtCore.QObject):
+class QArkWorkerThreadController_QThreadSubclassing(QtCore.QObject):
 
     workerFinished = QtCore.pyqtSignal()
-    workerTerminated = QtCore.pyqtSignal()
-    workerError = QtCore.pyqtSignal(str)
-    writeStdOutRequest = QtCore.pyqtSignal(str)
+    #workerTerminated = QtCore.pyqtSignal() # => does not exists in Qt5
+    workerError = QtCore.pyqtSignal(object)
+    writeStdOutRequest = QtCore.pyqtSignal(object)
     interruptRequest = QtCore.pyqtSignal()
 
     def __init__( self
@@ -82,7 +82,7 @@ class QArkWorkerThreadController(QtCore.QObject):
                                           , _b_selfIO = self.b_selfIO
                                           )
         self.o_workerThread.finished.connect( self.handleWorkerThreadFinished )
-        self.o_workerThread.terminated.connect( self.handleWorkerThreadTerminated )
+        #self.o_workerThread.terminated.connect( self.handleWorkerThreadTerminated )
         self.o_workerThread.errorOccured.connect( self.handleWorkerThreadErrorOccured )
         self.o_workerThread.stdoutWriteRequest.connect( self.handleWorkerThreadStdOutWriteRequest )
         self.o_workerThread.returnedDataReady.connect( self.handleWorkerThreadReturnedDataReady )
@@ -107,12 +107,12 @@ class QArkWorkerThreadController(QtCore.QObject):
         if not self.o_exceptionHandler is None:
             self.o_exceptionHandler.restoreLocalExceptHook()
 
-    @QtCore.pyqtSlot()
-    def handleWorkerThreadTerminated(self):
-        self.b_hasWorkerFinished = True
-        self.workerTerminated.emit()
-        if not self.o_exceptionHandler is None:
-            self.o_exceptionHandler.restoreLocalExceptHook()
+#    @QtCore.pyqtSlot()
+#    def handleWorkerThreadTerminated(self):
+#        self.b_hasWorkerFinished = True
+#        self.workerTerminated.emit()
+#        if not self.o_exceptionHandler is None:
+#            self.o_exceptionHandler.restoreLocalExceptHook()
 
     @QtCore.pyqtSlot(str)
     def handleWorkerThreadErrorOccured(self, _s_str):

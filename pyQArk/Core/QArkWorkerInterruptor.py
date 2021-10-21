@@ -33,6 +33,12 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
+from pyQArk import QArkConfig
+if QArkConfig.QARK_QT_GENERATION == 4:
+    from PyQt4 import QtCore
+elif QArkConfig.QARK_QT_GENERATION == 5:
+    from PyQt5 import QtCore
+
 from pyQArk.Core.QArkException import QArkException
 
 class QArkWorkerInterruptException( QArkException ):
@@ -43,11 +49,15 @@ T_ERROR_MESSAGES = {
   QArkWorkerInterruptException : 'User interrupt'
 }
 
-class QArkWorkerInterruptor(object):
-    
+#class QArkWorkerInterruptor(QtCore.QObject):
+class QArkWorkerInterruptor(QtCore.QObject):
+
+    isDoInterrupt = QtCore.pyqtSignal()
+
     def __init__(self):
         """
         """
+        QtCore.QObject.__init__(self)
         self.b_interrupt = False
 
     def doInterrupt(self):
@@ -58,6 +68,13 @@ class QArkWorkerInterruptor(object):
         Check interrupt
         This method should be called in the worker run function
         """
+        if QArkConfig.QARK_QT_THREADING_EVENT_DRIVEN:
+            # send a signal : used for asking connected thread (usually main/gui thread)
+            # if user wants to interrupt
+            self.isDoInterrupt.emit()
         if self.b_interrupt:
             raise QArkWorkerInterruptException()
-    
+
+    @classmethod
+    def forceInterrupt(cls):
+        raise QArkWorkerInterruptException()

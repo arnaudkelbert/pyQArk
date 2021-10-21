@@ -7,6 +7,7 @@
 # This implementation uses QThread subclassing.
 # => Should reimplement it to use an Event Driven mechanism
 #
+#
 # @author : Arnaud Kelbert
 # @date : 2019/03/05
 # @version : 0.2
@@ -35,11 +36,11 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtCore
+from PyQt5 import QtCore
 
 from pyQArk.Core.QArkWorkerInterruptor import QArkWorkerInterruptor
 
-class QArkWorkerThread(QtCore.QThread):
+class QArkWorkerThread_QThreadSubclassing(QtCore.QThread):
     
     stdoutWriteRequest = QtCore.pyqtSignal(str)
     errorOccured = QtCore.pyqtSignal(str)
@@ -73,19 +74,12 @@ class QArkWorkerThread(QtCore.QThread):
         sys.stderr = self.o_saveStdErr
                 
     def write(self, _s_str):
-        if self.b_selfIO:
-            self.stdoutWriteRequest.emit( _s_str )
-        else:
-            QtCore.QThread.write(self, _s_str)
+        # called if self IO
+        self.stdoutWriteRequest.emit( _s_str )
 
     def flush(self):
-        if self.b_selfIO:
-            pass
-        else:
-            try:
-                QtCore.QThread.flush()
-            except:
-                pass
+        # called if self IO
+        pass
 
     def quit(self):
         if self.b_selfIO:
@@ -95,6 +89,7 @@ class QArkWorkerThread(QtCore.QThread):
     def start(self):
         if self.b_selfIO:
             self.saveIO()
+            # should not be done like this => not working for concurrent threads
             sys.stdout = self
             sys.stderr = self
         QtCore.QThread.start(self)
