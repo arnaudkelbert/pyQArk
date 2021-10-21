@@ -36,13 +36,12 @@ except:
 
 from PyQt4 import QtCore, QtGui
 
-
-from ...Core import QArkMessageSender
-from ...Core import QArkWarningSender
-from ...Core.QArkExceptionHandler import QArkExceptionHandler
-from ...Core.QArkExceptionHandableObject import QArkExceptionHandableObject
-from ...Widgets.QArkMessageTabWidget.QArkMessageTabWidget import QArkMessageTabWidget
-from ...Widgets.QArkStatusWidget.QArkStatusWidget import QArkStatusWidget
+from pyQArk.Core import QArkMessageSender
+from pyQArk.Core import QArkWarningSender
+from pyQArk.Core.QArkExceptionHandler import QArkExceptionHandler
+from pyQArk.Core.QArkExceptionHandableObject import QArkExceptionHandableObject
+from pyQArk.Widgets.QArkMessageTabWidget.QArkMessageTabWidget import QArkMessageTabWidget
+from pyQArk.Widgets.QArkStatusWidget.QArkStatusWidget import QArkStatusWidget
 
 class QArkMDIMainWindow( QtGui.QMainWindow, QArkExceptionHandableObject ):
     """
