@@ -47,8 +47,8 @@ except ImportError as e:
     print(str(e))
     print('Continue...')
 from pyQArk.Dialogs.QArkExportPlotWidgetDialog.QArkExportPlotWidgetDialog import QArkExportPlotWidgetDialog
-from pyQArk.Dialogs.QArkSetAxisRangePlotWidgetDialog.QArkSetAxisRangePlotWidgetDialog import QArkSetAxisRangePlotWidgetDialog
-from pyQArk.Dialogs.QArkSetNotationPlotWidgetDialog.QArkSetNotationPlotWidgetDialog import QArkSetNotationPlotWidgetDialog
+from pyQArk.Dialogs.QArkSetAxisRangePlotWidgetDialog.__qarkqt4__QArkSetAxisRangePlotWidgetDialog import QArkSetAxisRangePlotWidgetDialog
+from pyQArk.Dialogs.QArkSetNotationPlotWidgetDialog.__qarkqt4__QArkSetNotationPlotWidgetDialog import QArkSetNotationPlotWidgetDialog
 from pyQArk.Widgets.QArkPlotPenSettingsWidget.QArkPlotPenSettingsWidget import QArkPlotPenSettingsWidget
 from pyQArk.Core.QArkPlotableObject import QArkPlotableObject
 

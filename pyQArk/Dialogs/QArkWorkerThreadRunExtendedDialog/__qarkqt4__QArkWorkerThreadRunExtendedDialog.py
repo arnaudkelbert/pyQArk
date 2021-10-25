@@ -33,14 +33,14 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-
-import sys
-
 from PyQt4 import QtCore, QtGui
 
-from .Ui_QArkWorkerThreadRunExtendedDialog import Ui_QArkWorkerThreadRunExtendedDialog
-from ...Core.QArkWorkerThreadController import QArkWorkerThreadController
-from ... import QArkConfig
+from pyQArk.Core.QArkUiLoader import loadUi
+from . import PKGPATH
+Ui_QArkWorkerThreadRunExtendedDialog = loadUi(PKGPATH('./QArkWorkerThreadRunExtendedDialog.ui'), pkgname=__package__)
+
+from pyQArk.Core.QArkWorkerThreadController import QArkWorkerThreadController
+from pyQArk import QArkConfig
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -67,7 +67,6 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
     """
     STDOUT_TAB_INDEX = 0
     STDERR_TAB_INDEX = 1
-
     returnedDataReady = QtCore.pyqtSignal(object)
 
     def __init__( self
@@ -80,21 +79,16 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
                  , _s_loaderAnimationFile = None
                  ):
         super( QArkWorkerThreadRunExtendedDialog, self).__init__( parent = parent )
-
         self.o_exceptionHandler = None
         self.t_workerResult = None
-
         self.b_workIsInterruptable = _b_workIsInterruptable
         self.b_enableProgressBar = _b_enableProgressBar
         self.b_keepDialogOpen = _b_keepDialogOpen
         self.b_showDetails = _b_showDetails
         self.s_promptMessage = _s_promptMessage
-
         self.s_loaderAnimationFile = _s_loaderAnimationFile
-
         if not self.s_loaderAnimationFile:
             self.s_loaderAnimationFile = QArkConfig.QARK_MEDIA_LOADER_GIF
-
         self.initUi()
         self.initConnection()
 
@@ -170,41 +164,32 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
         """
         self.ui = Ui_QArkWorkerThreadRunExtendedDialog()
         self.ui.setupUi(self)
-
         self.setObjectName(_fromUtf8("qArkWorkerRunDialog"))
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-
         # Set icons
         #---------------------------------------------------------------
         self.ui.tabWidget.setTabIcon( self.__class__.STDOUT_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-information") )
         self.ui.tabWidget.setTabIcon( self.__class__.STDERR_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-error") )
-
         # Set current tab
         self.ui.tabWidget.setCurrentIndex( self.__class__.STDOUT_TAB_INDEX )
-
         self.ui.buttonBox.button( QtGui.QDialogButtonBox.Close ).setEnabled(False)
         self.ui.buttonBox.button( QtGui.QDialogButtonBox.Abort ).setEnabled(self.b_workIsInterruptable)
 
         if not self.b_enableProgressBar:
             self.ui.progressBar.setVisible(False)
-
             # Set movie
             self.o_progressMovie = QtGui.QMovie( self.s_loaderAnimationFile )
-
             if self.o_progressMovie.isValid():
                 self.ui.movieLabel.setMovie( self.o_progressMovie )
             else:
                 self.o_progressMovie = None
-
         else:
             self.ui.movieLabel.setVisible(False)
             self.o_progressMovie = None
 
         self.ui.keepOpenCheckBox.setChecked(self.b_keepDialogOpen)
-
         self.ui.tabWidget.setVisible(self.b_showDetails)
         self.checkShowDetailsLabel()
-
         self.ui.promptLabel.setText(self.s_promptMessage)
 
     def initConnection( self ):
@@ -257,7 +242,6 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
             self.ui.stderrPlainTextEdit.moveCursor( QtGui.QTextCursor.End, QtGui.QTextCursor.MoveAnchor )
             self.ui.stderrPlainTextEdit.insertPlainText(_s_str)
             self.ui.stderrPlainTextEdit.moveCursor(QtGui.QTextCursor.End, QtGui.QTextCursor.MoveAnchor)
-
             self.ui.tabWidget.setCurrentIndex( self.__class__.STDERR_TAB_INDEX )
             self.b_errorOccured = True
 
@@ -266,20 +250,15 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
 
     def reject(self):
         if not self.o_controller.hasWorkerFinished():
-
             if self.b_workIsInterruptable:
-
                 answer = QtGui.QMessageBox.question( self, '', 'Abort and close window ?'
                                                     , QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No )
-
                 if answer == QtGui.QMessageBox.Yes:
                     self.o_controller.interrupt()
                 #self.restoreDefaultSystemOutput()
                 #QtGui.QDialog.reject(self)
-
         else:
             self.t_workerResult = self.o_controller.getReturnedData()
-
             self.returnedDataReady.emit( self.t_workerResult )
             #self.restoreDefaultSystemOutput()
             QtGui.QDialog.reject(self)
@@ -288,24 +267,20 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
         """
         """
         self.b_workerHasStarted = False
-
         self.o_controller = QArkWorkerThreadController( _cls_worker = _cls_workerClass
                                                         , _t_workerParameters = _t_workerParam
                                                         , _o_exceptionHandler = self.o_exceptionHandler
                                                         #, _o_exceptionHandler = None
                                                         )
-
         self.o_controller.workerError.connect( self.handleErrorHandledSlot )
         self.o_controller.workerFinished.connect( self.handleWorkerHasFinished )
         self.o_controller.writeStdOutRequest.connect( self.handleMessageSentSlot )
 
     def startWorker(self):
         self.b_errorOccured = False
-
         #self.setAsSystemOutput()
         if not self.o_progressMovie is None:
             self.o_progressMovie.start()
-
         self.o_controller.startThread()
 
     def showEvent(self, evt):
@@ -317,15 +292,12 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
         if not self.o_controller.hasWorkerFinished():
             answer = QtGui.QMessageBox.question( self, '', 'Abort and close window ?'
                                                 , QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No )
-
             if answer == QtGui.QMessageBox.Yes:
                 self.o_controller.interrupt()
                 #self.restoreDefaultSystemOutput()
                 evt.accept()
-
             else:
                 evt.ignore()
-
         else:
             evt.accept()
 
@@ -353,10 +325,8 @@ class QArkWorkerThreadRunExtendedDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunEx
     def handleWorkerHasFinished(self):
         if not self.o_progressMovie is None:
             self.o_progressMovie.stop()
-
         self.ui.buttonBox.button( QtGui.QDialogButtonBox.Close ).setEnabled(True)
         self.ui.buttonBox.button( QtGui.QDialogButtonBox.Abort ).setEnabled(False)
-
         if not self.ui.keepOpenCheckBox.isChecked() and not self.b_errorOccured:
             self.reject()
 

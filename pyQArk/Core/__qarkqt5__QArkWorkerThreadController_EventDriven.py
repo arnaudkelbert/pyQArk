@@ -176,5 +176,6 @@ class QArkWorkerThreadController_EventDriven(QtCore.QObject):
         #self.print_lock('thread asked for is do interrupt')
         if self.b_doInterrupt:
             self.print_lock('self.interruptWorker.emit()')
-            self.o_thread.quit()
             #self.interruptWorker.emit()
+            self.o_worker.o_workerInterruptor.doInterrupt()
+            self.o_thread.quit()

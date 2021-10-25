@@ -34,9 +34,11 @@ except:
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-from .Ui_QArkSetAxisRangePlotWidgetDialog import Ui_QArkSetAxisRangePlotWidgetDialog
+from pyQArk.Core.QArkUiLoader import loadUi
+from . import PKGPATH
+Ui_QArkSetAxisRangePlotWidgetDialog = loadUi(PKGPATH('./QArkSetAxisRangePlotWidgetDialog.ui'), pkgname=__package__)
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -52,7 +54,7 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class QArkSetAxisRangePlotWidgetDialog( QtGui.QDialog, Ui_QArkSetAxisRangePlotWidgetDialog ):
+class QArkSetAxisRangePlotWidgetDialog( QtWidgets.QDialog, Ui_QArkSetAxisRangePlotWidgetDialog ):
 
     def __init__( self
                  , parent = None
@@ -86,11 +88,11 @@ class QArkSetAxisRangePlotWidgetDialog( QtGui.QDialog, Ui_QArkSetAxisRangePlotWi
             self.f_xmax = float( self.ui.xmaxLineEdit.text() )
             self.f_ymin = float( self.ui.yminLineEdit.text() )
             self.f_ymax = float( self.ui.ymaxLineEdit.text() )
-            QtGui.QDialog.accept( self )
+            QtWidgets.QDialog.accept( self )
         except:
-            QtGui.QMessageBox.critical( self, ''
+            QtWidgets.QMessageBox.critical( self, ''
                                     , 'Valeur incorrecte'
-                                    , QtGui.QMessageBox.Ok
+                                    , QtWidgets.QMessageBox.Ok
                                     )
 
     def getRange(self):

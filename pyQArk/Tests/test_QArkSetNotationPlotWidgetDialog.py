@@ -31,20 +31,32 @@ except:
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
 import unittest
+sys._excepthook = sys.excepthook
+def exception_hook(exctype, value, traceback):
+    print(exctype, value, traceback)
+    sys._excepthook(exctype, value, traceback)
+    sys.exit(1)
+sys.excepthook = exception_hook
+
+from pyQArk import QArkConfig
 from pyQArk.QArkConfig import QARK_QT_GENERATION
 
 if QARK_QT_GENERATION == 4:
-    from PyQt4 import QtGui
+    from PyQt4 import QtGui, QtCore
     QtWidgets=QtGui
 elif QARK_QT_GENERATION == 5:
-    from PyQt5 import QtWidgets
+    from PyQt5 import QtWidgets, QtCore
 
-from pyQArk.Widgets.QArkInputWidget.QArkStringLineEditWidget import QArkStringLineEditWidget
-from pyQArk.Widgets.QArkInputWidget.QArkIntegerSpinBoxWidget import QArkIntegerSpinBoxWidget
-from pyQArk.Widgets.QArkInputWidgetGrid.QArkInputWidgetGrid import QArkInputWidgetGrid
+from pyQArk.Dialogs.QArkSetNotationPlotWidgetDialog.QArkSetNotationPlotWidgetDialog import QArkSetNotationPlotWidgetDialog
+from pyQArk.Widgets.QArkMplPlotWidget.QArkMplPlotWidget import QArkMplPlotWidget
 
-TEST_CLASS = QArkInputWidgetGrid
-class QArkInputWidgetGridTest(unittest.TestCase):
+class MyPlotWidget(QArkMplPlotWidget):
+    def getTitle(self): return 'title'
+    def getXLabel(self): return 'x_label'
+    def getYLabel(self): return 'y_label'
+
+TEST_CLASS = QArkSetNotationPlotWidgetDialog
+class QArkSetNotationPlotWidgetDialogTest(unittest.TestCase):
     """
     Test
     """
@@ -56,29 +68,25 @@ class QArkInputWidgetGridTest(unittest.TestCase):
 
         def initUi(self):
             self.o_layout = QtWidgets.QVBoxLayout(self)
-            self.o_widget = TEST_CLASS(self
-                                      ,_t_initTuple = [('key0', QArkStringLineEditWidget, 'label0', 'initvalue0', {})
-                                                       ,('key1', QArkStringLineEditWidget, 'label1', 'initvalue1', {})
-                                                       ,('key2', QArkIntegerSpinBoxWidget, 'label2', 11, {})
-                                                       ]
-                                       )
-
-            self.o_layout.addWidget(self.o_widget)
             self.o_button0 = QtWidgets.QPushButton('Test')
             self.o_layout.addWidget(self.o_button0)
-            o_spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum,
-                                                 QtWidgets.QSizePolicy.MinimumExpanding)
-            self.o_layout.addItem(o_spacerItem)
 
         def initConnection(self):
             self.o_button0.clicked.connect(self.handleButton0Clicked)
 
         def handleButton0Clicked(self):
-            try:
-                self.o_widget.registerValues()
-            except Exception as e:
-                print(e)
-            for k,v in self.o_widget.getRegisteredValues().items(): print(k,v)
+            o_dialog = TEST_CLASS(parent=self, _o_plotWidget=MyPlotWidget())
+
+            if QARK_QT_GENERATION == 5:
+                o_dialog.setModal(True)
+                o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+                o_dialog.show()
+
+            elif QARK_QT_GENERATION == 4:
+                o_dialog.setModal(True)
+                o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+                o_dialog.show()
+                #o_dialog.exec_()
 
     def test_widget(self):
         print(TEST_CLASS)

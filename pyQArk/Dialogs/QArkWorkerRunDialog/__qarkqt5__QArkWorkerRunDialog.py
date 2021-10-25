@@ -2,28 +2,50 @@
 #-----------------------------------------------------------------------
 #
 #
-# QArkWorkerThreadRunDialog
+# QArkMessageTabWidget
 #
 #
 # @author : Arnaud Kelbert
-# @date : 2015/03/08
-# @version : 0.1
+# @date : 2019/03/05
+# @version : 0.2
+#
+# Historic:
+# 0.1 : init version
+# 0.2 : add python 2/3 compatibility
 #-----------------------------------------------------------------------
-
+#{-- Pyhton 2/3 compatibility ------------------------------------------
+from __future__ import (absolute_import, division, print_function, unicode_literals)
 import sys
-import os
-import time
+try:
+    from future import standard_library
+    standard_library.install_aliases()
 
-from PyQt4 import QtCore, QtGui
+    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
+                          int, map, next, oct, open, pow, range, round,
+                          str, super, zip)
+except ImportError:
+    if sys.version_info.major == 2:
+        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
+try:
+    # Python 2 : basestring exists (for isinstance test)
+    basestring
+except:
+    # Python 3 : basestring does not exist
+    basestring = str
+#}-- Pyhton 2/3 compatibility ------------------------------------------
+import warnings
+warnings.warn('QArkWorkerRunDialog class is deprecated. No support garanteed. You should use QArkWorkerThreadRunDialog instead.',
+              DeprecationWarning)
+print('WARNING : QArkWorkerRunDialog class is deprecated. No support garanteed. You should use QArkWorkerThreadRunDialog instead.')
+import sys
 
-from .Ui_QArkWorkerThreadRunDialog import Ui_QArkWorkerThreadRunDialog
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-from ...Core.QArkMessage import QArkMessage
-from ...Core.QArkMessageSender import QArkMessageSender
-from ...Core.QArkWarningSender import QArkWarningSender
-from ...Core.QArkExceptionHandler import QArkExceptionHandler
-from ...Core.QArkWorkerThreadController import QArkWorkerThreadController
+from pyQArk.Core.QArkUiLoader import loadUi
+from . import PKGPATH
+Ui_QArkWorkerRunDialog = loadUi(PKGPATH('./QArkWorkerRunDialog.ui'), pkgname=__package__)
 
+from pyQArk.Core.QArkWorkerController import QArkWorkerController
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -39,11 +61,7 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
-
-
-
-class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
+class QArkWorkerRunDialog( QtWidgets.QDialog, Ui_QArkWorkerRunDialog ):
     """
     Class to represents a run dialog.
     It starts a threaded Worker on show.
@@ -55,21 +73,14 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
     STDOUT_TAB_INDEX = 0
     STDERR_TAB_INDEX = 1
 
-    
-    returnedDataReady = QtCore.pyqtSignal(object)
-
-
     def __init__( self
                  , parent = None
                  ):
-        super( QArkWorkerThreadRunDialog, self).__init__( parent = parent )
-        
+        super( QArkWorkerRunDialog, self).__init__( parent = parent )
         self.o_exceptionHandler = None
         self.t_workerResult = None
-        
         self.initUi()
         self.initConnection()
-
 
     def setMessageSender( self, _o_sender ):
         """
@@ -83,7 +94,6 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
         self.o_messageSender = _o_sender
         self.o_messageSender.messageSentSignal.connect( self.handleMessageSentSlot )
 
-
     def setWarningSender( self, _o_sender ):
         """
         Set the warning sender member and set the connection with
@@ -93,7 +103,6 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
         """
         self.o_warningSender = _o_sender
         self.o_warningSender.warningSentSignal.connect( self.handleWarningSentSlot )
-
 
     def setExceptionHandler( self, _o_handler ):
         """
@@ -106,72 +115,61 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
         self.o_exceptionHandler.errorHandledSignal.connect( self.handleErrorHandledSlot )
         self.o_exceptionHandler.basicExceptionHandledSignal.connect( self.handleErrorHandledSlot )
 
+    def write( self, _s_str ):
+        """
+        Define a write method so that an object can be considered as
+        system output
+        """
+        # Check the message length and do not send newline only
+        if len(_s_str.replace('\r','')) > 0 and _s_str != '\n':
+            self.updateStdOut( _s_str )
 
-    #def write( self, _s_str ):
-        #"""
-        #Define a write method so that an object can be considered as
-        #system output
-        #"""
-        ## Check the message length and do not send newline only
-        #if len(_s_str.replace('\r','')) > 0 and _s_str != '\n':
-            #self.updateStdOut( _s_str )
+    def flush( self ):
+        """
+        Define a write method so that an object can be considered as
+        system output
+        """
+        # Do nothing
+        pass
 
+    def setAsSystemOutput( self ):
+        """
+        Set the current object as system output
+        """
+        self.o_systemStdOut = sys.stdout
+        self.o_systemStdErr = sys.stderr
+        sys.stdout = self
+        sys.stderr = self
 
-    #def flush( self ):
-        #"""
-        #Define a write method so that an object can be considered as
-        #system output
-        #"""
-        ## Do nothing
-        #pass
-
-
-    #def setAsSystemOutput( self ):
-        #"""
-        #Set the current object as system output
-        #"""
-        #self.o_systemStdOut = sys.stdout
-        #self.o_systemStdErr = sys.stderr
-        #sys.stdout = self
-        #sys.stderr = self
-
-
-    #def restoreDefaultSystemOutput( self ):
-        #"""
-        #Restore the default system output
-        #"""
-        #sys.stdout = self.o_systemStdOut
-        #sys.stderr = self.o_systemStdErr
-
+    def restoreDefaultSystemOutput( self ):
+        """
+        Restore the default system output
+        """
+        sys.stdout = self.o_systemStdOut
+        sys.stderr = self.o_systemStdErr
 
     def initUi( self ):
         """
         @brief init user interface
         """
-        self.ui = Ui_QArkWorkerThreadRunDialog()
+        self.ui = Ui_QArkWorkerRunDialog()
         self.ui.setupUi(self)
-
         self.setObjectName(_fromUtf8("qArkWorkerRunDialog"))
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-
         # Set icons
         #---------------------------------------------------------------
         self.ui.tabWidget.setTabIcon( self.__class__.STDOUT_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-information") )
         self.ui.tabWidget.setTabIcon( self.__class__.STDERR_TAB_INDEX, QtGui.QIcon.fromTheme("dialog-error") )
-
         # Set current tab
         self.ui.tabWidget.setCurrentIndex( self.__class__.STDOUT_TAB_INDEX )
-        
-        self.ui.buttonBox.button( QtGui.QDialogButtonBox.Close ).setEnabled(False)
-        self.ui.buttonBox.button( QtGui.QDialogButtonBox.Abort ).setEnabled(True)
-
+        self.ui.buttonBox.button( QtWidgets.QDialogButtonBox.Close ).setEnabled(False)
+        self.ui.buttonBox.button( QtWidgets.QDialogButtonBox.Abort ).setEnabled(True)
 
     def initConnection( self ):
         """
         @brief init connection
         """
         pass
-
 
     def addWarning( self, _o_warning ):
         """
@@ -181,7 +179,6 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
         """
         self.updateStdOut(str(_o_warning))
 
-
     def addError( self, _o_error ):
         """
         Add an error to StdErr plainTextEdit
@@ -189,7 +186,6 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
         @type _o_error : L{QArkException}
         """
         self.updateStdErr(str(_o_error))
-
 
     def addMessage( self, _o_message ):
         """
@@ -199,93 +195,69 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
         """
         self.updateStdOut(str(_o_message))
 
-
     def updateStdOut(self, _s_str):
         if _s_str != '':
             self.ui.stdoutPlainTextEdit.moveCursor( QtGui.QTextCursor.End, QtGui.QTextCursor.MoveAnchor )
             self.ui.stdoutPlainTextEdit.insertPlainText(_s_str)
             self.ui.stdoutPlainTextEdit.moveCursor(QtGui.QTextCursor.End, QtGui.QTextCursor.MoveAnchor)
 
-
     def updateStdErr(self, _s_str):
         if _s_str != '':
             self.ui.stderrPlainTextEdit.moveCursor( QtGui.QTextCursor.End, QtGui.QTextCursor.MoveAnchor )
             self.ui.stderrPlainTextEdit.insertPlainText(_s_str)
             self.ui.stderrPlainTextEdit.moveCursor(QtGui.QTextCursor.End, QtGui.QTextCursor.MoveAnchor)
-            
-            self.ui.tabWidget.setCurrentIndex( self.__class__.STDERR_TAB_INDEX )
-
 
     def accept(self):
         QtGui.QDialog.accept(self)
-    
-    
-    def reject(self):
-        if not self.o_controller.hasWorkerFinished():
-            answer = QtGui.QMessageBox.question( self, '', 'Abort and close window ?'
-                                                , QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No )
-            
-            if answer == QtGui.QMessageBox.Yes:
-                self.o_controller.interrupt()
-                #self.restoreDefaultSystemOutput()
-                #QtGui.QDialog.reject(self)
-            
-        else:
-            self.t_workerResult = self.o_controller.getReturnedData()
-            
-            self.returnedDataReady.emit( self.t_workerResult )
-            #self.restoreDefaultSystemOutput()
-            QtGui.QDialog.reject(self)
 
+    def reject(self):
+        if not self.o_workerController.hasWorkerFinished():
+            answer = QtWidgets.QMessageBox.question( self, '', 'Abort and close window ?'
+                                                , QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No )
+            if answer == QtWidgets.QMessageBox.Yes:
+                self.o_workerController.interrupt()
+                self.restoreDefaultSystemOutput()
+                QtWidgets.QDialog.reject(self)
+        else:
+            self.t_workerResult = self.o_workerController.getWorkerResult()
+            self.restoreDefaultSystemOutput()
+            QtWidgets.QDialog.reject(self)
 
     def setWorker(self, _cls_workerClass, _t_workerParam):
         """
         """
         self.b_workerHasStarted = False
-        
-        self.o_controller = QArkWorkerThreadController( _cls_worker = _cls_workerClass
-                                                        , _t_workerParameters = _t_workerParam
-                                                        , _o_exceptionHandler = self.o_exceptionHandler
-                                                        #, _o_exceptionHandler = None
-                                                        )
-        
-        self.o_controller.workerError.connect( self.handleErrorHandledSlot )
-        self.o_controller.workerFinished.connect( self.handleWorkerHasFinished )
-        self.o_controller.writeStdOutRequest.connect( self.handleMessageSentSlot )
-        
-    
-    
+        # must connect thread finished signal
+        self.o_workerController = QArkWorkerController( _cls_worker = _cls_workerClass
+                                                       , _o_exceptionHandler = self.o_exceptionHandler
+                                                       )
+        self.o_workerController.workerHasFinished.connect( self.handleWorkerHasFinished )
+        self.t_workerParam = _t_workerParam
+
     def startWorker(self):
-        #self.setAsSystemOutput()
-        self.o_controller.startThread()
-    
-    
+        self.setAsSystemOutput()
+        self.o_workerController.start( self.t_workerParam )
+
     def showEvent(self, evt):
         if not self.b_workerHasStarted:
             self.b_workerHasStarted = True
             self.startWorker()
-            
-            
+
     def closeEvent(self, evt):
-        if not self.o_controller.hasWorkerFinished():
-            answer = QtGui.QMessageBox.question( self, '', 'Abort and close window ?'
-                                                , QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No )
-            
-            if answer == QtGui.QMessageBox.Yes:
-                self.o_controller.interrupt()
-                #self.restoreDefaultSystemOutput()
+        if not self.o_workerController.hasWorkerFinished():
+            answer = QtWidgets.QMessageBox.question( self, '', 'Abort and close window ?'
+                                                , QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No )
+            if answer == QtWidgets.QMessageBox.Yes:
+                self.o_workerController.interrupt()
+                self.restoreDefaultSystemOutput()
                 evt.accept()
-            
             else:
                 evt.ignore()
-        
         else:
             evt.accept()
-            
 
     def getWorkerResult(self):
         return self.t_workerResult
-
 
 #---------------------------------------------------------------
 #
@@ -296,19 +268,15 @@ class QArkWorkerThreadRunDialog( QtGui.QDialog, Ui_QArkWorkerThreadRunDialog ):
     def handleWarningSentSlot( self, _o_warning ):
         self.addWarning( _o_warning )
 
-
     @QtCore.pyqtSlot( object )
     def handleErrorHandledSlot( self, _o_error ):
         self.addError( _o_error )
-
 
     @QtCore.pyqtSlot( object )
     def handleMessageSentSlot( self, _o_message ):
         self.addMessage( _o_message )
 
-
     @QtCore.pyqtSlot()
     def handleWorkerHasFinished(self):
-        self.ui.buttonBox.button( QtGui.QDialogButtonBox.Close ).setEnabled(True)
-        self.ui.buttonBox.button( QtGui.QDialogButtonBox.Abort ).setEnabled(False)
-
+        self.ui.buttonBox.button( QtWidgets.QDialogButtonBox.Close ).setEnabled(True)
+        self.ui.buttonBox.button( QtWidgets.QDialogButtonBox.Abort ).setEnabled(False)
