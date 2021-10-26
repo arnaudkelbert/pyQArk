@@ -28,6 +28,7 @@ def PKGPATH(_s_file): return os.path.normpath(os.path.join(LOCAL_PATH, _s_file))
 # Local package specifics
 #=> must load QArkInputWidget first
 T_DO_FIRST = [
+    'QArkDialog'
 ]
 T_MODULE_NAMES_FIRST = [ '{}{}'.format(QARK_QT_MODULE_PREFIX,n) for n in T_DO_FIRST ]
 T_MODULE_NAMES = T_MODULE_NAMES_FIRST + [ n for (_,n,_) in pkgutil.iter_modules([LOCAL_PATH]) if not n in T_MODULE_NAMES_FIRST ]
