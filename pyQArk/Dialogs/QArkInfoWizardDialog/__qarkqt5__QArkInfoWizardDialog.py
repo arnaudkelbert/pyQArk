@@ -39,7 +39,7 @@ from PyQt5 import QtWidgets
 from pyQArk.Core import QArkDomXml
 from pyQArk.Dialogs.QArkInfoWizardDialog.QArkInfoWizardWelcomePage import QArkInfoWizardWelcomePage
 from pyQArk.Dialogs.QArkInfoWizardDialog.QArkInfoWizardPage import QArkInfoWizardPage
-from pyQArk.QArkDialog import QArkDialog
+from pyQArk.Dialogs.QArkDialog import QArkDialog
 
 class QArkInfoWizardDialog( QtWidgets.QWizard ):
     """
