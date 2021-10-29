@@ -31,6 +31,7 @@ except:
     basestring = str
 # }-- Pyhton 2/3 compatibility ------------------------------------------
 import unittest
+from pyQArk.Core import QArkQt
 from pyQArk.QArkConfig import QARK_QT_GENERATION
 
 if QARK_QT_GENERATION == 4:
@@ -67,9 +68,9 @@ class QArkWarningQuestionMessageBoxTest(unittest.TestCase):
                 o_dialog.setModal(True)
                 o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
                 # Les tests avec Qt4 ne passe pas si on utilise exec : mot cle reserve (meme si on passe pas dans ce bloc)
-                o_dialog.exec()
+                QArkQt._exec(o_dialog)
             elif QARK_QT_GENERATION == 4:
-                reply = o_dialog.exec_()
+                QArkQt._exec(o_dialog)
             if o_dialog.isReplyIgnore():
                 print('ignore')
             if o_dialog.isReplyAbort():
