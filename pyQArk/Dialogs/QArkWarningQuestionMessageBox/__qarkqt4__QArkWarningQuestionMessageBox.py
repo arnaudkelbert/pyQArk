@@ -33,7 +33,7 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 
 from pyQArk.Dialogs.QArkDialog import QArkDialog
 
@@ -46,9 +46,23 @@ class QArkWarningQuestionMessageBox(QtGui.QMessageBox):
         self.setIcon( QtGui.QMessageBox.Warning )
         if not detailedMessage is None:
             self.setDetailedText( detailedMessage )
+        self.initConnection()
+
+    def initConnection(self):
+        self.finished.connect(self.handleFinished)
 
     def exec_(self, _b_centered=True, **kwargs):
         # Reimplemented to get it centered
         if _b_centered:
             QArkDialog.centerDialog( self, **kwargs )
         QtGui.QMessageBox.exec_(self, **kwargs)
+
+    def isReplyIgnore(self):
+        return self.u_reply == QtGui.QMessageBox.Ignore
+
+    def isReplyAbort(self):
+        return self.u_reply == QtGui.QMessageBox.Abort
+
+    @QtCore.pyqtSlot(int)
+    def handleFinished(self, v):
+        self.u_reply = v

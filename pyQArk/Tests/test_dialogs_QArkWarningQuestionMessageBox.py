@@ -66,17 +66,14 @@ class QArkWarningQuestionMessageBoxTest(unittest.TestCase):
             if QARK_QT_GENERATION == 5:
                 o_dialog.setModal(True)
                 o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-                reply = o_dialog.exec()
-                if reply == QtWidgets.QMessageBox.Ignore:
-                    print('ignore')
-                if reply == QtWidgets.QMessageBox.Abort:
-                    print('abort')
+                # Les tests avec Qt4 ne passe pas si on utilise exec : mot cle reserve (meme si on passe pas dans ce bloc)
+                o_dialog.exec()
             elif QARK_QT_GENERATION == 4:
                 reply = o_dialog.exec_()
-                if reply == QtWidgets.QMessageBox.Ignore:
-                    print('ignore')
-                if reply == QtWidgets.QMessageBox.Abort:
-                    print('abort')
+            if o_dialog.isReplyIgnore():
+                print('ignore')
+            if o_dialog.isReplyAbort():
+                print('abort')
 
     def test_widget(self):
         print(TEST_CLASS)
