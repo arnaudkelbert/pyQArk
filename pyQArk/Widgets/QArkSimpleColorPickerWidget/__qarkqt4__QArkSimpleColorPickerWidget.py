@@ -6,20 +6,39 @@
 #
 #
 # @author : Arnaud Kelbert
-# @date : 2014/08/01
+# @date : 2014/008/01
 # @version : 0.1
-#-----------------------------------------------------------------------
+# {-- Pyhton 2/3 compatibility ------------------------------------------
+from __future__ import (absolute_import, division, print_function, unicode_literals)
+import sys
+try:
+    from future import standard_library
+    standard_library.install_aliases()
+
+    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
+                          int, map, next, oct, open, pow, range, round,
+                          str, super, zip)
+except ImportError:
+    if sys.version_info.major == 2:
+        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
+try:
+    # Python 2 : basestring exists (for isinstance test)
+    basestring
+except:
+    # Python 3 : basestring does not exist
+    basestring = str
+# }-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt4 import QtCore, QtGui
-
-from .Ui_QArkSimpleColorPickerWidget import Ui_QArkSimpleColorPickerWidget
-
+from pyQArk.Core.QArkUiLoader import loadUi
+from pyQArk.Widgets.QArkSimpleColorPickerWidget import PKGPATH
+Ui_QArkSimpleColorPickerWidget = loadUi(PKGPATH('./QArkSimpleColorPickerWidget.ui'), pkgname=__name__.rpartition('.')[0],
+                                  classname='QArkSimpleColorPickerWidget')
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
     def _fromUtf8(s):
         return s
-
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
     def _translate(context, text, disambig):
@@ -28,9 +47,6 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
-
-
 class QArkSimpleColorPickerWidget( QtGui.QWidget, Ui_QArkSimpleColorPickerWidget ):
     """
     """
@@ -38,11 +54,8 @@ class QArkSimpleColorPickerWidget( QtGui.QWidget, Ui_QArkSimpleColorPickerWidget
                  , parent=None
                  ):
         super( QArkSimpleColorPickerWidget, self).__init__( parent )
-
         self.initUi()
         self.initConnection()
-
-
 
     def initUi( self ):
         """
@@ -50,42 +63,28 @@ class QArkSimpleColorPickerWidget( QtGui.QWidget, Ui_QArkSimpleColorPickerWidget
         """
         self.ui = Ui_QArkSimpleColorPickerWidget()
         self.ui.setupUi(self)
-
         self.setObjectName( _fromUtf8("qArkSimpleColorPickerWidget") )
         self.setAttribute( QtCore.Qt.WA_DeleteOnClose )
-
-
         self.ui.colorLabel.setSize( QtCore.QSize(50,23) )
         self.ui.colorLabel.setFillColor( QtGui.QColor(0,0,0))
-
         self.ui.redSlider.setValue(0)
         self.ui.greenSlider.setValue(0)
         self.ui.blueSlider.setValue(0)
-
         self.ui.redSlider.setMinimum(0)
         self.ui.redSlider.setMaximum(255)
         self.ui.greenSlider.setMinimum(0)
         self.ui.greenSlider.setMaximum(255)
         self.ui.blueSlider.setMinimum(0)
         self.ui.blueSlider.setMaximum(255)
-
         self.ui.redSlider.setLabel('R:')
         self.ui.greenSlider.setLabel('G:')
         self.ui.blueSlider.setLabel('B:')
-
-
-
 
     def initConnection( self ):
         self.ui.redSlider.valueChangedSignal.connect( self.handleSlidersValueChangedSlot )
         self.ui.greenSlider.valueChangedSignal.connect( self.handleSlidersValueChangedSlot )
         self.ui.blueSlider.valueChangedSignal.connect( self.handleSlidersValueChangedSlot )
-
         self.ui.colorLabel.clicked.connect( self.handleColorLabelClickedSlot )
-
-
-
-
 
     @QtCore.pyqtSlot(object)
     def handleSlidersValueChangedSlot( self, _u_value ):
@@ -93,24 +92,13 @@ class QArkSimpleColorPickerWidget( QtGui.QWidget, Ui_QArkSimpleColorPickerWidget
                                   ,self.ui.greenSlider.getValue()
                                   ,self.ui.blueSlider.getValue()
                                   )
-
         if o_newColor != self.ui.colorLabel.getFillColor():
             self.ui.colorLabel.setFillColor( o_newColor )
-
-
 
     @QtCore.pyqtSlot()
     def handleColorLabelClickedSlot( self ):
         o_colorDialog = QtGui.QColorDialog( self )
         o_colorDialog.setCurrentColor( self.ui.colorLabel.getFillColor() )
-
         o_newColor = o_colorDialog.getColor()
-
         if o_newColor != self.ui.colorLabel.getFillColor():
             self.ui.colorLabel.setFillColor( o_newColor )
-
-
-
-
-
-
