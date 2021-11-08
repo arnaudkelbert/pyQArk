@@ -40,7 +40,7 @@ from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Widgets.QArkHorizontalSlider import PKGPATH
-Ui_QArkHorizontalSlider = loadUi(PKGPATH('./QArkHorizontalSlider.ui'), pkgname=__package__)
+Ui_QArkHorizontalSlider = loadUi(PKGPATH('./QArkHorizontalSlider.ui'), pkgname=__name__.rpartition('.')[0])
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

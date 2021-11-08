@@ -37,7 +37,7 @@ from PyQt5 import QtCore, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Widgets.QArkListWidgetNavigationWidget import PKGPATH
-Ui_QArkListWidgetNavigationWidget = loadUi(PKGPATH('./QArkListWidgetNavigationWidget.ui'), pkgname=__package__)
+Ui_QArkListWidgetNavigationWidget = loadUi(PKGPATH('./QArkListWidgetNavigationWidget.ui'), pkgname=__name__.rpartition('.')[0])
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

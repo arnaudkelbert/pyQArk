@@ -38,7 +38,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Dialogs.QArkSetAxisRangePlotWidgetDialog import PKGPATH
-Ui_QArkSetAxisRangePlotWidgetDialog = loadUi(PKGPATH('./QArkSetAxisRangePlotWidgetDialog.ui'), pkgname=__package__)
+Ui_QArkSetAxisRangePlotWidgetDialog = loadUi(PKGPATH('./QArkSetAxisRangePlotWidgetDialog.ui'), pkgname=__name__.rpartition('.')[0])
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

@@ -37,7 +37,7 @@ from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Dialogs.QArkSetNotationPlotWidgetDialog import PKGPATH
-Ui_QArkSetNotationPlotWidgetDialog = loadUi(PKGPATH('./QArkSetNotationPlotWidgetDialog.ui'), pkgname=__package__)
+Ui_QArkSetNotationPlotWidgetDialog = loadUi(PKGPATH('./QArkSetNotationPlotWidgetDialog.ui'), pkgname=__name__.rpartition('.')[0])
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

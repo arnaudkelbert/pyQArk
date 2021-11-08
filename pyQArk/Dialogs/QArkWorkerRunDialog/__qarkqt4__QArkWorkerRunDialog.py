@@ -43,7 +43,7 @@ from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Dialogs.QArkWorkerRunDialog import PKGPATH
-Ui_QArkWorkerRunDialog = loadUi(PKGPATH('./QArkWorkerRunDialog.ui'), pkgname=__package__)
+Ui_QArkWorkerRunDialog = loadUi(PKGPATH('./QArkWorkerRunDialog.ui'), pkgname=__name__.rpartition('.')[0])
 
 from pyQArk.Core.QArkWorkerController import QArkWorkerController
 

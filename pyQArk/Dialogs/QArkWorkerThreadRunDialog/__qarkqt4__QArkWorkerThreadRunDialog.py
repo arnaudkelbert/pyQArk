@@ -33,7 +33,7 @@ from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Dialogs.QArkWorkerThreadRunDialog import PKGPATH
-Ui_QArkWorkerThreadRunDialog = loadUi(PKGPATH('./QArkWorkerThreadRunDialog.ui'), pkgname=__package__)
+Ui_QArkWorkerThreadRunDialog = loadUi(PKGPATH('./QArkWorkerThreadRunDialog.ui'), pkgname=__name__.rpartition('.')[0])
 
 #from pyQArk.Core.QArkMessage import QArkMessage
 #from pyQArk.Core.QArkMessageSender import QArkMessageSender

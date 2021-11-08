@@ -46,7 +46,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Dialogs.QArkOpenFilterFileDialog import PKGPATH
-Ui_QArkOpenFilterFileDialog = loadUi(PKGPATH('./QArkOpenFilterFileDialog.ui'), pkgname=__package__)
+Ui_QArkOpenFilterFileDialog = loadUi(PKGPATH('./QArkOpenFilterFileDialog.ui'), pkgname=__name__.rpartition('.')[0])
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

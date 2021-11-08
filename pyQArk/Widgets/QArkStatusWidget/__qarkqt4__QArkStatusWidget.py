@@ -33,7 +33,7 @@ from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Widgets.QArkStatusWidget import PKGPATH
-Ui_QArkStatusWidget = loadUi(PKGPATH('./QArkStatusWidget.ui'), pkgname=__package__)
+Ui_QArkStatusWidget = loadUi(PKGPATH('./QArkStatusWidget.ui'), pkgname=__name__.rpartition('.')[0])
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

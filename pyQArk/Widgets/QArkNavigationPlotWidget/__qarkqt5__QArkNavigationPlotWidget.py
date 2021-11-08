@@ -37,7 +37,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 #from pyQArk.Core.QArkUiLoader import loadUi
 #import PKGPATH
-#Ui_QArkNavigationPlotWidget = loadUi(PKGPATH('./QArkNavigationPlotWidget.ui'), pkgname=__package__)
+#Ui_QArkNavigationPlotWidget = loadUi(PKGPATH('./QArkNavigationPlotWidget.ui'), pkgname=__name__.rpartition('.')[0])
 
 from pyQArk.Widgets.QArkNavigationTabWidget.QArkNavigationTabWidget import QArkNavigationTabWidget
 try:

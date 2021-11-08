@@ -37,7 +37,7 @@ from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Widgets.QArkMessageTabWidget import PKGPATH
-Ui_QArkMessageTabWidget = loadUi(PKGPATH('./QArkMessageTabWidget.ui'), pkgname=__package__)
+Ui_QArkMessageTabWidget = loadUi(PKGPATH('./QArkMessageTabWidget.ui'), pkgname=__name__.rpartition('.')[0])
 
 from pyQArk.Models.QArkMessageItemModel import QArkMessageItemModel
 from pyQArk.Models.QArkWarningItemModel import QArkWarningItemModel
