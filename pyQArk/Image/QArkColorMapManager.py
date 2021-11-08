@@ -38,8 +38,13 @@ import os
 import math
 import inspect
 
+from pyQArk import QArkConfig
 
-from PyQt4 import QtCore, QtGui
+if QArkConfig.QARK_QT_GENERATION == 4:
+    from PyQt4 import QtCore, QtGui
+elif QArkConfig.QARK_QT_GENERATION == 5:
+    from PyQt5 import QtCore, QtGui
+
 
 class QArkColorMapManager( QtCore.QObject ):
 
