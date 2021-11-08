@@ -36,7 +36,7 @@ except:
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Dialogs.QArkSetNotationPlotWidgetDialog import PKGPATH
 Ui_QArkSetNotationPlotWidgetDialog = loadUi(PKGPATH('./QArkSetNotationPlotWidgetDialog.ui'), pkgname=__package__)
 
 try:

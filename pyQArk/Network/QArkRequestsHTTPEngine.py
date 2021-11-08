@@ -44,8 +44,8 @@ if QArkConfig.QARK_QT_GENERATION == 4:
 elif QArkConfig.QARK_QT_GENERATION == 5:
     from PyQt5 import QtCore
 
-from .QArkAbstractHTTPEngine import QArkAbstractHTTPEngine
-from .QArkRequestsHTTPResponse import QArkRequestsHTTPResponse
+from pyQArk.Network.QArkAbstractHTTPEngine import QArkAbstractHTTPEngine
+from pyQArk.Network.QArkRequestsHTTPResponse import QArkRequestsHTTPResponse
 
 #https://www.codementor.io/aviaryan/downloading-files-from-urls-in-python-77q3bs0un
 

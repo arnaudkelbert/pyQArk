@@ -36,7 +36,7 @@ except:
     
 from PyQt4 import QtCore, QtGui
 
-from .QArkSimpleItemModel import QArkSimpleItemModel
+from pyQArk.Models.QArkSimpleItemModel import QArkSimpleItemModel
 
 
 class QArkWarningItemModel( QArkSimpleItemModel ):

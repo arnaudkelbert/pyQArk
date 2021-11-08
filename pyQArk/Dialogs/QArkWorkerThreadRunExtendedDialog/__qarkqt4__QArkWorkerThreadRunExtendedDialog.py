@@ -36,7 +36,7 @@ except:
 from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Dialogs.QArkWorkerThreadRunExtendedDialog import PKGPATH
 Ui_QArkWorkerThreadRunExtendedDialog = loadUi(PKGPATH('./QArkWorkerThreadRunExtendedDialog.ui'), pkgname=__package__)
 
 from pyQArk.Core.QArkWorkerThreadController import QArkWorkerThreadController

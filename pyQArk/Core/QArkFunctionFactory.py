@@ -35,9 +35,9 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 import copy
 
-from ..Widgets.QArkInputWidgetGrid.QArkInputWidgetGrid import QArkInputWidgetGrid
-from ..Widgets.QArkInputListWidget.QArkInputListWidget import QArkInputListWidget
-from .QArkFuncArg import QArkFuncArg
+from pyQArk.Widgets.QArkInputWidgetGrid.QArkInputWidgetGrid import QArkInputWidgetGrid
+from pyQArk.Widgets.QArkInputListWidget.QArkInputListWidget import QArkInputListWidget
+from pyQArk.Core.QArkFuncArg import QArkFuncArg
 
 class QArkFunctionFactory():
     

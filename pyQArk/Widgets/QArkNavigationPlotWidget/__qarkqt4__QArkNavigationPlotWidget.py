@@ -36,7 +36,7 @@ except:
 from PyQt4 import QtCore, QtGui
 
 #from pyQArk.Core.QArkUiLoader import loadUi
-#from . import PKGPATH
+#import PKGPATH
 #Ui_QArkNavigationPlotWidget = loadUi(PKGPATH('./QArkNavigationPlotWidget.ui'), pkgname=__package__)
 
 from pyQArk.Widgets.QArkNavigationTabWidget.QArkNavigationTabWidget import QArkNavigationTabWidget

@@ -45,7 +45,7 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Dialogs.QArkOpenFilterFileDialog import PKGPATH
 Ui_QArkOpenFilterFileDialog = loadUi(PKGPATH('./QArkOpenFilterFileDialog.ui'), pkgname=__package__)
 
 try:

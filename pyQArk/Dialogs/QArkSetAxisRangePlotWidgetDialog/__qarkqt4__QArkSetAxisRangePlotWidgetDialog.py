@@ -37,7 +37,7 @@ except:
 from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Dialogs.QArkSetAxisRangePlotWidgetDialog import PKGPATH
 Ui_QArkSetAxisRangePlotWidgetDialog = loadUi(PKGPATH('./QArkSetAxisRangePlotWidgetDialog.ui'), pkgname=__package__)
 
 try:

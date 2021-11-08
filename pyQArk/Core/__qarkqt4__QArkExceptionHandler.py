@@ -45,7 +45,7 @@ except:
 
 from PyQt4 import QtCore, QtGui
 
-from .QArkException import QArkException
+from pyQArk.Core.QArkException import QArkException
 
 class QArkExceptionHandler( QtCore.QObject ):
     """

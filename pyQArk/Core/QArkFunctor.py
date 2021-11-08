@@ -33,9 +33,9 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from .QArkException import QArkException
-from .QArkWarning import QArkWarning
-from .QArkFuncArg import QArkFuncArg
+from pyQArk.Core.QArkException import QArkException
+from pyQArk.Core.QArkWarning import QArkWarning
+from pyQArk.Core.QArkFuncArg import QArkFuncArg
 
 class QArkFunctorWarning( QArkWarning ): pass
 

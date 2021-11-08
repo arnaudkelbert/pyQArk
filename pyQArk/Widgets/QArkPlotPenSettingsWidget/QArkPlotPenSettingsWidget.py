@@ -13,7 +13,7 @@ from PyQt4 import QtCore, QtGui
 
 from .Ui_QArkPlotPenSettingsWidget import Ui_QArkPlotPenSettingsWidget
 
-from ...Core.QArkPlotableObject import QArkPlotableObject
+from pyQArk.Core.QArkPlotableObject import QArkPlotableObject
 
 
 try:

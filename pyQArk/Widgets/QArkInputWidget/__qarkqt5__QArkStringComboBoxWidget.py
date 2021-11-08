@@ -35,7 +35,7 @@ except:
 # }-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt5 import QtCore, QtWidgets
 
-from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
+from pyQArk.Widgets.QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 
 class QArkStringComboBoxWidget( QArkInputWidget ):
 

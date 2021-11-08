@@ -35,7 +35,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt5 import QtCore
 
-from .QArkMessage import QArkMessage
+from pyQArk.Core.QArkMessage import QArkMessage
 
 class QArkMessageSender( QtCore.QObject ):
     """

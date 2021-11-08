@@ -32,7 +32,7 @@ except:
 from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Widgets.QArkStatusWidget import PKGPATH
 Ui_QArkStatusWidget = loadUi(PKGPATH('./QArkStatusWidget.ui'), pkgname=__package__)
 
 try:

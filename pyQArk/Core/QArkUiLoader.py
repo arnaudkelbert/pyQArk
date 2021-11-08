@@ -37,7 +37,7 @@ import os
 import datetime
 import importlib
 from pyQArk.QArkConfig import QARK_QT_MODULE_PREFIX
-from .QArkUiCompiler import QArkUiCompiler
+from pyQArk.Core.QArkUiCompiler import QArkUiCompiler
 
 def loadUi(_s_uiFile, pkgname, **kwargs):
     """

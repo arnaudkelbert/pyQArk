@@ -34,8 +34,8 @@ except:
 # }-- Pyhton 2/3 compatibility ------------------------------------------
 import requests
 
-from .QArkAbstractHTTPResponse import QArkAbstractHTTPResponse
-from .QArkNetworkException import QArkHTTPResponseStatusCodeError
+from pyQArk.Network.QArkAbstractHTTPResponse import QArkAbstractHTTPResponse
+from pyQArk.Network.QArkNetworkException import QArkHTTPResponseStatusCodeError
 
 #https://www.codementor.io/aviaryan/downloading-files-from-urls-in-python-77q3bs0un
 class QArkRequestsHTTPResponse(QArkAbstractHTTPResponse):

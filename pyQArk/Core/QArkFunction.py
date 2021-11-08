@@ -33,8 +33,8 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from .QArkException import QArkException
-from .QArkWarning import QArkWarning
+from pyQArk.Core.QArkException import QArkException
+from pyQArk.Core.QArkWarning import QArkWarning
 
 class QArkFunctionWarning( QArkWarning ): pass
 

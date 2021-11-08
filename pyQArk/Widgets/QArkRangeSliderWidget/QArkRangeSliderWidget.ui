@@ -83,7 +83,7 @@
   <customwidget>
    <class>QxtSpanSlider</class>
    <extends>QSlider</extends>
-   <header>QxtSpanSlider</header>
+   <header>pyQArk.Widgets.QArkRangeSliderWidget.QxtSpanSlider</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -41,8 +41,8 @@ try:
 except ImportError:
     print('Warning : pyCurl package not available')
 
-from .QArkAbstractHTTPResponse import QArkAbstractHTTPResponse
-from .QArkNetworkException import QArkHTTPResponseStatusCodeError
+from pyQArk.Network.QArkAbstractHTTPResponse import QArkAbstractHTTPResponse
+from pyQArk.Network.QArkNetworkException import QArkHTTPResponseStatusCodeError
 
 # TODO
 class QArkCurlHTTPResponse(QArkAbstractHTTPResponse):

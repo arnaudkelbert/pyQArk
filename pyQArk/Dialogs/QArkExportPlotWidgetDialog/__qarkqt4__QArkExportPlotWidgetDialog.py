@@ -38,7 +38,7 @@ import os
 from PyQt4 import QtCore, QtGui
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Dialogs.QArkExportPlotWidgetDialog import PKGPATH
 Ui_QArkExportPlotWidgetDialog = loadUi(PKGPATH('./QArkExportPlotWidgetDialog.ui'), pkgname=__package__)
 
 from pyQArk.Widgets.QArkPlotWidget.QArkPlotWidget import QArkPlotWidget

@@ -36,7 +36,7 @@ except:
 
 from PyQt4 import QtGui
 
-from .QArkGraphicsScene import QArkGraphicsScene
+from pyQArk.Graphics.QArkGraphicsScene import QArkGraphicsScene
 
 class QArkGraphicsVirtualItem( object ):
 

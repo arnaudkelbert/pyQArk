@@ -93,12 +93,12 @@
   <customwidget>
    <class>QArkClickableFilledRect</class>
    <extends>QLabel</extends>
-   <header>..QArkClickableFilledRect.QArkClickableFilledRect.h</header>
+   <header>pyQArk.Widgets.QArkClickableFilledRect.QArkClickableFilledRect.h</header>
   </customwidget>
   <customwidget>
    <class>QArkHorizontalSlider</class>
    <extends>QWidget</extends>
-   <header>..QArkHorizontalSlider.QArkHorizontalSlider.h</header>
+   <header>pyQArk.Widgets.QArkHorizontalSlider.QArkHorizontalSlider.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

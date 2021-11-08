@@ -36,7 +36,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt5 import QtCore
 
-from ..Core.QArkMimeData import QArkMimeData
+from pyQArk.Core.QArkMimeData import QArkMimeData
 
 class QArkPlotableObjectTreeItem( object ):
 

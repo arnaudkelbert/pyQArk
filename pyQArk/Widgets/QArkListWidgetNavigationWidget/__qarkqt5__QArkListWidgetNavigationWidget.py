@@ -36,7 +36,7 @@ except:
 from PyQt5 import QtCore, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Widgets.QArkListWidgetNavigationWidget import PKGPATH
 Ui_QArkListWidgetNavigationWidget = loadUi(PKGPATH('./QArkListWidgetNavigationWidget.ui'), pkgname=__package__)
 
 try:

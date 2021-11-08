@@ -35,7 +35,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt5 import QtCore
 
-from .QArkSimpleItemModel import QArkSimpleItemModel
+from pyQArk.Models.QArkSimpleItemModel import QArkSimpleItemModel
 
 
 class QArkSimpleItemListModel( QtCore.QAbstractListModel ):

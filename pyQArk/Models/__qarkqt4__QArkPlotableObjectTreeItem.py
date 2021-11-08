@@ -36,7 +36,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt4 import QtCore, QtGui
 
-from .QArkTreeItem import QArkTreeItem
+from pyQArk.Models.QArkTreeItem import QArkTreeItem
 
 class QArkPlotableObjectTreeItem( QArkTreeItem ):
 

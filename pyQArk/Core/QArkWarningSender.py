@@ -39,7 +39,7 @@ if QArkConfig.QARK_QT_GENERATION == 4:
 elif QArkConfig.QARK_QT_GENERATION == 5:
     from PyQt5 import QtCore
 
-from .QArkWarning import QArkWarning
+from pyQArk.Core.QArkWarning import QArkWarning
 
 class QArkWarningSender( QtCore.QObject ):
     """

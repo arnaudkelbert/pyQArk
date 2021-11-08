@@ -35,7 +35,7 @@ except:
 # }-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt4 import QtCore, QtGui
 
-from .QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
+from pyQArk.Widgets.QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 
 class QArkIntegerLineEditWidget( QArkInputWidget ):
 

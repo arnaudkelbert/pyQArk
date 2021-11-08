@@ -39,7 +39,7 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyQArk.Core.QArkUiLoader import loadUi
-from . import PKGPATH
+from pyQArk.Widgets.QArkHorizontalSlider import PKGPATH
 Ui_QArkHorizontalSlider = loadUi(PKGPATH('./QArkHorizontalSlider.ui'), pkgname=__package__)
 
 try:

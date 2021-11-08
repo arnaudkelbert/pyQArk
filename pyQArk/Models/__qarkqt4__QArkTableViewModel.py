@@ -34,7 +34,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt4 import QtCore
 
-from .QArkItem import QArkItem
+from pyQArk.Models.QArkItem import QArkItem
 from pyQArk.Core.QArkMimeData import QArkMimeData
 
 import copy

@@ -38,6 +38,7 @@ import os
 import math
 import inspect
 
+
 from PyQt4 import QtCore, QtGui
 
 class QArkColorMapManager( QtCore.QObject ):

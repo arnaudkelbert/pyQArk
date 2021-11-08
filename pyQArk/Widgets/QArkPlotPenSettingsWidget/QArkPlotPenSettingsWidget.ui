@@ -192,7 +192,7 @@
   <customwidget>
    <class>QArkClickableFilledRect</class>
    <extends>QLabel</extends>
-   <header>..QArkClickableFilledRect.QArkClickableFilledRect.h</header>
+   <header>pyQArk.Widgets.QArkClickableFilledRect.QArkClickableFilledRect.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
