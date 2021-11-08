@@ -33,8 +33,12 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-    
-from PyQt4 import QtCore, QtGui
+
+from pyQArk import QArkConfig
+if QArkConfig.QARK_QT_GENERATION == 4:
+    from PyQt4 import QtCore, QtGui
+elif QArkConfig.QARK_QT_GENERATION == 5:
+    from PyQt5 import QtCore, QtGui
 
 class QArkGraphicsScene( QtGui.QGraphicsScene ):
 

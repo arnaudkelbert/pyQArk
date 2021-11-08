@@ -35,7 +35,11 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
     
 import numpy as np
-from PyQt4 import QtCore, QtGui
+from pyQArk import QArkConfig
+if QArkConfig.QARK_QT_GENERATION == 4:
+    from PyQt4 import QtCore, QtGui
+elif QArkConfig.QARK_QT_GENERATION == 5:
+    from PyQt5 import QtCore, QtGui
 
 from pyQArk.Graphics.QArkGraphicsVirtualItem import QArkGraphicsVirtualItem
 
