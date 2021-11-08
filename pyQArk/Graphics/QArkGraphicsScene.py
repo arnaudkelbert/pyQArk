@@ -37,10 +37,11 @@ except:
 from pyQArk import QArkConfig
 if QArkConfig.QARK_QT_GENERATION == 4:
     from PyQt4 import QtCore, QtGui
+    QtWidgets = QtGui
 elif QArkConfig.QARK_QT_GENERATION == 5:
-    from PyQt5 import QtCore, QtGui
+    from PyQt5 import QtCore, QtGui, QtWidgets
 
-class QArkGraphicsScene( QtGui.QGraphicsScene ):
+class QArkGraphicsScene( QtWidgets.QGraphicsScene ):
 
     NO_MOUSE_EVENT_MODE \
     ,CREATION_MOUSE_EVENT_MODE \
