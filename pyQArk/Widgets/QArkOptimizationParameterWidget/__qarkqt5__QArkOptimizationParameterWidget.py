@@ -32,7 +32,7 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 # }-- Python 2/3 compatibility ------------------------------------------
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from pyQArk.Dialogs.QArkCriticalMessageBox.QArkCriticalMessageBox import QArkCriticalMessageBox
 from pyQArk.Core import QArkQt
 from pyQArk.Core.QArkUiLoader import loadUi
