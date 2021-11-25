@@ -48,7 +48,10 @@ def getRootNodeFromString( _s_str, _s_rootTag, _s_encoding='UTF-8' ):
     Return root DOM Node from _s_string
     """
     if not _s_encoding is None:
-        _s_str = _s_str.decode(_s_encoding)
+        try:
+            _s_str = _s_str.decode(_s_encoding)
+        except AttributeError:
+            pass
     s_str = ((_s_str.replace(u'\n','')).replace(u'\t','')).replace('    ','').replace('   ','').replace('  ','').replace(u'> <',u'><')
     o_doc = xml.dom.minidom.parseString( s_str.encode('UTF-8') )
     if not _s_rootTag is None:
