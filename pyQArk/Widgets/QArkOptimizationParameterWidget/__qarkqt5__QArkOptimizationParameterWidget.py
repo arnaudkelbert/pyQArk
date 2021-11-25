@@ -6,20 +6,44 @@
 #
 #
 # @author : Arnaud Kelbert
-# @date : 2014/08/01
-# @version : 0.1
-#-----------------------------------------------------------------------
-from PyQt4 import QtCore, QtGui
-from pyQArk.Dialogs.QArkCriticalMessageBox.QArkCriticalMessageBox import QArkCriticalMessageBox
+# @date : 2021/11/25
+#
+# Historic:
+# 0.1 : init version
+# 2021/11/25 : add python 2/3 compatibility
+# -----------------------------------------------------------------------
+# {-- Python 2/3 compatibility ------------------------------------------
+from __future__ import (absolute_import, division, print_function, unicode_literals)
+import sys
+try:
+    from future import standard_library
+    standard_library.install_aliases()
 
-from Ui_QArkOptimizationParameterWidget import Ui_QArkOptimizationParameterWidget
+    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
+                          int, map, next, oct, open, pow, range, round,
+                          str, super, zip)
+except ImportError:
+    if sys.version_info.major == 2:
+        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
+try:
+    # Python 2 : basestring exists (for isinstance test)
+    basestring
+except:
+    # Python 3 : basestring does not exist
+    basestring = str
+# }-- Python 2/3 compatibility ------------------------------------------
+from PyQt5 import QtCore, QtWidgets
+from pyQArk.Dialogs.QArkCriticalMessageBox.QArkCriticalMessageBox import QArkCriticalMessageBox
+from pyQArk.Core import QArkQt
+from pyQArk.Core.QArkUiLoader import loadUi
+from pyQArk.Widgets.QArkOptimizationParameterWidget import PKGPATH
+Ui_QArkOptimizationParameterWidget = loadUi(PKGPATH('./QArkOptimizationParameterWidget.ui'), pkgname=__name__.rpartition('.')[0])
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
     def _fromUtf8(s):
         return s
-
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
     def _translate(context, text, disambig):
@@ -28,8 +52,7 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
-class QArkOptimizationParameterWidget( QtGui.QWidget, Ui_QArkOptimizationParameterWidget ):
+class QArkOptimizationParameterWidget( QtWidgets.QWidget, Ui_QArkOptimizationParameterWidget ):
     """
     """
 
@@ -131,19 +154,19 @@ class QArkOptimizationParameterWidget( QtGui.QWidget, Ui_QArkOptimizationParamet
         try:
             self.getValue()
         except Exception as e:
-            QArkCriticalMessageBox( 'Parameter {} : invalid value'.format(self.s_parameterName), str(e) ).exec_()
+            QArkQt._exec(QArkCriticalMessageBox('Parameter {} : invalid value'.format(self.s_parameterName), str(e)))
             return False
 
         try:
             self.getMinValue()
         except Exception as e:
-            QArkCriticalMessageBox( 'Parameter {} : invalid minimum boundary'.format(self.s_parameterName), str(e) ).exec_()
+            QArkQt._exec(QArkCriticalMessageBox('Parameter {} : invalid minimum boundary'.format(self.s_parameterName), str(e)))
             return False
 
         try:
             self.getMaxValue()
         except Exception as e:
-            QArkCriticalMessageBox( 'Parameter {} : invalid maximum boundary'.format(self.s_parameterName), str(e) ).exec_()
+            QArkQt._exec(QArkCriticalMessageBox('Parameter {} : invalid maximum boundary'.format(self.s_parameterName), str(e)))
             return False
 
         return True
