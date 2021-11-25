@@ -78,7 +78,8 @@ def getNodeValue( _o_node, _s_tag=None ):
 def getNodeInnerContent( _o_node ):
     try:
         o_et = ElementTree.fromstring( _o_node.toxml('utf-8') )
-        raise Exception( '{} {}'.format(type(o_et.text()), type(ElementTree.tostring(o_et[0]))) )
+        raise Exception( '{} {}'.format( str(type(o_et.text())),
+                                         str(type(ElementTree.tostring(o_et[0]))) ))
         return o_et.text + ''.join( [ElementTree.tostring(o_child) for o_child in o_et] )
     except Exception as e:
         raise e
