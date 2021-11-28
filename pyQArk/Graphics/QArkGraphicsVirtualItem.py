@@ -46,8 +46,8 @@ class QArkGraphicsVirtualItem( object ):
 
     def __init__(self):
         self.setAcceptHoverEvents(False)
-        self.setFlag(QtGui.QGraphicsItem.ItemIsMovable, False)
-        self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable, False)
+        self.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable, False)
+        self.setFlag(QtWidgets.QGraphicsItem.ItemIsSelectable, False)
 
     def hoverEnterEvent(self, e):
         self.setPen( self.parent.o_penOver )
