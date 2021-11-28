@@ -33,7 +33,7 @@ except:
     # Python 3 : basestring does not exist
     basestring = str
 #}-- Pyhton 2/3 compatibility ------------------------------------------
-from PyQt5 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class QArkDialog(object):
 
@@ -61,10 +61,10 @@ class QArkDialog(object):
         size = dialog.sizeHint()
         if host is None:
             # use screen
-            if QtGui.QDesktopWidget().isVirtualDesktop() and useVirtualDesktop:
-                hostGeometry = QtGui.QDesktopWidget().screen().rect()
+            if QtWidgets.QDesktopWidget().isVirtualDesktop() and useVirtualDesktop:
+                hostGeometry = QtWidgets.QDesktopWidget().screen().rect()
             else:
-                hostGeometry = QtGui.QDesktopWidget().screenGeometry(screenId)
+                hostGeometry = QtWidgets.QDesktopWidget().screenGeometry(screenId)
 
             x = (hostGeometry.width() - size.width()) // 2
             y = (hostGeometry.height() - size.height()) // 2
