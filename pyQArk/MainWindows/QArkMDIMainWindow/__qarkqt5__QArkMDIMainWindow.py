@@ -285,13 +285,13 @@ class QArkMDIMainWindow( QtWidgets.QMainWindow, QArkExceptionHandableObject ):
         except KeyError:
             b_stayOnTop = False
 
-        if issubclass( _cls_dialogClass, QtGui.QDialog ):
+        if issubclass( _cls_dialogClass, QtWidgets.QDialog ):
             o_dialog = _cls_dialogClass( parent = self, **kwargs )
         else:
             # A QWidget has been passed : create a QDialog and put it in
-            o_dialog = QtGui.QDialog( parent = self )
+            o_dialog = QtWidgets.QDialog( parent = self )
             o_widget = _cls_dialogClass( parent = o_dialog, **kwargs )
-            o_layout = QtGui.QVBoxLayout(o_dialog)
+            o_layout = QtWidgets.QVBoxLayout(o_dialog)
             o_layout.setSpacing( 0 )
             o_layout.setMargin(0)
             o_layout.addWidget( o_widget )
@@ -301,7 +301,7 @@ class QArkMDIMainWindow( QtWidgets.QMainWindow, QArkExceptionHandableObject ):
                 o_widget.resize(o_size)
 
         o_dialog.setWindowTitle( s_windowTitle )
-        o_window = QtGui.QMdiSubWindow( self.ui_mdiArea )
+        o_window = QtWidgets.QMdiSubWindow( self.ui_mdiArea )
         o_window.setWidget( o_dialog )
         o_window.setAttribute( QtCore.Qt.WA_DeleteOnClose )
 
