@@ -37,8 +37,9 @@ except:
 from pyQArk import QArkConfig
 if QArkConfig.QARK_QT_GENERATION == 4:
     from PyQt4 import QtCore, QtGui
+    QtWidgets = QtGui
 elif QArkConfig.QARK_QT_GENERATION == 5:
-    from PyQt5 import QtCore, QtGui
+    from PyQt5 import QtCore, QtGui, QtWidgets
 
 from pyQArk.Graphics.QArkGraphicsScene import QArkGraphicsScene
 
