@@ -56,23 +56,23 @@ class QArkGraphicsVirtualItem( object ):
         self.setPen( self.parent.o_pen )
 
     def mousePressEvent(self, e):
-        QtGui.QGraphicsItem.mousePressEvent(self, e)
+        QtWidgets.QGraphicsItem.mousePressEvent(self, e)
 
     def mouseReleaseEvent(self, e):
-        QtGui.QGraphicsItem.mouseReleaseEvent(self, e)
+        QtWidgets.QGraphicsItem.mouseReleaseEvent(self, e)
 
     def changeMode(self, mode):
         if mode == QArkGraphicsScene.CREATION_MOUSE_EVENT_MODE:
             self.setAcceptHoverEvents(False)
-            self.setFlag(QtGui.QGraphicsItem.ItemIsMovable, False)
-            self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable, False)
+            self.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable, False)
+            self.setFlag(QtWidgets.QGraphicsItem.ItemIsSelectable, False)
 
         elif mode == QArkGraphicsScene.EDITION_MOUSE_EVENT_MODE:
             self.setAcceptHoverEvents(True)
-            self.setFlag(QtGui.QGraphicsItem.ItemIsMovable, True)
-            self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable, True)
+            self.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable, True)
+            self.setFlag(QtWidgets.QGraphicsItem.ItemIsSelectable, True)
 
         else:
             self.setAcceptHoverEvents(False)
-            self.setFlag(QtGui.QGraphicsItem.ItemIsMovable, False)
-            self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable, False)
+            self.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable, False)
+            self.setFlag(QtWidgets.QGraphicsItem.ItemIsSelectable, False)

@@ -48,7 +48,7 @@ class QArkGraphicsScene( QtWidgets.QGraphicsScene ):
     ,EDITION_MOUSE_EVENT_MODE = range(3)
 
     def __init__(self):
-        QtGui.QGraphicsScene.__init__(self)
+        QtWidgets.QGraphicsScene.__init__(self)
 
         self.o_currentItem = None
 
@@ -66,7 +66,7 @@ class QArkGraphicsScene( QtWidgets.QGraphicsScene ):
 
     def mousePressEvent( self, e ):
         if self.u_mouseEventMode is self.__class__.NO_MOUSE_EVENT_MODE:
-            QtGui.QGraphicsScene.mousePressEvent(self, e)
+            QtWidgets.QGraphicsScene.mousePressEvent(self, e)
 
         elif e.button() == QtCore.Qt.LeftButton \
                 and self.u_mouseEventMode is self.__class__.CREATION_MOUSE_EVENT_MODE:
@@ -77,12 +77,12 @@ class QArkGraphicsScene( QtWidgets.QGraphicsScene ):
             self.b_mouseEventCreateState = True
 
         else:
-            QtGui.QGraphicsScene.mousePressEvent(self, e)
+            QtWidgets.QGraphicsScene.mousePressEvent(self, e)
 
 
     def mouseReleaseEvent( self, e ):
         if self.u_mouseEventMode is self.__class__.NO_MOUSE_EVENT_MODE:
-            QtGui.QGraphicsScene.mouseReleaseEvent(self, e)
+            QtWidgets.QGraphicsScene.mouseReleaseEvent(self, e)
 
         elif e.button() == QtCore.Qt.LeftButton \
                 and self.u_mouseEventMode is self.__class__.CREATION_MOUSE_EVENT_MODE:
@@ -99,7 +99,7 @@ class QArkGraphicsScene( QtWidgets.QGraphicsScene ):
             self.b_mouseEventCreateState = False
 
         else:
-            QtGui.QGraphicsScene.mouseReleaseEvent(self, e)
+            QtWidgets.QGraphicsScene.mouseReleaseEvent(self, e)
 
 
 
@@ -108,7 +108,7 @@ class QArkGraphicsScene( QtWidgets.QGraphicsScene ):
             self.o_currentItem.resize( self.o_creationFirstPoint, e.scenePos() )
 
         else:
-            QtGui.QGraphicsScene.mouseMoveEvent(self, e)
+            QtWidgets.QGraphicsScene.mouseMoveEvent(self, e)
 
 
     def removeSelection(self):

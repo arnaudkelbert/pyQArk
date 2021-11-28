@@ -47,7 +47,7 @@ from pyQArk.Graphics.QArkGraphicsVirtualItem import QArkGraphicsVirtualItem
 class QArkGraphicsSquareItem( QtWidgets.QGraphicsRectItem, QArkGraphicsVirtualItem ):
 
     def __init__(self, parent = None):
-        QtGui.QGraphicsRectItem.__init__(self)
+        QtWidgets.QGraphicsRectItem.__init__(self)
         self.parent = parent
         QArkGraphicsVirtualItem.__init__(self)
 
