@@ -331,7 +331,7 @@ class QArkMDIMainWindow( QtWidgets.QMainWindow, QArkExceptionHandableObject ):
         if not o_size is None:
             o_window.resize(o_size)
 
-        o_window.setGeometry( QtGui.QStyle.alignedRect( QtCore.Qt.LeftToRight
+        o_window.setGeometry( QtWidgets.QStyle.alignedRect( QtCore.Qt.LeftToRight
                                                          , QtCore.Qt.AlignCenter
                                                          , o_window.size()
                                                          , self.ui_mdiArea.geometry()
