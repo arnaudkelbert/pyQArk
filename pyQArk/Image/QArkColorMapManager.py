@@ -85,7 +85,10 @@ class QArkColorMapManager( QtCore.QObject ):
         self.t_colorMap[ 'GREEN' ] = [ QtGui.qRgb(0,k,0) for k in range(256) ]
 
     def genColorMap_SINUS( self):
-        self.t_colorMap[ 'SINUS' ] = [ QtGui.qRgb(math.sin(k*2.0*math.pi/255.0),math.sin(k*2.0*math.pi/255.0),math.sin(k*2.0*math.pi/255.0)) for k in range(256) ]
+        self.t_colorMap[ 'SINUS' ] = [ QtGui.qRgb(int(math.sin(k*2.0*math.pi/255.0))*255,
+                                                  int(math.sin(k*2.0*math.pi/255.0))*255,
+                                                  int(math.sin(k*2.0*math.pi/255.0))*255)
+                                                  for k in range(256) ]
 
     def getColorMap( self, _s_colorMapKey ):
         return self.t_colorMap[ _s_colorMapKey ]

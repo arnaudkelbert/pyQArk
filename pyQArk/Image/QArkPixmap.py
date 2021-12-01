@@ -55,12 +55,12 @@ class QArkPixmap( object ):
         self.qimageToQPixmap()
 
     def createQImageFromGreyData( self, _t_data ):
-        t_data = _t_data.astype( np.int )
+        t_data = _t_data.astype(np.int32)
 
         u_mod4 = np.shape( t_data )[1] % 4
         
         if u_mod4 != 0:
-            t_data4 = np.zeros( (np.shape(t_data)[0], np.shape(t_data)[1] + 4 - u_mod4), dtype=np.int )
+            t_data4 = np.zeros( (np.shape(t_data)[0], np.shape(t_data)[1] + 4 - u_mod4), dtype=np.int32 )
             t_data4[ 0:np.shape(t_data)[0],0:np.shape(t_data)[1] ] = t_data[ 0:np.shape(t_data)[0],0:np.shape(t_data)[1] ]
             t_data = t_data4
         
