@@ -68,7 +68,8 @@ class QArkPixmapTest(unittest.TestCase):
             self.o_layout.addWidget(self.o_widget)
 
             #Test QPixmap directly
-            o_image2 = QtGui.QImage('./pixmap.png')
+            #o_image2 = QtGui.QImage('./pixmap.png')
+            o_image2 = QtGui.QImage('./pixmap.jpg')
             o_pixmap2 = QtGui.QPixmap.fromImage(o_image2)
             self.o_widget2 = QtWidgets.QLabel()
             self.o_widget2.setPixmap(o_pixmap2)
