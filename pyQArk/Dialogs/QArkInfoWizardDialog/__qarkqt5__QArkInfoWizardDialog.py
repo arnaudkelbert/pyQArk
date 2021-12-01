@@ -58,6 +58,7 @@ class QArkInfoWizardDialog( QtWidgets.QWizard ):
         """Constructeur"""
         super( QArkInfoWizardDialog, self ).__init__(parent)
         self.__parseXml( _s_xml, _u_mode, _s_encoding )
+        self.setWizardStyle(QtWidgets.QWizard.ModernStyle)
 
     def __parseXml( self, _s_xml, _u_mode, _s_encoding ):
         if _u_mode is self.__class__.MODE_XML_FILE:
