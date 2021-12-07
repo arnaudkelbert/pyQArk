@@ -113,7 +113,7 @@ class QArkWorkerThread(QtCore.QThread):
             #self.interruptThread()
             self.quit()    
         except:
-            self.errorOccured.emit( '\n'.join(map(str,sys.exc_info())) )
+            self.errorOccured.emit('\n'.join([str(v) for v in sys.exc_info()]))
             #self.interruptThread()
             self.quit()
         finally:

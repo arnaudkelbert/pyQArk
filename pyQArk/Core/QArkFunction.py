@@ -131,5 +131,5 @@ class QArkFunction(object):
         
     @classmethod
     def getCstArgsKeys(cls):
-        return map( lambda t:t[cls.U_CST_ARG_KEY_INDEX], cls.getCstArgs() )
+        return [t[cls.U_CST_ARG_KEY_INDEX] for t in cls.getCstArgs()]
     

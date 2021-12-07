@@ -105,10 +105,10 @@ class QArkColorMapManager( QtCore.QObject ):
         #print "Loading colormap %s : %s" % (s_key,_s_file)
 
         def colorLineToRGB( _s_line ):
-            c = map( int, _s_line.split(',') )
+            c = [int(x) for x in _s_line.split(',')]
             return QtGui.qRgb( c[0], c[1], c[2] )
 
-        self.t_colorMap[ s_key ] = map( colorLineToRGB, t_lines[1:257] )
+        self.t_colorMap[ s_key ] = [colorLineToRGB(v) for v in t_lines[1:257]]
 
     def loadColorMapRepository( self, _s_dir ):
 

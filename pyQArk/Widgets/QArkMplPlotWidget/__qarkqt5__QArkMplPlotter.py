@@ -86,12 +86,24 @@ class QArkMplPlotter( QtCore.QObject ):
         elif _u_mode is self.__class__.VIEW_MODE__MATRIXSHOW:
             self.t_axes[_u_c] = self.o_figure.add_subplot(_u_c, **kwargs)
         elif _u_mode is self.__class__.VIEW_MODE__WIREFRAME:
+            try:
+                kwargs.pop('aspect')
+            except KeyError:
+                pass
             self.t_axes[_u_c] = self.o_figure.add_subplot(_u_c, projection='3d', **kwargs)
         elif _u_mode is self.__class__.VIEW_MODE__SURFACE:
+            try:
+                kwargs.pop('aspect')
+            except KeyError:
+                pass
             self.t_axes[_u_c] = self.o_figure.add_subplot(_u_c, projection='3d', **kwargs)
         elif _u_mode is self.__class__.VIEW_MODE__COLORMESH:
             self.t_axes[_u_c] = self.o_figure.add_subplot(_u_c, **kwargs)
         elif _u_mode is self.__class__.VIEW_MODE__SCATTER_3D:
+            try:
+                kwargs.pop('aspect')
+            except KeyError:
+                pass
             self.t_axes[_u_c] = self.o_figure.add_subplot(_u_c, projection='3d', **kwargs)
         return self.t_axes[_u_c]
 

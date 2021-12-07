@@ -110,7 +110,7 @@ class QArkWorker_EventDriven(QtCore.QObject):
         except BaseException as e:
             self.errorOccured.emit(str(e))
         except:
-            self.errorOccured.emit('\n'.join(map(str, sys.exc_info())))
+            self.errorOccured.emit('\n'.join([str(v) for v in sys.exc_info()]))
         finally:
             self.finished.emit()
 

@@ -160,9 +160,8 @@ class QArkOpenFilterFileDialog( QtGui.QDialog, Ui_QArkOpenFilterFileDialog ):
         return self.ui.fileListWidget.selectedItems()
 
     def getSelectedFileNameList( self ):
-        return map( lambda i: os.path.join( self.s_currentDirectory, str(i.text()) )
-                    , self.ui.fileListWidget.selectedItems()
-                    )
+        return [os.path.join( self.s_currentDirectory, str(i.text()) )
+                for i in self.ui.fileListWidget.selectedItems()]
 
     def getSafeFilter( self ):
         s_filter = self.ui.filterLineEdit.text()
