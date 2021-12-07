@@ -93,7 +93,7 @@ class QArkPixmapFrame( QtWidgets.QFrame ):
 
     def initUi(self):
         self.o_scene = QtWidgets.QGraphicsScene()
-        self.o_graphicView = QtWidgets.QGraphicsView( self.o_scene )
+        self.o_graphicView = QtWidgets.QGraphicsView(self.o_scene)
         self.setBackground()
         self.o_graphicView.setRenderHint( QtGui.QPainter.SmoothPixmapTransform )
         self.o_graphicView.setStyleSheet( "QGraphicsView { border-style: none; }" )
@@ -142,7 +142,8 @@ class QArkPixmapFrame( QtWidgets.QFrame ):
         """
         """
         self.o_graphicView.resetTransform()
-        self.o_imagePixmapItem = QtWidgets.QGraphicsPixmapItem(scene=self.o_scene)
+        self.o_imagePixmapItem = QtWidgets.QGraphicsPixmapItem()
+        self.o_scene.addItem(self.o_imagePixmapItem)
         o_pixmap = self.o_imagePixmap.getPixmap()
         self.o_imagePixmapItem.setPixmap(o_pixmap)
         # Centrage
