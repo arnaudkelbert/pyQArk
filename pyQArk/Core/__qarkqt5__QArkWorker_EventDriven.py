@@ -18,6 +18,7 @@
 #{-- Pyhton 2/3 compatibility ------------------------------------------
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 import sys
+import os
 try:
     from future import standard_library
     standard_library.install_aliases()
@@ -38,6 +39,13 @@ except:
 from PyQt5 import QtCore
 
 from pyQArk.Core.QArkWorkerInterruptor import QArkWorkerInterruptor
+import traceback
+try:
+    # Python 2
+    from cStringIO import StringIO
+except:
+    # Python 3
+    from io import StringIO
 
 def print_lock(str, _o_mutex):
     # Obliger de stocker le QMutexLocker dans une variable pour pas qu'il soit detruit : la portee du Mutex couvre ici l'ensemble de la methode
@@ -70,6 +78,7 @@ class QArkWorker_EventDriven(QtCore.QObject):
         self.o_workerInterruptor = QArkWorkerInterruptor()
         self.o_mutexInterruptThread = QtCore.QMutex()
         self.b_selfIO = _b_selfIO
+        self.t_sys_exec_info = None
 
         try:
             self.o_printMutex = self.t_workerParameters['print_lock']
@@ -101,14 +110,23 @@ class QArkWorker_EventDriven(QtCore.QObject):
 
         self.b_hasBeenTerminated = False
         try:
-            self.x_return = self.__class__.run( _t_param=self.t_workerParameters
+            self.x_return = self.__class__.run(_t_param=self.t_workerParameters
                                                 ,_o_interruptor=self.o_workerInterruptor
                                                 )
             if not isinstance(self.x_return, list):
                 self.x_return = [self.x_return]
             self.returnedDataReady.emit(self.x_return)
         except BaseException as e:
-            self.errorOccured.emit(str(e))
+            # init a buffer to write traceback
+            fp_tbinfofile = StringIO()
+            # print traceback in buffer
+            _, _, tracebackobj = sys.exc_info()
+            traceback.print_tb(tracebackobj, None, fp_tbinfofile)
+            # read buffer
+            fp_tbinfofile.seek(0)
+            s_tbinfo = fp_tbinfofile.read()
+            s_exception = '\n'.join([str(e),'',s_tbinfo])
+            self.errorOccured.emit(s_exception)
         except:
             self.errorOccured.emit('\n'.join([str(v) for v in sys.exc_info()]))
         finally:
@@ -132,6 +150,8 @@ class QArkWorker_EventDriven(QtCore.QObject):
     @QtCore.pyqtSlot()
     def handleInterruptRequest(self):
         print_lock('handleInterruptRequest', self.o_printMutex)
+        #self.t_sys_exec_info = sys.exc_info()
+        #print_lock(self.t_sys_exec_info)
         self.o_workerInterruptor.doInterrupt()
         #self.doInterrupt()
         #self.o_interruptor.doInterrupt()
