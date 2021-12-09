@@ -60,6 +60,9 @@ class QArkWorkerInterruptor(QtCore.QObject):
         QtCore.QObject.__init__(self)
         self.b_interrupt = False
 
+    def reset(self):
+        self.b_interrupt = False
+
     def doInterrupt(self):
         self.b_interrupt = True
         
