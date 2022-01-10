@@ -35,7 +35,7 @@ except:
 # }-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt4 import QtCore, QtGui
 
-from pyQArk.Widgets.QArkInputWidget import QArkInputWidget
+from pyQArk.Widgets.QArkInputWidget.QArkInputWidget import QArkInputWidget
 
 class QArkBooleanCheckBoxWidget(QArkInputWidget):
 

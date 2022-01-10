@@ -36,6 +36,7 @@ for name in T_MODULE_NAMES:
     if name.startswith(QARK_QT_MODULE_PREFIX):
         # import the module
         imported_module = importlib.import_module('.'+name, package=__name__)
+
         # add an attribute to the current package to module with name without prefix
         setattr(sys.modules[__name__], name[len(QARK_QT_MODULE_PREFIX):], imported_module)
         # find all references to the module with a prefixed name and replace them without prefix

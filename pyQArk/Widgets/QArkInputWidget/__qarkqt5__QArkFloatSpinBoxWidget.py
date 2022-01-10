@@ -36,7 +36,7 @@ except:
 import unittest
 from PyQt5 import QtCore, QtWidgets
 
-from pyQArk.Widgets.QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
+from pyQArk.Widgets.QArkInputWidget.QArkInputWidget import QArkInputWidget, QArkInputWidgetBadFormat
 
 class QArkFloatSpinBoxWidget( QArkInputWidget ):
 

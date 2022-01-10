@@ -37,7 +37,7 @@ from PyQt5 import QtCore, QtWidgets
 
 from pyQArk.Widgets.QArkInputWidget import QArkInputWidget
 
-class QArkBooleanCheckBoxWidget(QArkInputWidget):
+class QArkBooleanCheckBoxWidget(QArkInputWidget.QArkInputWidget):
 
     U_COLSIZE = 1
 
