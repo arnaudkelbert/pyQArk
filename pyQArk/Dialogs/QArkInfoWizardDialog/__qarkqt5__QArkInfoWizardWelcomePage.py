@@ -66,9 +66,9 @@ class QArkInfoWizardWelcomePage( QtWidgets.QWizardPage ):
         self.setSubTitle( self.s_subtitle )
 
         if not self.s_image is None:
-            o_image = QtGui.QImage( str(self.s_image) )
-            o_pixmap = QtGui.QPixmap.fromImage(o_image)
-            self.setPixmap( QtWidgets.QWizard.BannerPixmap, o_pixmap )
+            self.o_image = QtGui.QImage( str(self.s_image) )
+            self.o_pixmap = QtGui.QPixmap.fromImage(self.o_image)
+            self.setPixmap(QtWidgets.QWizard.BannerPixmap, self.o_pixmap)
 
         if not self.s_text is None:
             o_layout = QtWidgets.QVBoxLayout(self)
