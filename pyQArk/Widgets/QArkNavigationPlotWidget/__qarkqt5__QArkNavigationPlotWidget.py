@@ -88,7 +88,7 @@ class QArkNavigationPlotWidget( QtWidgets.QWidget ):
         self.setAttribute( QtCore.Qt.WA_DeleteOnClose )
         o_layout = QtWidgets.QVBoxLayout(self)
         o_layout.setSpacing( 0 )
-        o_layout.setMargin(0)
+        o_layout.setContentsMargins(0, 0, 0, 0)
         self.ui_navigationTabWidget = QArkNavigationTabWidget( self )
         self.ui_plotWidget = QArkPlotWidget( self )
         self.ui_penSettingsWidget = QArkPlotPenSettingsWidget( self )

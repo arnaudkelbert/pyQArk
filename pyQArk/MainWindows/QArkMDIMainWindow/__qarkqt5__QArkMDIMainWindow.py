@@ -293,7 +293,7 @@ class QArkMDIMainWindow( QtWidgets.QMainWindow, QArkExceptionHandableObject ):
             o_widget = _cls_dialogClass( parent = o_dialog, **kwargs )
             o_layout = QtWidgets.QVBoxLayout(o_dialog)
             o_layout.setSpacing( 0 )
-            o_layout.setMargin(0)
+            o_layout.setContentsMargins(0, 0, 0, 0)
             o_layout.addWidget( o_widget )
             o_dialog.setLayout( o_layout )
 

@@ -101,7 +101,7 @@ class QArkPlotWidget( QtGui.QWidget ):
         self.setMinimumSize(100,100)
         o_layout = QtGui.QVBoxLayout(self)
         o_layout.setSpacing( 0 )
-        o_layout.setMargin(0)
+        o_layout.setContentsMargins(0, 0, 0, 0)
         self.o_viewBox = CustomViewBox()
         self.o_plotWidget = pg.PlotWidget( parent = self
                                            ,viewBox = self.o_viewBox
