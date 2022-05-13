@@ -86,7 +86,11 @@ def loadUi(_s_uiFile, pkgname, **kwargs):
     if len(t_members) == 1:
         return t_members[0][1]
     else:
-        if s_kwClassname is None:
+        # Filter Ui_ classnames
+        t_members_filtered = [m for m in t_members if m[0][0:3] == 'Ui_']
+        if len(t_members_filtered) == 1:
+            return t_members_filtered[0][1]
+        elif s_kwClassname is None:
             raise Exception('You should give the name of the compiled class to the loadUi method (classname parameter)')
         try:
             return [m[1] for m in t_members if m[0] == 'Ui_{}'.format(s_kwClassname)][0]
