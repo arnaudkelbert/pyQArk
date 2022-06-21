@@ -82,9 +82,15 @@ elif QARK_QT_GENERATION == 4:
 # Setting matplotlib backends
 import matplotlib
 if QARK_QT_GENERATION == 5:
-    matplotlib.use('QT5Agg')
+    try:
+        matplotlib.use('QT5Agg')
+    except:
+        pass
 elif QARK_QT_GENERATION == 4:
-    matplotlib.use('QT4Agg')
+    try:
+        matplotlib.use('QT4Agg')
+    except:
+        pass
 # Tell matplotlib to use PyQt (instead of PySide if installed)
 # This line is deprecated :
 # => import Qt binding or set QT_API environment variable
