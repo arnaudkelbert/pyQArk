@@ -36,7 +36,10 @@ except:
 from PyQt5 import QtCore
 
 import matplotlib
-matplotlib.use('QT5Agg')
+try:
+    matplotlib.use('QT5Agg')
+except:
+    pass
 import matplotlib.pyplot as plt
 
 class QArkMplPlotter( QtCore.QObject ):

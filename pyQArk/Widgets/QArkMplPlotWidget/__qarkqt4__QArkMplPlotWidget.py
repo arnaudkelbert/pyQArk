@@ -49,7 +49,10 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 import matplotlib
-matplotlib.use('QT4Agg')
+try:
+    matplotlib.use('QT4Agg')
+except:
+    pass
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 try:
     from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
