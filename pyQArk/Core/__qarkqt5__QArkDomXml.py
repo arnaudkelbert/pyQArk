@@ -35,7 +35,8 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 import xml.dom.minidom
 from xml.dom import Node
-from xml.etree import ElementTree
+#from xml.etree import ElementTree
+from lxml.etree import ElemenTree
 
 from PyQt5 import QtXml
 
@@ -78,10 +79,7 @@ def getNodeValue( _o_node, _s_tag=None ):
 def getNodeInnerContent( _o_node ):
     try:
         o_et = ElementTree.fromstring( _o_node.toxml('utf-8') )
-        #raise Exception( '{} {}'.format( str(type(o_et.text)),
-        #                                 str(type(ElementTree.tostring(o_et[0]))) ))
         return o_et.text + ''.join( [ElementTree.tostring(o_child, encoding='unicode') for o_child in o_et] )
-        #return o_et.text + ''.join( [ElementTree.tostring(o_child, encoding='utf-8') for o_child in o_et] )
     except Exception as e:
         raise e
 
