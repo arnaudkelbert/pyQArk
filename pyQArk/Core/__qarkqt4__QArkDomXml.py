@@ -35,7 +35,7 @@ except:
 #}-- Pyhton 2/3 compatibility ------------------------------------------
 import xml.dom.minidom
 from xml.dom import Node
-from xml.etree import ElementTree
+from lxml.etree import ElementTree
 
 from PyQt4 import QtXml
 
