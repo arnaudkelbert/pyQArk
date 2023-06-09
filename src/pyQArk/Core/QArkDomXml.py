@@ -1,43 +1,9 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-#
-#
-# QArkDomXML
-#
-#
-# @author : Arnaud Kelbert
-# @date : 2019/07/26
-# @version : 0.2
-#
-# Historic:
-# 0.1 : init version
-# 0.2 : add python 2/3 compatibility
-#-----------------------------------------------------------------------
-#{-- Pyhton 2/3 compatibility ------------------------------------------
-from __future__ import (absolute_import, division, print_function, unicode_literals)
-import sys
-try:
-    from future import standard_library
-    standard_library.install_aliases()
-
-    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
-                          int, map, next, oct, open, pow, range, round,
-                          str, super, zip)
-except ImportError:
-    if sys.version_info.major == 2:
-        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
-try:
-    # Python 2 : basestring exists (for isinstance test)
-    basestring
-except:
-    # Python 3 : basestring does not exist
-    basestring = str
-#}-- Pyhton 2/3 compatibility ------------------------------------------
 import xml.dom.minidom
 from xml.dom import Node
 from lxml.etree import ElementTree
 
-from PyQt4 import QtXml
+from PyQt5 import QtXml
 
 def getRootNode( _s_file, _s_rootTag, _s_encoding='UTF-8' ):
     with open(_s_file,'r') as fp:
@@ -78,9 +44,7 @@ def getNodeValue( _o_node, _s_tag=None ):
 def getNodeInnerContent( _o_node ):
     try:
         o_et = ElementTree.fromstring( _o_node.toxml('utf-8') )
-        return o_et.text + ''.join([ElementTree.tostring(o_child, encoding='unicode') for o_child in o_et])
-        # return o_et.text + ''.join( [ElementTree.tostring(o_child, encoding='utf-8') for o_child in o_et] )
-        #return o_et.text + ''.join( [ElementTree.tostring(o_child) for o_child in o_et] )
+        return o_et.text + ''.join( [ElementTree.tostring(o_child, encoding='unicode') for o_child in o_et] )
     except Exception as e:
         raise e
 

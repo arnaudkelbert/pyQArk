@@ -1,19 +1,4 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-# 
-#
-# Core.QArkFunctorFactory
-# 
-#
-# @author : Arnaud Kelbert
-# @date : 2019/03/05
-# @version : 0.2
-#
-# Historic:
-# 0.1 : init version
-# 0.2 : add python 2/3 compatibility
-#-----------------------------------------------------------------------
-#{-- Pyhton 2/3 compatibility ------------------------------------------
 import copy
 
 from pyQArk.Widgets.QArkInputWidgetGrid.QArkInputWidgetGrid import QArkInputWidgetGrid
