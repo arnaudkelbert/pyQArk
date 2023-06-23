@@ -1,42 +1,7 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-#
-#
-# QArkMDIMainWindow
-#
-#
-# @author : Arnaud Kelbert
-# @date : 2019/03/05
-# @version : 0.2
-#
-# Historic:
-# 0.1 : init version
-# 0.2 : add python 2/3 compatibility
-#-----------------------------------------------------------------------
-#{-- Pyhton 2/3 compatibility ------------------------------------------
-from __future__ import (absolute_import, division, print_function, unicode_literals)
-import sys
-try:
-    from future import standard_library
-    standard_library.install_aliases()
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
-                          int, map, next, oct, open, pow, range, round,
-                          str, super, zip)
-except ImportError:
-    if sys.version_info.major == 2:
-        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
-try:
-    # Python 2 : basestring exists (for isinstance test)
-    basestring
-except:
-    # Python 3 : basestring does not exist
-    basestring = str
-#}-- Pyhton 2/3 compatibility ------------------------------------------
-
-from PyQt4 import QtCore, QtGui
-
-class QArkMinimalistMDIMainWindow( QtGui.QMainWindow ):
+class QArkMinimalistMDIMainWindow( QtWidgets.QMainWindow ):
     """
     A main window framework for multi-document area.
     Here are the main components :
@@ -68,9 +33,9 @@ class QArkMinimalistMDIMainWindow( QtGui.QMainWindow ):
         Overwrite to add components (do not forget to call parent method first)
         """
         # init the mdiArea
-        self.ui_mdiArea = QtGui.QMdiArea()
-        self.ui_mdiArea.setOption(QtGui.QMdiArea.DontMaximizeSubWindowOnActivation)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.ui_mdiArea = QtWidgets.QMdiArea()
+        self.ui_mdiArea.setOption(QtWidgets.QMdiArea.DontMaximizeSubWindowOnActivation)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(1)
         self.ui_mdiArea.setSizePolicy( sizePolicy )        
@@ -184,7 +149,7 @@ class QArkMinimalistMDIMainWindow( QtGui.QMainWindow ):
         """Create action
         Overwrite to add actions
         """
-        self.registerAction( 'QUIT_ACTION', QtGui.QAction( "&Quit", self, triggered = self.close ) )
+        self.registerAction( 'QUIT_ACTION', QtWidgets.QAction( "&Quit", self, triggered = self.close ) )
 
     def createMenus( self ):
         """
@@ -219,7 +184,7 @@ class QArkMinimalistMDIMainWindow( QtGui.QMainWindow ):
         try:
             s_windowTitle = kwargs.pop('_s_windowTitle')
         except KeyError:
-            s_windowTitle = QtCore.QString()
+            s_windowTitle = ""
 
         try:
             b_showTitleButtons = kwargs.pop('_b_showTitleButtons')
@@ -237,23 +202,24 @@ class QArkMinimalistMDIMainWindow( QtGui.QMainWindow ):
         except KeyError:
             b_stayOnTop = False
 
-        if issubclass( _cls_dialogClass, QtGui.QDialog ):
+        if issubclass( _cls_dialogClass, QtWidgets.QDialog ):
             o_dialog = _cls_dialogClass( parent = self, **kwargs )
         else:
             # A QWidget has been passed : create a QDialog and put it in
-            o_dialog = QtGui.QDialog( parent = self )
+            o_dialog = QtWidgets.QDialog( parent = self )
             o_widget = _cls_dialogClass( parent = o_dialog, **kwargs )
-            o_layout = QtGui.QVBoxLayout(o_dialog)
+            o_layout = QtWidgets.QVBoxLayout(o_dialog)
             o_layout.setSpacing( 0 )
-            o_layout.setMargin(0)
+            o_layout.setContentsMargins(0, 0, 0, 0)
             o_layout.addWidget( o_widget )
             o_dialog.setLayout( o_layout )
+
 
             if not o_size is None:
                 o_widget.resize(o_size)
 
         o_dialog.setWindowTitle( s_windowTitle )
-        o_window = QtGui.QMdiSubWindow( self.ui_mdiArea )
+        o_window = QtWidgets.QMdiSubWindow( self.ui_mdiArea )
         o_window.setWidget( o_dialog )
         o_window.setAttribute( QtCore.Qt.WA_DeleteOnClose )
 

@@ -1,49 +1,6 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-# 
-#
-# QArkOpenFilterFileDialog
-# 
-#
-# @author : Arnaud Kelbert
-# @date : 2019/03/05
-# @version : 0.2
-#
-# Usage :
-#
-#    o_dialog = QArkOpenFilterFileDialog( parent = self, _s_directory=None, _s_filter='*' )
-#    if o_dialog.exec_() == QtGui.QDialog.Accepted:
-#        t_files = o_dialog.getSelectedFiles()
-#
-# Historic:
-# 0.1 : init version
-# 0.2 : add python 2/3 compatibility
-#-----------------------------------------------------------------------
-#{-- Pyhton 2/3 compatibility ------------------------------------------
-from __future__ import (absolute_import, division, print_function, unicode_literals)
-import sys
-try:
-    from future import standard_library
-    standard_library.install_aliases()
-
-    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
-                          int, map, next, oct, open, pow, range, round,
-                          str, super, zip)
-except ImportError:
-    if sys.version_info.major == 2:
-        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
-try:
-    # Python 2 : basestring exists (for isinstance test)
-    basestring
-except:
-    # Python 3 : basestring does not exist
-    basestring = str
-#}-- Pyhton 2/3 compatibility ------------------------------------------
-import sys
 import os
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5 import QtCore, QtWidgets
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Dialogs.QArkOpenFilterFileDialog import PKGPATH
 Ui_QArkOpenFilterFileDialog = loadUi(PKGPATH('./QArkOpenFilterFileDialog.ui'), pkgname=__name__.rpartition('.')[0])

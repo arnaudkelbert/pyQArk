@@ -1,44 +1,8 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-#
-#
-# QArkWorkerThreadRunDialog
-#
-#
-# @author : Arnaud Kelbert
-# @date : 2015/03/08
-# @version : 0.1
-#-----------------------------------------------------------------------
-#{-- Pyhton 2/3 compatibility ------------------------------------------
-from __future__ import (absolute_import, division, print_function, unicode_literals)
-import sys
-try:
-    from future import standard_library
-    standard_library.install_aliases()
-
-    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
-                          int, map, next, oct, open, pow, range, round,
-                          str, super, zip)
-except ImportError:
-    if sys.version_info.major == 2:
-        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
-try:
-    # Python 2 : basestring exists (for isinstance test)
-    basestring
-except:
-    # Python 3 : basestring does not exist
-    basestring = str
-#}-- Pyhton 2/3 compatibility ------------------------------------------
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 from pyQArk.Core.QArkUiLoader import loadUi
 from pyQArk.Dialogs.QArkWorkerThreadRunDialog import PKGPATH
 Ui_QArkWorkerThreadRunDialog = loadUi(PKGPATH('./QArkWorkerThreadRunDialog.ui'), pkgname=__name__.rpartition('.')[0])
-
-#from pyQArk.Core.QArkMessage import QArkMessage
-#from pyQArk.Core.QArkMessageSender import QArkMessageSender
-from pyQArk.Core.QArkWarningSender import QArkWarningSender
-#from pyQArk.Core.QArkExceptionHandler import QArkExceptionHandler
 from pyQArk.Core.QArkWorkerThreadController import QArkWorkerThreadController
 
 try:

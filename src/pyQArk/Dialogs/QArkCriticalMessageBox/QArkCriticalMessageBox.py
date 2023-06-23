@@ -1,5 +1,4 @@
 from PyQt5 import QtWidgets
-
 from pyQArk.Dialogs.QArkDialog import QArkDialog
 
 class QArkCriticalMessageBox(QtWidgets.QMessageBox):
