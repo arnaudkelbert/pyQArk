@@ -3,11 +3,7 @@ import warnings
 warnings.warn('QArkWorkerController class is deprecated. No support garanteed. You should use QArkWorkerThreadController instead.',
               DeprecationWarning)
 print('WARNING : QArkWorkerController class is deprecated. No support garanteed. You should use QArkWorkerThreadController instead.')
-from pyQArk import QArkConfig
-if QArkConfig.QARK_QT_GENERATION == 4:
-    from PyQt4 import QtCore
-elif QArkConfig.QARK_QT_GENERATION == 5:
-    from PyQt5 import QtCore
+from PyQt5 import QtCore
 
 class QArkThread(QtCore.QThread):
     def __init__(self, parent=None):

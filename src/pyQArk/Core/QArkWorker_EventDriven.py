@@ -10,15 +10,12 @@
 
 #-----------------------------------------------------------------------
 from PyQt5 import QtCore
+import sys
 
 from pyQArk.Core.QArkWorkerInterruptor import QArkWorkerInterruptor
 import traceback
-try:
-    # Python 2
-    from cStringIO import StringIO
-except:
-    # Python 3
-    from io import StringIO
+# Python 3
+from io import StringIO
 
 def print_lock(str, _o_mutex):
     # Obliger de stocker le QMutexLocker dans une variable pour pas qu'il soit detruit : la portee du Mutex couvre ici l'ensemble de la methode

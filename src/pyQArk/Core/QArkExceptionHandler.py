@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import traceback
 import time
-try:
-    # Python 2
-    from cStringIO import StringIO
-except:
-    # Python 3
-    from io import StringIO
+from io import StringIO
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 

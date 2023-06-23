@@ -3,10 +3,7 @@ import unittest
 import os
 from pyQArk import QArkConfig
 
-if QArkConfig.QARK_QT_GENERATION == 4:
-    import PyQt4.uic as uic
-elif QArkConfig.QARK_QT_GENERATION == 5:
-    import PyQt5.uic as uic
+import PyQt5.uic as uic
 
 class QArkUiCompiler( object ):
 
@@ -26,7 +23,7 @@ class QArkUiCompiler( object ):
         s_path = os.path.normpath(os.path.abspath(uifile))
         # Automatic file naming depending on PyQt generation
         s_basename = os.path.splitext(os.path.basename(s_path))[0]
-        pyfile = os.path.join(os.path.dirname(s_path), '{}Ui_{}.py'.format(QArkConfig.QARK_QT_MODULE_PREFIX, s_basename))
+        pyfile = os.path.join(os.path.dirname(s_path), 'Ui_{}.py'.format(s_basename))
         return pyfile
 
     @classmethod

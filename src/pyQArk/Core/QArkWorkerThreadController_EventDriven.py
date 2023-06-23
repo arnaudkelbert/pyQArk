@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt5 import QtWidgets, QtCore
 
-from pyQArk.Core.QArkWorkerInterruptor import QArkWorkerInterruptor
-#from pyQArk.Core.QArkWorkerThread import QArkWorkerThread
-
 class QArkWorkerThreadController_EventDriven(QtCore.QObject):
 
     workerFinished = QtCore.pyqtSignal()
