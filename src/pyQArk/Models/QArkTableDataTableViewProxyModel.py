@@ -1,46 +1,6 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-#
-# CNES - DNO/OT/PE
-#
-# @author : Arnaud Kelbert (DNO/OT/PE)
-# @date : 2020/02/02
-# @version : 0.1
-#
-# Historic:
-# 0.1 : init version
-#-----------------------------------------------------------------------
-# {-- Pyhton 2/3 compatibility ------------------------------------------
-from __future__ import (absolute_import, division, print_function, unicode_literals)
-import sys
-try:
-    from future import standard_library
-    standard_library.install_aliases()
-
-    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
-                          int, map, next, oct, open, pow, range, round,
-                          str, super, zip)
-except ImportError:
-    if sys.version_info.major == 2:
-        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
-try:
-    # Python 2 : basestring exists (for isinstance test)
-    basestring
-except:
-    # Python 3 : basestring does not exist
-    basestring = str
-# }-- Pyhton 2/3 compatibility ------------------------------------------
-import datetime
-from pyQArk.QArkConfig import QARK_QT_GENERATION
-
-if QARK_QT_GENERATION == 4:
-    from PyQt4 import QtGui, QtCore
-    QtWidgets=QtGui
-    QSortFilterProxyModel = QtGui.QSortFilterProxyModel
-
-elif QARK_QT_GENERATION == 5:
-    from PyQt5 import QtWidgets, QtCore, QtGui
-    QSortFilterProxyModel = QtCore.QSortFilterProxyModel
+rom PyQt5 import QtWidgets, QtCore, QtGui
+QSortFilterProxyModel = QtCore.QSortFilterProxyModel
 
 class QArkTableDataTableViewProxyModel(QSortFilterProxyModel):
 
