@@ -1,19 +1,6 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-#
-#
-# QArkNavigationTabWidget
-#
-#
-# @author : Arnaud Kelbert
-# @date : 2014/07/26
-# @version : 0.1
-#-----------------------------------------------------------------------
-import sys
-import os
-
-from PyQt4 import QtCore, QtGui
-
+# TODO : refactor python 3 / Qt5 to be continued...
+from PyQt5 import QtCore, QtGui, QtWidgets
 from .Ui_QArkNavigationTabWidget import Ui_QArkNavigationTabWidget
 
 
@@ -34,7 +21,7 @@ except AttributeError:
 
 
 
-class QArkNavigationTabWidget( QtGui.QTabWidget, Ui_QArkNavigationTabWidget ):
+class QArkNavigationTabWidget( QtWidgets.QTabWidget, Ui_QArkNavigationTabWidget ):
     """
     Class to represents a navigation tab widget.
     Tabs can be TreeView or ListView
@@ -87,7 +74,7 @@ class QArkNavigationTabWidget( QtGui.QTabWidget, Ui_QArkNavigationTabWidget ):
         o_view = self.getNavigationTab(_u_index)
 
         if o_view.model():
-            o_selectionModel = QtGui.QItemSelectionModel( o_view.model(), o_view )
+            o_selectionModel = QtCore.QItemSelectionModel( o_view.model(), o_view )
             o_view.setSelectionModel(o_selectionModel)
             o_selectionModel.selectionChanged.connect( self.handleSelectionChanged )
 
@@ -107,7 +94,7 @@ class QArkNavigationTabWidget( QtGui.QTabWidget, Ui_QArkNavigationTabWidget ):
         if _u_type is self.__class__.NAVIGATION_TREEVIEW:
 
             # Create a treeview tab
-            o_treeviewTab = QtGui.QTreeView(self)
+            o_treeviewTab = QtWidgets.QTreeView(self)
 
             if not _o_model is None:
                 o_treeviewTab.setModel( _o_model )
@@ -132,7 +119,7 @@ class QArkNavigationTabWidget( QtGui.QTabWidget, Ui_QArkNavigationTabWidget ):
         elif _u_type is self.__class__.NAVIGATION_LISTVIEW:
 
             # Create a listview tab
-            o_listviewTab = QtGui.QListView(self)
+            o_listviewTab = QtWidgets.QListView(self)
 
             if not _o_model is None:
                 o_listviewTab.setModel( _o_model )
@@ -202,7 +189,7 @@ class QArkNavigationTabWidget( QtGui.QTabWidget, Ui_QArkNavigationTabWidget ):
 
 
     def getViewFromModel( self, _o_model ):
-        for u_idx in xrange(self.count()):
+        for u_idx in range(self.count()):
             if self.getNavigationTab(u_idx).model() is _o_model:
                 return self.getNavigationTab(u_idx)
         return None
@@ -319,8 +306,8 @@ class QArkNavigationTabWidget( QtGui.QTabWidget, Ui_QArkNavigationTabWidget ):
         o_item = o_viewModel.getItem( o_index )
 
         o_data = o_item.getItemData()
-        print o_data
-        print o_selectionModel.selectedIndexes()
+        print(o_data)
+        print(o_selectionModel.selectedIndexes())
 
         #for o_index in o_currentView.selectionModel().selectedIndexes()
 

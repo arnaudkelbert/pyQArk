@@ -1,37 +1,4 @@
 # -*- coding: utf-8 -*-
-#-----------------------------------------------------------------------
-#
-#
-# QArkOptimizationParameterWidget
-#
-#
-# @author : Arnaud Kelbert
-# @date : 2021/11/25
-#
-# Historic:
-# 0.1 : init version
-# 2021/11/25 : add python 2/3 compatibility
-# -----------------------------------------------------------------------
-# {-- Python 2/3 compatibility ------------------------------------------
-from __future__ import (absolute_import, division, print_function, unicode_literals)
-import sys
-try:
-    from future import standard_library
-    standard_library.install_aliases()
-
-    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
-                          int, map, next, oct, open, pow, range, round,
-                          str, super, zip)
-except ImportError:
-    if sys.version_info.major == 2:
-        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
-try:
-    # Python 2 : basestring exists (for isinstance test)
-    basestring
-except:
-    # Python 3 : basestring does not exist
-    basestring = str
-# }-- Python 2/3 compatibility ------------------------------------------
 from PyQt5 import QtCore, QtWidgets, QtGui
 from pyQArk.Dialogs.QArkCriticalMessageBox.QArkCriticalMessageBox import QArkCriticalMessageBox
 from pyQArk.Core import QArkQt
