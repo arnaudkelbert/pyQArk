@@ -1,35 +1,5 @@
 # -*- coding: utf-8 -*-
-# -----------------------------------------------------------------------
-# @author : Arnaud Kelbert
-# @date : 2019/03/19
-# @version : 0.2
-#
-# Historic:
-# 0.1 : init version
-# 0.2 : add python 2/3 compatibility
-# -----------------------------------------------------------------------
-# {-- Pyhton 2/3 compatibility ------------------------------------------
-from __future__ import (absolute_import, division, print_function, unicode_literals)
 import sys
-
-try:
-    from future import standard_library
-
-    standard_library.install_aliases()
-
-    from builtins import (ascii, bytes, chr, dict, filter, hex, input,
-                          int, map, next, oct, open, pow, range, round,
-                          str, super, zip)
-except ImportError:
-    if sys.version_info.major == 2:
-        print('Warning : future package is missing - compatibility issues between python 2 and 3 may occur')
-try:
-    # Python 2 : basestring exists (for isinstance test)
-    basestring
-except:
-    # Python 3 : basestring does not exist
-    basestring = str
-# }-- Pyhton 2/3 compatibility ------------------------------------------
 import unittest
 sys._excepthook = sys.excepthook
 def exception_hook(exctype, value, traceback):
@@ -38,15 +8,7 @@ def exception_hook(exctype, value, traceback):
     sys.exit(1)
 sys.excepthook = exception_hook
 
-from pyQArk import QArkConfig
-from pyQArk.QArkConfig import QARK_QT_GENERATION
-
-if QARK_QT_GENERATION == 4:
-    from PyQt4 import QtGui, QtCore
-    QtWidgets=QtGui
-elif QARK_QT_GENERATION == 5:
-    from PyQt5 import QtWidgets, QtCore
-
+from PyQt5 import QtWidgets, QtCore
 from pyQArk.Dialogs.QArkExportPlotWidgetDialog.QArkExportPlotWidgetDialog import QArkExportPlotWidgetDialog
 
 TEST_CLASS = QArkExportPlotWidgetDialog
@@ -71,17 +33,9 @@ class QArkExportPlotWidgetDialogTest(unittest.TestCase):
         def handleButton0Clicked(self):
             o_dialog = TEST_CLASS(parent=self)
 
-            if QARK_QT_GENERATION == 5:
-                o_dialog.setModal(True)
-                o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-                o_dialog.show()
-
-            elif QARK_QT_GENERATION == 4:
-                o_dialog.setModal(True)
-                o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-                o_dialog.show()
-                #o_dialog.exec_()
-
+            o_dialog.setModal(True)
+            o_dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+            o_dialog.show()
     def test_widget(self):
         print(TEST_CLASS)
         o_app = QtWidgets.QApplication(sys.argv)

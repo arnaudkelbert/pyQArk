@@ -1,27 +1,26 @@
 # -*- coding: utf-8 -*-
-"""
-Error when there are no ticks to plot (to small range)
+#Error when there are no ticks to plot (to small range)
+#
+#I am getting this error apparently when my plot is very small on the screen and the left axis tick mechanism seems to decide that the number of ticks is zero.
+#
+#
+#Traceback (most recent call last):
+#  File "C:\Users\j\Documents\projects\navala\3rd-lib\pyqtgraph-0.9.8\pyqtgraph\graphicsItems\AxisItem.py", line 412, in paint
+#    specs = self.generateDrawSpecs(painter)
+#  File "C:\Users\j\Documents\projects\navala\3rd-lib\pyqtgraph-0.9.8\pyqtgraph\graphicsItems\AxisItem.py", line 812, in generateDrawSpecs
+#    textSize2 = np.max([r.width() for r in textRects])
+#  File "C:\Python27\lib\site-packages\numpy\core\fromnumeric.py", line 2125, in amax
+#    out=out, keepdims=keepdims)
+#  File "C:\Python27\lib\site-packages\numpy\core\_methods.py", line 17, in _amax
+#    out=out, keepdims=keepdims)
+#ValueError: zero-size array to reduction operation maximum which has no identity
+#
+#
+# replaced one line which read "            if i > 0:  ## always draw top level"
+#by "            if i > 0 and len(textRects) > 0:  ## always draw top level" as a workaround.
+#
+#Julio
 
-I am getting this error apparently when my plot is very small on the screen and the left axis tick mechanism seems to decide that the number of ticks is zero.
-
-
-Traceback (most recent call last):
-  File "C:\Users\j\Documents\projects\navala\3rd-lib\pyqtgraph-0.9.8\pyqtgraph\graphicsItems\AxisItem.py", line 412, in paint
-    specs = self.generateDrawSpecs(painter)
-  File "C:\Users\j\Documents\projects\navala\3rd-lib\pyqtgraph-0.9.8\pyqtgraph\graphicsItems\AxisItem.py", line 812, in generateDrawSpecs
-    textSize2 = np.max([r.width() for r in textRects])
-  File "C:\Python27\lib\site-packages\numpy\core\fromnumeric.py", line 2125, in amax
-    out=out, keepdims=keepdims)
-  File "C:\Python27\lib\site-packages\numpy\core\_methods.py", line 17, in _amax
-    out=out, keepdims=keepdims)
-ValueError: zero-size array to reduction operation maximum which has no identity
-
-
-I replaced one line which read "            if i > 0:  ## always draw top level"
-by "            if i > 0 and len(textRects) > 0:  ## always draw top level" as a workaround.
-
-Julio
-"""
 from PyQt5 import QtCore, QtGui, QtWidgets
 #TODO
 import pyqtgraph as pg
@@ -42,7 +41,7 @@ class CustomViewBox(pg.ViewBox):
         else:
             pg.ViewBox.mouseDragEvent(self, ev)
 
-class QArkPlotWidget( QtGui.QWidget ):
+class QArkPlotWidget( QtWidgets.QWidget ):
 
     T_ACCEPTED_EXPORT_FORMATS = [ 'png' ]
 
