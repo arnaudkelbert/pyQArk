@@ -1,3 +1,8 @@
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+
+[project.urls]
+"Homepage" = "https://github.com/arnaudkelbert/pyQArk"
+"Bug Tracker" = "https://github.com/arnaudkelbert/pyQArk/issues"
