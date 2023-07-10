@@ -121,7 +121,7 @@ class QArkInputListWidget(QArkInputWidget):
             return QtCore.QVariant()
 
     def getValue(self):
-        return map( lambda o_widget:o_widget.getValue(), self.t_widgets )
+        return [o_widget.getValue() for o_widget in self.t_widgets]
 
     def setValue( self, *args, **kwargs ):
         """
