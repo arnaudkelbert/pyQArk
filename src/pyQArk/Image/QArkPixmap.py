@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-rom PyQt5 import QtGui
+from PyQt5 import QtGui
 
 class QArkPixmap( object ):
 
