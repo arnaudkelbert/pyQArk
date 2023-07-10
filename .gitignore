@@ -18,3 +18,7 @@ syntax: glob
 *.bz2
 *.b2
 *.f
+
+.idea/
+build/
+src/pyQArk.egg-info/
